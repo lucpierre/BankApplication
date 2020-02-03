@@ -26,10 +26,8 @@
     
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
-        
-        <!-- A modifier une fois les premières entitées créées       
-            <property name="persistenceUnitName" value="HelloPU"/>
-        -->        
+           
+        <property name="persistenceUnitName" value="BankPU"/>
         
         <property name="dataSource" ref="BankProjectDataSource"/>        
         <property name="jpaVendorAdapter">            
