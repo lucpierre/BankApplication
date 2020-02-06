@@ -12,18 +12,18 @@ import java.io.Serializable;
  *
  * @author lucqu
  * @param <T>
- * @param <PK>
  */
-public interface GenericDao <T, PK extends Serializable>{
+public interface GenericDao <T extends Serializable>{
     
     /**
      * Save an object in database
+     * @param entity
      */
     public void save(T entity);
     
     /**
-     * Update the a object in the database
-     * @param a 
+     * Update the a object in the database 
+     * @param entity
      */
     public void update(T entity);
     
@@ -34,11 +34,11 @@ public interface GenericDao <T, PK extends Serializable>{
     public void delete(T entity);
     
     /**
-     * Get the entity who has the primary_key
-     * @param primary_key
-     * @return 
+     * Find an element with its primary key
+     * @param id
+     * @return T
      */
-    public T find (PK primary_key);
+    T find(Object id);
     
     /**
      * Return all the T entities in the databse
