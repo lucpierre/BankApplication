@@ -18,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @author lucqu
  */
 @Repository
-public class GenericDaoImpl implements GenericDao {
+public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
+    
+    private Class<T> class_type;
     
     /*
     Get the entity manager
@@ -38,35 +40,33 @@ public class GenericDaoImpl implements GenericDao {
     /*
     Implementation of the GenericDao methods
     */
-    
-    @Override
-    @Transactional
-    public void save(Object entity) {
-        entity = em.merge(entity);
-        em.persist(entity);
-    }
-
-    @Override
-    @Transactional
-    public void update(Object entity) {
-        em.merge(entity);
-    }
-
-    @Override
-    @Transactional
-    public void delete(Object entity) {
-        entity = em.merge(entity);
-        em.remove(entity);
-    }
-
-    @Override
-    public Object find(Serializable primary_key) {
-        return em.find(Object.class, primary_key);
-    }
 
     @Override
     public List findAll(){
         return new ArrayList<>();
     };
+
+    @Override
+    public void save(T entity) {
+        entity = em.merge(entity);
+        em.persist(entity);
+    }
+
+    @Override
+    public void update(T entity) {
+        em.merge(entity);
+    }
+
+    @Override
+    public void delete(T entity) {
+        entity = em.merge(entity);
+        em.remove(entity);
+    }
+    
+    @Transactional
+    @Override
+    public T find(Object id) {
+        return em.find(class_type, id);
+    }
     
 }
