@@ -22,7 +22,7 @@
                         <h4>Hello world!</h4>
                     </fieldset>
                 </div>
-                <%@include  file="lastDeals.jsp"%>
+                <%@include  file="lastsDeals.jsp"%>
             </div>
           </div>      
     </body>

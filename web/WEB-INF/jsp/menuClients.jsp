@@ -6,12 +6,13 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <!DOCTYPE html>
 
 
-<div class="col-3">  
-    <div class="card">
-        <img src="${pageContext.request.contextPath}/img/logo.png" class="card-img-top" alt="">
+<div id="menu" class="col-3">  
+    <div>
+        <img src="${pageContext.request.contextPath}/img/logo.png" class="w-50" alt="">
     </div>
     <table>
         <tbody>

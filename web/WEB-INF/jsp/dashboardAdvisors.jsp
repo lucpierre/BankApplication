@@ -10,7 +10,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-         <title>Dashboards : Advisor</title>
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+        <title>Dashboards : Advisor</title>
     </head>
     <body>
         <div class="row">

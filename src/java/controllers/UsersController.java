@@ -5,8 +5,7 @@
  */
 package controllers;
 
-import entity.User;
-import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ public class UsersController extends AbstractController {
     
     @RequestMapping(value="index", method = RequestMethod.GET)     
     public String init(){
-        return "index";
+        return "dashboardAdvisors";
     }
     
     public UsersController() {

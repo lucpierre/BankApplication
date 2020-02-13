@@ -6,7 +6,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styleLogin.css">
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
         <title>Login Page</title>
     </head>
 
@@ -18,39 +18,24 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="col">
-                    <div class="card">
-                        <img src="${pageContext.request.contextPath}/img/logo.png" class="card-img-top" alt="">
+                    <div>
+                        <img src="${pageContext.request.contextPath}/img/logo.png" class="w-25" alt="">
                      </div>
                 </div>
                 <div class="w-100"></div>
                 <div class ="col">
                     <h2> Connexion </h2>
                     <form method="POST" action="result.htm">
-                        <fieldset>
-                            <div>Entrez votre login : <input type=text name=login></div>
-                            <div>Entrez votre mot de passe : <input type=text name=mdp></div>
-                            <input type=submit value="OK">
-                        </fieldset>
-                    </form>
-                </div>
-                <div class="w-100"></div>
-                <div class ="col">
-                    <h2> Inscription </h2>
-                    <form method="POST" action="result.htm">
-                        <fieldset>
-                            <div>Ma civilité <input type=radio name=madame><input type=radio name=monsieur></div>
-                            <div>Entrez votre nom : <input type=text name=nom></div>
-                            <div>Entrez votre prenom : <input type=text name=prenom></div>
-                            <div>Votre numéro de téléphone <input type=tel name=phone></div>
-                            <div>Entrez votre adresse mail : <input type=email name=mail></div>
-                            <div>Entrez votre date de naissance : <input type=date name=dateB></div>
-                            <div>Entrez votre login : <input type=text name=loginP></div>
-                            <div>Entrez votre mot de passe : <input type=password name=mdpP></div>
-                            <div>Professionnel (cocher la case si oui) : <input type=radio name=pro></div>
-                            <div>N°Siret : <input type=text name=nSiret></div>
-                            <div>Entrez votre identifiant de compte : <input type=text name=idCompte></div>
-                            <input type=submit value="OK">
-                        </fieldset>
+                        <div class="form-group">
+                            <label>Entrez votre nom de compte : </label>
+                            <input type="text" class="form-control" name="ndc" placeholder="Nom de compte">
+                        </div>
+                        <div class="form-group">
+                            <label>Entrez votre mot de passe : </label>
+                            <input type="password" class="form-control" name="mdp" placeholder="Mot de passe">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Connexion</button>
+                        <small class="form-text text-muted">Ne jamais partager son nom de compte et son mot de passe : ce sont des informations PERSONNELLES</small>
                     </form>
                 </div>
             </div>
