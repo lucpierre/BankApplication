@@ -17,7 +17,7 @@
                 <!-- Section pour les cartes -->
                 <section>
                     <div class="section-title">
-                        <h2>Tableau de bord</h2>
+                        <h2>Tableau de bord : ${last_name}</h2>
                     </div>
 
                     <div class="card-deck">

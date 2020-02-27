@@ -15,22 +15,22 @@
                 <div class="col-2"></div>
                 <div class ="col-8">
                     <div class="text-center">
-                        <img src="${pageContext.request.contextPath}/img/logo.png" class="w-25" alt="">
+                        <img src="${pageContext.request.contextPath}/img/logo.png" class="w-25" alt="logo">
                     </div>
                     
-                    <form method="POST" action="result.htm">
+                    <form method="POST" action="login.htm">
                         <div class="form-group">
-                            <label for="input_login">Login : </label>
-                            <input type="text" id="input_login" class="form-control" name="login" placeholder="Login">
+                            <label for="input_login">Numéro de client : </label>
+                            <input type="text" id="input_login" class="form-control" name="client-number" placeholder="Numéro de client">
                         </div>
                         
                         <div class="form-group">
                             <label for="input-mot-de-passe">Mot de passe : </label>
-                            <input type="password" id="input-mot-de-passe" class="form-control" name="mot-de-passe" placeholder="Mot de passe">
+                            <input type="password" id="input-mot-de-passe" class="form-control" name="password" placeholder="Mot de passe">
                         </div>
                         
                         <button type="submit" class="btn btn-primary">Connexion</button>
-                        <small class="form-text text-muted">Ne jamais partager son nom de compte et son mot de passe : ce sont des informations PERSONNELLES</small>
+                        <small class="form-text text-muted">Ne jamais partager ses identifiants : ce sont des informations PERSONNELLES !</small>
                     </form>
                 </div>
                 <div class="col-2"></div>

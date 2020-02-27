@@ -1,0 +1,21 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package service;
+
+import dao.UserEntity;
+import java.util.List;
+
+/**
+ *
+ * @author lucqu
+ */
+public interface UserService {
+    public UserEntity find(String num_client, String password);
+    public List<UserEntity> findAll();
+    public void save(UserEntity u);
+    public void update(UserEntity entity);
+    public void delete(UserEntity entity);
+}
