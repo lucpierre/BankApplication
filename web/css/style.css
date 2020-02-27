@@ -1,20 +1,94 @@
+/*
+================================================================================
+*/
+
+/*
+    CSS commun à toutes les pages
+*/
 html {
     font: Regular 16px/24px Helvetica Neue;
-    opacity: 1;
 }
 
-#menu {
-    background: #202340 0% 0% no-repeat padding-box;
-    border: 1px solid #707070;
+thead {
+    background-color: #e9ecef;
 }
 
-i {
-    background: 0% 0% no-repeat padding-box;
-    color : #EEB14F; 
+tr {
+    border-bottom: solid 2px #e9ecef;
 }
 
-td.text {
-    font: Regular 22px/26px Helvetica Neue;
-    letter-spacing: 0;
-    color: #FFFFFF;
+section {
+    margin-top: 3rem;
+}
+
+.section-title {
+    border-bottom: solid 3px #202340;
+    margin-bottom: 2rem;
+}
+
+.jumbotron {
+    padding : 24px;
+}
+
+/*
+================================================================================
+*/
+
+/*
+    CSS pour la page de connexion
+*/
+.connexion-page{
+    background-color: #202340;
+    color: white;
+}
+
+/*
+================================================================================
+*/
+
+/*
+    CSS pour les menu
+*/
+.menu {
+    background: #202340;
+    min-height: 100vh;
+    text-transform: uppercase;
+}
+
+.menu a, .menu a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.menu ul {
+    list-style-type: none;
+}
+
+.menu li {
+    margin-top: 2rem;
+}
+
+.menu i {
+    color : #EEB14F;
+}
+
+/*
+================================================================================
+*/
+
+/*
+    CSS pour les cards
+*/
+.card-img-top {
+    max-height: 200px;
+    max-width: 200px;
+    
+    /* Permet de centrer les images */
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.card-body {
+    max-height: 200px;
 }

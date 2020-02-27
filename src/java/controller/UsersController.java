@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package controller;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +23,12 @@ public class UsersController extends AbstractController {
     
     @RequestMapping(value="index", method = RequestMethod.GET)     
     public String init(){
-        return "dashboardAdvisors";
+        return "passbookA";
     }
     
     public UsersController() {
     }
+    
     
     @RequestMapping(value="result", method = RequestMethod.POST)
     protected ModelAndView handleRequestInternal( HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -43,5 +44,5 @@ public class UsersController extends AbstractController {
         mv.addObject("userMessage",result);
         return mv;
     }
-    
 }
+

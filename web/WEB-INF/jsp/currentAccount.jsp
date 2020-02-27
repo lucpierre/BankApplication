@@ -1,32 +1,59 @@
-<%-- 
-    Document   : currentAccount
-    Created on : 6 févr. 2020, 20:40:31
-    Author     : Charles
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-        <title>Current Account</title>
+        <%@include file="dependencies_css.jsp"%>
+        <title>Dashboard : Clients</title>
     </head>
+    
     <body>
-        <div class="row">
-            <%@include file="menuClients.jsp"%>
+        <div class="container-fluid row">
+            <!-- Include du menu-->
+            <%@include file="menuClient.jsp"%>
+            
+            <!-- Contenu de la page -->
             <div class="col-9">
-                <div class=container>
-                    <h2 ><u>Compte courant</u></h2>
-                    <div class="row">
-                        <fieldset>
-                            <h1>Hello world!</h1> 
-                        </fieldset> 
+                <!-- Section identité -->
+                <section>
+                    <div class="section-title">
+                        <h2>Compte courant</h2>
                     </div>
-                </div>
-                <%@include file="lastsDeals.jsp"%>
+                    
+                    <div class="jumbotron">
+                        <div class="constainer-fluid row">
+                            <div class="col-sm-6">
+                                <!-- <h3>Mr ${user_last_name} ${user_first_name}</h3> -->
+                                <h3>Mr nom prenom</h3>
+                                <!-- <p class="text-muted">${num_account}</p> -->
+                                <p class="text-muted">numero compte</p>
+                            </div>
+                            
+                            <div class="col-sm-6 text-right pt-3">
+                                <!-- <h3>${account_balance} €</h3> -->
+                                <h3>500,0 €</h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                            
+                <!-- Section pour les cartes -->
+                <section>
+                    <div class="section-title">
+                        <h2>Dernières opérations</h2>
+                    </div>
+                    
+                    <!-- Trouver une solution pour le compléter à l'aide des infos récupérées depuis le controleur -->
+                    <%@include file="lastsDeals.jsp"%>
+                </section>
+
+                
             </div>
-          </div>       
+  
+        </div>
+                                
+        <%@include file="dependencies_js.jsp"%>
+    
     </body>
 </html>
+

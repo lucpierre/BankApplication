@@ -13,8 +13,8 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="material-icons mr-2 align-bottom">group</i>
-                    Clients
+                    <i class="material-icons mr-2 align-bottom">euro</i>
+                    Comptes
                 </a>
             </li>
             <li>
@@ -25,8 +25,14 @@
             </li>
             <li>
                 <a href="#">
+                    <i class="material-icons mr-2 align-bottom">sync_alt</i>
+                    Transactions
+                </a>
+            </li>
+            <li>
+                <a href="#">
                     <i class="material-icons mr-2 align-bottom">message</i>
-                    Messages
+                    Contact
                 </a>
             </li>
             <li>
