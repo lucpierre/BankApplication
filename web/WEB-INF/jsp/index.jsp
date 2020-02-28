@@ -20,8 +20,8 @@
                     
                     <form method="POST" action="login.htm">
                         <div class="form-group">
-                            <label for="input_login">Numéro de client : </label>
-                            <input type="text" id="input_login" class="form-control" name="client-number" placeholder="Numéro de client">
+                            <label for="input_login">Login : </label>
+                            <input type="text" id="input_login" class="form-control" name="login" placeholder="Login">
                         </div>
                         
                         <div class="form-group">

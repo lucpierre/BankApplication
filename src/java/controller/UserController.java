@@ -62,18 +62,17 @@ public class UserController extends AbstractController {
         ModelAndView mv = new ModelAndView("dashboardClient");
         
         // Récupération num_client et mdp
-        String client_number = request.getParameter("client-number");
+        String login = request.getParameter("login");
         String password = request.getParameter("password");
-        if(null == client_number || "" == client_number){
+        if(null == login || login.equals("")){
             return new ModelAndView("index");
         }
-        if(null == password || "" == password){
+        if(null == password || password.equals("")){
             return new ModelAndView("index");
         }
         
         //Récupération de l'utilisateur correspondant
-        UserEntity u = user_service.find(client_number, password);
-        
+        UserEntity u = user_service.find(login, password);
         
         mv.addObject("last_name", u.getLastName());
         

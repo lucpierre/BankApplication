@@ -8,6 +8,7 @@ package service;
 import dao.entity.UserEntity;
 import dao.repository.UserDAO;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,23 +24,24 @@ public class UserServiceImpl implements UserService {
     UserDAO dao;
 
     @Override
-    public UserEntity find(String num_client, String password) {
-         return dao.find(Long.parseLong(num_client));
+    public UserEntity find(String login, String password) {
+         return dao.findByLoginPassword(login, password);
     }
     
-    /*
     @Override
     public List<UserEntity> findAll(){
         return new ArrayList<>();
     }
     
     @Override
-    public void save(UserEntity u){
-        dao.save(u);
+    public void save(UserEntity entity){
+        entity.setCreatedAt(new Date());
+        dao.save(entity);
     }
     
     @Override
     public void update(UserEntity entity){
+        entity.setUpdatedAt(new Date());
         dao.update(entity);
     }
     
@@ -47,6 +49,5 @@ public class UserServiceImpl implements UserService {
     public void delete(UserEntity entity){
         dao.delete(entity);
     }
-    */
     
 }

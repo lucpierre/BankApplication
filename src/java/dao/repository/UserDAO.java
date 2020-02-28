@@ -6,41 +6,11 @@
 package dao.repository;
 
 import dao.entity.UserEntity;
-import java.util.List;
 
 /**
  *
  * @author lucqu
  */
 public interface UserDAO extends GenericDAO<UserEntity>{
-    /**
-     * Save an object in database
-     * @param entity
-     */
-    //public void save(UserEntity entity);
-    
-    /**
-     * Update the a object in the database 
-     * @param entity
-     */
-    //public void update(UserEntity entity);
-    
-    /**
-     * Delete the entity from the database
-     * @param entity 
-     */
-    //public void delete(UserEntity entity);
-    
-    /**
-     * Find an element with its primary key
-     * @param id
-     * @return T
-     */
-    //UserEntity find(long id);
-    
-    /**
-     * Return all the T entities in the databse
-     * @return List
-     */
-    //List<UserEntity> findAll();
+    public UserEntity findByLoginPassword(String login, String password);
 }

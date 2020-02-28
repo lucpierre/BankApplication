@@ -5,7 +5,6 @@
  */
 package dao.repository;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -45,7 +44,7 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     /*
     Implementation of the GenericDAO methods
     */
-    /*
+    
     @Override
     public List findAll(){
         return new ArrayList<>();
@@ -67,7 +66,7 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
         entity = em.merge(entity);
         em.remove(entity);
     }
-    */
+    
     @Transactional
     @Override
     public T find(Object id) {

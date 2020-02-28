@@ -20,6 +20,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class UserEntity {
+    
+    public static String CIVILITY_MR = "Mr";
+    public static String CIVILITY_MME = "Mme";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -100,10 +103,10 @@ public class UserEntity {
     }
     
     //////////////////////////
-    // Methods   //
+    // Methods             //
     ////////////////////////
     
-    public void UserEntity(){
+    public UserEntity(){
         this.address = "address";
         this.birthday = new Date();
         this.civility = "Mr";
@@ -115,6 +118,28 @@ public class UserEntity {
         this.password = "password";
         this.phone = "0011223344";
         this.updated_at = new Date();
+    }
+    
+    public UserEntity(
+            String address,
+            Date birthday,
+            boolean civility,
+            String first_name,
+            String last_name,
+            String login,
+            String mail,
+            String password,
+            String phone
+    ){
+        this.address = address;
+        this.birthday = birthday;
+        this.civility = (civility) ? UserEntity.CIVILITY_MR : UserEntity.CIVILITY_MME;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.login = login;
+        this.mail = mail;
+        this.password = password;
+        this.phone = phone;
     }
     
     /**
@@ -235,6 +260,14 @@ public class UserEntity {
      */
     public Date getCreatedAt() {
         return this.created_at;
+    }
+    
+    /**
+     * Setter on the created_at
+     * @param new_date Date
+     */
+    public void setCreatedAt(Date new_date) {
+        this.created_at = new_date;
     }
 
     /**

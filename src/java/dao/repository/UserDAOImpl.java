@@ -6,10 +6,8 @@
 package dao.repository;
 
 import dao.entity.UserEntity;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,53 +22,19 @@ public class UserDAOImpl extends GenericDAOImpl<UserEntity> implements UserDAO {
         super(UserEntity.class);
     }
     
-     /*
-    Get the entity manager
-    */
-    /*
-    @PersistenceContext(unitName="BankPU")
-    private EntityManager em;
-    
-    public EntityManager getEm() {
-        return em;
-    }
-    
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-    */
-    
-    /*
-    Implementation of the GenericDao methods
-    */
-    /*
-    @Override
-    public List findAll(){
-        return new ArrayList<>();
-    };
-
-    @Override
-    public void save(UserEntity entity) {
-        entity = em.merge(entity);
-        em.persist(entity);
-    }
-
-    @Override
-    public void update(UserEntity entity) {
-        em.merge(entity);
-    }
-
-    @Override
-    public void delete(UserEntity entity) {
-        entity = em.merge(entity);
-        em.remove(entity);
-    }
-    
     @Transactional
     @Override
-    public UserEntity find(long id) {
-        UserEntity u = em.find(UserEntity.class, id);
-        return u;
+    public UserEntity findByLoginPassword(String login, String password) {
+        Query query = this.getEm().createQuery(
+                "SELECT * FROM USERENTITY user WHERE user.login = :login AND user.password = :password"
+        );
+        
+        query.setParameter("login", login);
+        query.setParameter("password", password);
+        try {
+            return (UserEntity) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
-    */
 }
