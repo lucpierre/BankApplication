@@ -6,6 +6,7 @@
 package controller;
 
 import dao.entity.UserEntity;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +74,7 @@ public class UserController extends AbstractController {
         
         //Récupération de l'utilisateur correspondant
         UserEntity u = user_service.find(login, password);
-        
-        mv.addObject("last_name", u.getLastName());
+        mv.addObject("user", u);
         
         return mv;
     }

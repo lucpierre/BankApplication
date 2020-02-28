@@ -1,3 +1,4 @@
+<%@page import="dao.entity.UserEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,7 +18,7 @@
                 <!-- Section pour les cartes -->
                 <section>
                     <div class="section-title">
-                        <h2>Tableau de bord : ${last_name}</h2>
+                        <h2>Tableau de bord de ${user.civility} ${user.lastName}</h2>
                     </div>
 
                     <div class="card-deck">
