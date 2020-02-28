@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dao.UserEntity;
+import dao.entity.UserEntity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class UserController extends AbstractController {
         return "index";
     }
     
-    @RequestMapping(value="login", method = RequestMethod.POST)
+    @RequestMapping(value="/login", method = RequestMethod.POST)
     public ModelAndView login(
             HttpServletRequest request,
             HttpServletResponse response){
@@ -75,7 +75,7 @@ public class UserController extends AbstractController {
         UserEntity u = user_service.find(client_number, password);
         
         
-        mv.addObject("user", u.getLastName());
+        mv.addObject("last_name", u.getLastName());
         
         return mv;
     }

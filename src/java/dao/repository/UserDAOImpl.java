@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dao.repository;
 
-import java.io.Serializable;
+import dao.entity.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -18,14 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @author lucqu
  */
 @Repository
-public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
+public class UserDAOImpl extends GenericDAOImpl<UserEntity> implements UserDAO {
     
-    private Class<T> class_type;
+    public UserDAOImpl(){
+        super(UserEntity.class);
+    }
     
-    /*
+     /*
     Get the entity manager
     */
-    
+    /*
     @PersistenceContext(unitName="BankPU")
     private EntityManager em;
     
@@ -36,37 +38,39 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
     public void setEm(EntityManager em) {
         this.em = em;
     }
+    */
     
     /*
     Implementation of the GenericDao methods
     */
-
+    /*
     @Override
     public List findAll(){
         return new ArrayList<>();
     };
 
     @Override
-    public void save(T entity) {
+    public void save(UserEntity entity) {
         entity = em.merge(entity);
         em.persist(entity);
     }
 
     @Override
-    public void update(T entity) {
+    public void update(UserEntity entity) {
         em.merge(entity);
     }
 
     @Override
-    public void delete(T entity) {
+    public void delete(UserEntity entity) {
         entity = em.merge(entity);
         em.remove(entity);
     }
     
     @Transactional
     @Override
-    public T find(Object id) {
-        return em.find(class_type, id);
+    public UserEntity find(long id) {
+        UserEntity u = em.find(UserEntity.class, id);
+        return u;
     }
-    
+    */
 }

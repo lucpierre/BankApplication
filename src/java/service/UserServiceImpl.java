@@ -5,11 +5,11 @@
  */
 package service;
 
-import dao.UserEntity;
-import dao.UserDAO;
+import dao.entity.UserEntity;
+import dao.repository.UserDAO;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     
-    @Resource
+    @Autowired
     UserDAO dao;
 
     @Override
@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
          return dao.find(Long.parseLong(num_client));
     }
     
+    /*
     @Override
     public List<UserEntity> findAll(){
         return new ArrayList<>();
@@ -46,5 +47,6 @@ public class UserServiceImpl implements UserService {
     public void delete(UserEntity entity){
         dao.delete(entity);
     }
+    */
     
 }

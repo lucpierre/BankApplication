@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dao.repository;
 
 import java.util.List;
 import java.io.Serializable;
@@ -13,25 +13,25 @@ import java.io.Serializable;
  * @author lucqu
  * @param <T>
  */
-public interface GenericDao <T extends Serializable>{
+public interface GenericDAO <T>{
     
     /**
      * Save an object in database
      * @param entity
      */
-    public void save(T entity);
+    //public void save(T entity);
     
     /**
      * Update the a object in the database 
      * @param entity
      */
-    public void update(T entity);
+    //public void update(T entity);
     
     /**
      * Delete the entity from the database
      * @param entity 
      */
-    public void delete(T entity);
+    //public void delete(T entity);
     
     /**
      * Find an element with its primary key
@@ -44,5 +44,5 @@ public interface GenericDao <T extends Serializable>{
      * Return all the T entities in the databse
      * @return List
      */
-    List<T> findAll();
+    //List<T> findAll();
 }

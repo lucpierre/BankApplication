@@ -5,7 +5,7 @@
  */
 package service;
 
-import dao.UserEntity;
+import dao.entity.UserEntity;
 import java.util.List;
 
 /**
@@ -14,8 +14,10 @@ import java.util.List;
  */
 public interface UserService {
     public UserEntity find(String num_client, String password);
+    /*
     public List<UserEntity> findAll();
     public void save(UserEntity u);
     public void update(UserEntity entity);
     public void delete(UserEntity entity);
+    */
 }
