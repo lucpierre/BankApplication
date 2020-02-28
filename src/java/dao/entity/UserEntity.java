@@ -5,12 +5,18 @@
  */
 package dao.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,7 +25,12 @@ import javax.persistence.TemporalType;
  * @author lucqu
  */
 @Entity
-public class UserEntity {
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="usertype", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("User")
+public class UserEntity implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     public static String CIVILITY_MR = "Mr";
     public static String CIVILITY_MME = "Mme";

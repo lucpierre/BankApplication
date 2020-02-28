@@ -3,6 +3,8 @@
   <persistence-unit name="BankPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>dao.NewEntity</class>
+    <class>dao.entity.ClientEntity</class>
+    <class>dao.entity.AdvisorEntity</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/BankProject"/>

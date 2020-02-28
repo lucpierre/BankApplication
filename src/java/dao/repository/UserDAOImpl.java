@@ -26,7 +26,9 @@ public class UserDAOImpl extends GenericDAOImpl<UserEntity> implements UserDAO {
     @Override
     public UserEntity findByLoginPassword(String login, String password) {
         Query query = this.getEm().createQuery(
-                "SELECT entity FROM UserEntity entity WHERE entity.login = :login AND entity.password = :password"
+                "SELECT user "
+                + "FROM UserEntity user "
+                + "WHERE user.login = :login AND user.password = :password"
         );
         
         query.setParameter("login", login);
