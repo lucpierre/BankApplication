@@ -5,9 +5,8 @@
  */
 package controller;
 
+import dao.entity.ClientEntity;
 import dao.entity.UserEntity;
-import java.util.ArrayList;
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +76,13 @@ public class UserController extends AbstractController {
         UserEntity u = user_service.find(login, password);
         if(null == u){
             return new ModelAndView("index");
+        }
+        
+        if(u instanceof ClientEntity){
+            System.out.println("Client");
+        }
+        else{
+            System.out.println("autre");
         }
         
         mv.addObject("user", u);

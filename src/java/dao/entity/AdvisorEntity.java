@@ -8,13 +8,14 @@ package dao.entity;
 import java.io.Serializable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  *
  * @author lucqu
  */
 @Entity
-@DiscriminatorValue("Client")
+@Table(name="AdvisorEntity")
+@DiscriminatorValue("AdvisorEntity")
 public class AdvisorEntity extends UserEntity implements Serializable {
-
 }

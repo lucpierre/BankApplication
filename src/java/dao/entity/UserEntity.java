@@ -17,6 +17,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,8 +29,17 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name="UserEntity")
 @DiscriminatorColumn(name="usertype", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("User")
+@DiscriminatorValue("UserEntity")
+
+@NamedQueries({
+    @NamedQuery(
+        name = "find_by_login_password",
+        query = "SELECT u FROM UserEntity u WHERE u.login = :login AND u.password = :password"
+    )
+})
+
 public class UserEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -80,11 +92,11 @@ public class UserEntity implements Serializable {
     // Generated methods   //
     ////////////////////////
     
-    public Long getId() {
+    public Long getNumClient() {
         return num_client;
     }
 
-    public void setId(Long id) {
+    public void setNumClient(Long id) {
         this.num_client = num_client;
     }
 
@@ -130,7 +142,6 @@ public class UserEntity implements Serializable {
         this.phone = "0011223344";
         this.updated_at = new Date();
     }
-    
     public UserEntity(
             String address,
             Date birthday,
