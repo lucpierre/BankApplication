@@ -60,7 +60,6 @@ public class UserController extends AbstractController {
     public ModelAndView login(
             HttpServletRequest request,
             HttpServletResponse response){
-        ModelAndView mv = new ModelAndView("dashboardClient");
         
         // Récupération num_client et mdp
         String login = request.getParameter("login");
@@ -79,15 +78,15 @@ public class UserController extends AbstractController {
         }
         
         if(u instanceof ClientEntity){
-            System.out.println("Client");
+            ModelAndView mv = new ModelAndView("dashboardClient");
+            mv.addObject("user", u);
+            return mv;
         }
         else{
-            System.out.println("autre");
-        }
-        
-        mv.addObject("user", u);
-        
-        return mv;
+            ModelAndView mv = new ModelAndView("dashboardAdvisor");
+            mv.addObject("user", u);
+            return mv;
+        } 
     }
 
     
