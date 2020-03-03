@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -5,40 +6,49 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+        <%@include file="dependencies_css.jsp"%>
         <title>Login Page</title>
     </head>
 
-    <body>
+    <body class="connexion-page mt-5">
         <div class="container">
             <div class="row">
-                <div class ="col">
-                    <h1> Bienvenue sur notre site de banque en ligne </h1>
-                </div>
-                <div class="w-100"></div>
-                <div class="col">
-                    <div>
-                        <img src="${pageContext.request.contextPath}/img/logo.png" class="w-25" alt="">
-                     </div>
-                </div>
-                <div class="w-100"></div>
-                <div class ="col">
-                    <h2> Connexion </h2>
-                    <form method="POST" action="result.htm">
+                <div class="col-2"></div>
+                <div class ="col-8">
+                    <div class="text-center">
+                        <img src="${pageContext.request.contextPath}/img/logo.png" class="w-25" alt="logo">
+                    </div>
+                    
+                    <form method="POST" action="login.htm">
                         <div class="form-group">
-                            <label>Entrez votre nom de compte : </label>
-                            <input type="text" class="form-control" name="ndc" placeholder="Nom de compte">
+                            <label for="input_login">Login : </label>
+                            <input type="text" id="input_login" class="form-control" name="login" placeholder="Login">
                         </div>
+                        
                         <div class="form-group">
-                            <label>Entrez votre mot de passe : </label>
-                            <input type="password" class="form-control" name="mdp" placeholder="Mot de passe">
+                            <label for="input-mot-de-passe">Mot de passe : </label>
+                            <input type="password" id="input-mot-de-passe" class="form-control" name="password" placeholder="Mot de passe">
                         </div>
+                        
                         <button type="submit" class="btn btn-primary">Connexion</button>
-                        <small class="form-text text-muted">Ne jamais partager son nom de compte et son mot de passe : ce sont des informations PERSONNELLES</small>
+                        <small class="form-text text-muted">Ne jamais partager ses identifiants : ce sont des informations PERSONNELLES !</small>
                     </form>
+                    
+                    <c:choose>
+                        <c:when test="${true == logout}">
+                            <div class="alert alert-info mt-5" role="alert">
+                                <span>
+                                    <i class="material-icons mr-2 align-bottom">info</i> Vous avez été déconnecté avec succés.
+                                </span>
+                            </div>
+                        </c:when>
+                    </c:choose>
+                        
                 </div>
+                <div class="col-2"></div>
             </div>
         </div>
+        
+        <%@include file="dependencies_js.jsp"%>
     </body>
 </html>

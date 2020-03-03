@@ -1,5 +1,5 @@
 <nav class="col-3 menu">
-    <div class="text-center mb-5 mt-5">
+    <div class="text-center mb-5 mt-4">
         <img src="${pageContext.request.contextPath}/img/logo.png" class="w-50" alt="">
     </div>
     
@@ -13,8 +13,8 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="material-icons mr-2 align-bottom">group</i>
-                    Clients
+                    <i class="material-icons mr-2 align-bottom">euro</i>
+                    Comptes
                 </a>
             </li>
             <li>
@@ -25,17 +25,28 @@
             </li>
             <li>
                 <a href="#">
+                    <i class="material-icons mr-2 align-bottom">sync_alt</i>
+                    Transactions
+                </a>
+            </li>
+            <li>
+                <a href="#">
                     <i class="material-icons mr-2 align-bottom">message</i>
-                    Messages
+                    Contact
                 </a>
             </li>
             <li>
                 <a href="#">
                     <i class="material-icons mr-2 align-bottom">settings</i>
-                    Paramètres
+                    Paramtres
+                </a>
+            </li>
+            <li>
+                <a href="logout.htm" >
+                    <i class="material-icons mr-2 align-bottom">power_settings_new</i>
+                    Se déconnecter
                 </a>
             </li>
         </ul>
     </div>
 </nav>
-
