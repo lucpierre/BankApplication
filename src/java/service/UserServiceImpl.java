@@ -24,7 +24,12 @@ public class UserServiceImpl implements UserService {
     UserDAO dao;
 
     @Override
-    public UserEntity find(String login, String password) {
+    public UserEntity find(String id) {
+         return dao.find(Long.parseLong(id));
+    }
+
+    @Override
+    public UserEntity findByLoginPassword(String login, String password) {
          return dao.findByLoginPassword(login, password);
     }
     

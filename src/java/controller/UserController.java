@@ -5,10 +5,12 @@
  */
 package controller;
 
+import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.UserEntity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +28,7 @@ import service.UserServiceImpl;
 public class UserController extends AbstractController {
     
     @Autowired
-    private UserService user_service;
+    private final UserService user_service;
     
     public UserController() {
         user_service = new UserServiceImpl();
@@ -42,7 +44,7 @@ public class UserController extends AbstractController {
      * @throws Exception 
      */
     @Override
-    @RequestMapping(value="index", method = RequestMethod.POST)
+    @RequestMapping(value="/index", method = RequestMethod.POST)
     protected ModelAndView handleRequestInternal(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -51,16 +53,37 @@ public class UserController extends AbstractController {
     }
     //==========================================================================
     
-    @RequestMapping(value="index", method = RequestMethod.GET)
-    public String init(){
-        return "index";
+    @RequestMapping(value="/index", method = RequestMethod.GET)
+    public ModelAndView index(
+            HttpServletRequest request,
+            HttpServletResponse response)
+    {    
+        ModelAndView mv = new ModelAndView("currentAccount");
+        return mv;
+    }
+    
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public ModelAndView logout(
+            HttpServletRequest request,
+            HttpServletResponse response)
+    {    
+        // Récupération de la session existante
+        HttpSession session = request.getSession();
+
+        if(null != session){
+            session.invalidate();
+        }
+        
+        ModelAndView mv = new ModelAndView("index");
+        mv.addObject("logout", true);
+        return mv;
     }
     
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public ModelAndView login(
             HttpServletRequest request,
-            HttpServletResponse response){
-        
+            HttpServletResponse response)
+    {   
         // Récupération num_client et mdp
         String login = request.getParameter("login");
         String password = request.getParameter("password");
@@ -71,25 +94,28 @@ public class UserController extends AbstractController {
             return new ModelAndView("index");
         }
         
-        //Récupération de l'utilisateur correspondant
-        UserEntity u = user_service.find(login, password);
+        // Récupération de l'utilisateur correspondant
+        UserEntity u = user_service.findByLoginPassword(login, password);
         if(null == u){
             return new ModelAndView("index");
         }
+        
+        HttpSession session = this.createSession(request, u);
         
         if(u instanceof ClientEntity){
             ModelAndView mv = new ModelAndView("dashboardClient");
             mv.addObject("user", u);
             return mv;
         }
-        else{
+        else if (u instanceof AdvisorEntity){
             ModelAndView mv = new ModelAndView("dashboardAdvisor");
             mv.addObject("user", u);
             return mv;
         } 
+        else {
+            return new ModelAndView("index");
+        }
     }
-
-    
     
     /*
     
@@ -135,5 +161,17 @@ public class UserController extends AbstractController {
         return mv;
     }
     */
+    
+    private HttpSession createSession(HttpServletRequest request, UserEntity u){
+        // Crée une nouvelle session si aucune n'existe
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user_num_client", u.getNumClient());
+        session.setAttribute("user_type", u.getUserType());
+        session.setAttribute("user_last_name", u.getLastName());
+        session.setAttribute("user_first_name", u.getFirstName());
+        session.setAttribute("user_civility", u.getCivility());
+        
+        return session;
+    }
     
 }

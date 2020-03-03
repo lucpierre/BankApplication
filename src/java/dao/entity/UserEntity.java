@@ -308,4 +308,17 @@ public class UserEntity implements Serializable {
         this.updated_at = new_date;
     }
     
+    /**
+     * Return the type of the user
+     * @return 
+     */
+    public String getUserType(){
+        if(this instanceof ClientEntity){
+            return "ClientEntity";
+        }
+        else{
+            return "AdvisorEntity";
+        }
+    }
+    
 }

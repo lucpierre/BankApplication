@@ -9,7 +9,7 @@
     </head>
     
     <body>
-        <div class="container-fluid row">
+        <div class="container-fluid row wrapper">
             <!-- Include du menu-->
             <%@include file="menuClient.jsp"%>
             

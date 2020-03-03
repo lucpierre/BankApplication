@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -32,6 +33,17 @@
                         <button type="submit" class="btn btn-primary">Connexion</button>
                         <small class="form-text text-muted">Ne jamais partager ses identifiants : ce sont des informations PERSONNELLES !</small>
                     </form>
+                    
+                    <c:choose>
+                        <c:when test="${true == logout}">
+                            <div class="alert alert-info mt-5" role="alert">
+                                <span>
+                                    <i class="material-icons mr-2 align-bottom">info</i> Vous avez été déconnecté avec succés.
+                                </span>
+                            </div>
+                        </c:when>
+                    </c:choose>
+                        
                 </div>
                 <div class="col-2"></div>
             </div>

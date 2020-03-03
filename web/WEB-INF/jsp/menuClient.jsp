@@ -1,5 +1,5 @@
 <nav class="col-3 menu">
-    <div class="text-center mb-5 mt-5">
+    <div class="text-center mb-5 mt-4">
         <img src="${pageContext.request.contextPath}/img/logo.png" class="w-50" alt="">
     </div>
     
@@ -38,10 +38,15 @@
             <li>
                 <a href="#">
                     <i class="material-icons mr-2 align-bottom">settings</i>
-                    Paramètres
+                    Paramtres
+                </a>
+            </li>
+            <li>
+                <a href="logout.htm" >
+                    <i class="material-icons mr-2 align-bottom">power_settings_new</i>
+                    Se déconnecter
                 </a>
             </li>
         </ul>
     </div>
 </nav>
-
