@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dao.repository;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -16,11 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  *
  * @author lucqu
+ * @param <T>
  */
 @Repository
-public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
+public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     
-    private Class<T> class_type;
+    private final Class<T> class_type;
+    
+    public GenericDAOImpl(Class<T> type) {
+        this.class_type = type;
+    }
     
     /*
     Get the entity manager
@@ -38,9 +42,9 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
     }
     
     /*
-    Implementation of the GenericDao methods
+    Implementation of the GenericDAO methods
     */
-
+    
     @Override
     public List findAll(){
         return new ArrayList<>();
