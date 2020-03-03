@@ -44,7 +44,7 @@ public class UserEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    public static String CIVILITY_MR = "Mr";
+    public static String CIVILITY_M = "M";
     public static String CIVILITY_MME = "Mme";
 
     @Id
@@ -132,7 +132,7 @@ public class UserEntity implements Serializable {
     public UserEntity(){
         this.address = "address";
         this.birthday = new Date();
-        this.civility = "Mr";
+        this.civility = "M";
         this.created_at = new Date();
         this.first_name = "first_name";
         this.last_name = "last_name";
@@ -155,7 +155,7 @@ public class UserEntity implements Serializable {
     ){
         this.address = address;
         this.birthday = birthday;
-        this.civility = (civility) ? UserEntity.CIVILITY_MR : UserEntity.CIVILITY_MME;
+        this.civility = (civility) ? UserEntity.CIVILITY_M : UserEntity.CIVILITY_MME;
         this.first_name = first_name;
         this.last_name = last_name;
         this.login = login;
