@@ -49,7 +49,7 @@ public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long num_client;
+    private Long id;
     
     @Column
     private String login;
@@ -92,18 +92,18 @@ public class UserEntity implements Serializable {
     // Generated methods   //
     ////////////////////////
     
-    public Long getNumClient() {
-        return num_client;
+    public Long getId() {
+        return id;
     }
 
-    public void setNumClient(Long id) {
-        this.num_client = num_client;
+    public void setId(Long id) {
+        this.id = this.id;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (num_client != null ? num_client.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -114,7 +114,7 @@ public class UserEntity implements Serializable {
             return false;
         }
         UserEntity other = (UserEntity) object;
-        if ((this.num_client == null && other.num_client != null) || (this.num_client != null && !this.num_client.equals(other.num_client))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -122,13 +122,14 @@ public class UserEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "dao.entities.UserEntity[ id=" + num_client + " ]";
+        return "dao.entities.UserEntity[ id=" + id + " ]";
     }
     
     //////////////////////////
     // Methods             //
     ////////////////////////
     
+    // Constructeur par défaut utilisé pour le debug à supprimer une fois les fixtures en places
     public UserEntity(){
         this.address = "address";
         this.birthday = new Date();
@@ -142,6 +143,7 @@ public class UserEntity implements Serializable {
         this.phone = "0011223344";
         this.updated_at = new Date();
     }
+    
     public UserEntity(
             String address,
             Date birthday,

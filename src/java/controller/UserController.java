@@ -8,6 +8,8 @@ package controller;
 import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.UserEntity;
+import fixtures.UserFixtures;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -58,7 +60,7 @@ public class UserController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response)
     {    
-        ModelAndView mv = new ModelAndView("currentAccount");
+        ModelAndView mv = new ModelAndView("index");
         return mv;
     }
     
@@ -84,6 +86,9 @@ public class UserController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response)
     {   
+        loadFixtures();
+        
+        
         // Récupération num_client et mdp
         String login = request.getParameter("login");
         String password = request.getParameter("password");
@@ -165,13 +170,21 @@ public class UserController extends AbstractController {
     private HttpSession createSession(HttpServletRequest request, UserEntity u){
         // Crée une nouvelle session si aucune n'existe
         HttpSession session = request.getSession(true);
-        session.setAttribute("user_num_client", u.getNumClient());
+        session.setAttribute("user_id", u.getId());
         session.setAttribute("user_type", u.getUserType());
         session.setAttribute("user_last_name", u.getLastName());
         session.setAttribute("user_first_name", u.getFirstName());
         session.setAttribute("user_civility", u.getCivility());
         
         return session;
+    }
+    
+    private void loadFixtures(){
+        ArrayList<UserEntity> users = new UserFixtures().getUsers();
+        
+        for(UserEntity user : users){
+            this.user_service.save(user);
+        }
     }
     
 }
