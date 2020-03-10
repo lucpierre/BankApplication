@@ -5,6 +5,7 @@
  */
 package fixtures;
 
+import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.ProfessionalEntity;
 import dao.entity.UserEntity;
@@ -51,7 +52,21 @@ public class UserFixtures {
                 "siren",
                 "head_office_address"
             )
-        );   
+        );
+        
+        users.add(
+            new AdvisorEntity(
+                "advisor_address",
+                new Date(),
+                true,
+                "advisor_first_name",
+                "advisor_last_name",
+                "advisor_login",
+                "advisor@mail.com",
+                "advisor_password",
+                "9988776655"
+            )
+        );
     }
     
     public ArrayList<UserEntity> getUsers(){
