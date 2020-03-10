@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao.repository;
 
 import java.util.ArrayList;
@@ -46,29 +41,35 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     */
     
     @Override
+    @Transactional
     public List findAll(){
         return new ArrayList<>();
     };
 
+    
     @Override
+    @Transactional
     public void save(T entity) {
-        entity = em.merge(entity);
+        em.merge(entity);
         em.persist(entity);
     }
 
     @Override
+    @Transactional
     public void update(T entity) {
         em.merge(entity);
     }
 
     @Override
+    @Transactional
     public void delete(T entity) {
         entity = em.merge(entity);
         em.remove(entity);
     }
     
-    @Transactional
+    
     @Override
+    @Transactional
     public T find(Object id) {
         return em.find(class_type, id);
     }

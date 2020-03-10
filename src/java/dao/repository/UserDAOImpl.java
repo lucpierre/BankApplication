@@ -22,8 +22,8 @@ public class UserDAOImpl extends GenericDAOImpl<UserEntity> implements UserDAO {
         super(UserEntity.class);
     }
     
-    @Transactional
     @Override
+    @Transactional
     public UserEntity findByLoginPassword(String login, String password) {
         Query query = this.getEm().createNamedQuery("find_by_login_password");
         
