@@ -15,6 +15,7 @@
             
             <!-- Contenu de la page -->
             <div class="col-9">
+                
                 <!-- Section pour les cartes -->
                 <section>
                     <div class="section-title">
