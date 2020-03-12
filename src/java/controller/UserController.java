@@ -8,6 +8,7 @@ package controller;
 import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.UserEntity;
+import exceptions.UserNotFoundException;
 import fixtures.UserFixtures;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -119,14 +120,20 @@ public class UserController extends AbstractController {
             return new ModelAndView("index");
         }
         
-        // Récupération de l'utilisateur correspondant
-        UserEntity u = user_service.findByLoginPassword(login, password);
-        if(null == u){
+        UserEntity user = null;
+        try{
+            // Récupération de l'utilisateur correspondant
+            user = user_service.findByLoginPassword(login, password);
+            if(null == user){
+                throw new UserNotFoundException();
+            }
+        }
+        catch(UserNotFoundException e){
             return new ModelAndView("index");
         }
         
         // Création de la session
-        HttpSession session = this.createSession(request, u);
+        HttpSession session = this.createSession(request, user);
         
         // Redirection vers le bon tableau de bord selon le type d'utilisateur
         return this.dashboard(request, response);
@@ -172,64 +179,38 @@ public class UserController extends AbstractController {
         }
     }
     
-    /*
+    //==========================================================================
+    // Méthodes internes
+    //==========================================================================
     
-    @RequestMapping(value="form_add_user", method = RequestMethod.GET)
-    protected ModelAndView formAddUser(
-            HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        
-        ModelAndView mv = new ModelAndView("index");
-        return mv;
-    }
-    
-    @RequestMapping(value="listusers", method = RequestMethod.GET)
-    protected ModelAndView list(
-            HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-            
-        ModelAndView mv = new ModelAndView("index");
-        return mv;
-    }
-    
-    @RequestMapping(value="adduser", method = RequestMethod.POST)
-    protected ModelAndView addUser(
-            HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ModelAndView mv = new ModelAndView("index");
-        return mv;
-    }
-    
-    @RequestMapping(value="getuser", method = RequestMethod.GET)
-    protected ModelAndView getUser(
-            HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ModelAndView mv = new ModelAndView("index");
-        return mv;
-    }
-    
-    @RequestMapping(value="removeuser", method = RequestMethod.GET)
-    protected ModelAndView removeUser(
-            HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ModelAndView mv = new ModelAndView("index");
-        return mv;
-    }
-    */
-    
-    
+    /**
+     * Crée une session pour l'utilisateur.
+     * 
+     * @param request
+     * @param u
+     * @return 
+     */
     private HttpSession createSession(HttpServletRequest request, UserEntity u){
         // Crée une nouvelle session si aucune n'existe
         HttpSession session = request.getSession(true);
+        
+        // Ajout des champs utilisateurs à la session
         session.setAttribute("user_id", Long.toString(u.getId()));
         session.setAttribute("user_type", u.getUserType());
         session.setAttribute("user_last_name", u.getLastName());
         session.setAttribute("user_first_name", u.getFirstName());
         session.setAttribute("user_civility", u.getCivility());
         
+        // Fixe le temps avant la destruction automatique de la session (en seconde)
+        // 300 secondes = 5 minutes
+        session.setMaxInactiveInterval(300);
+        
         return session;
     }
     
+    /**
+     * Peuple la base de donnée
+     */
     private void loadFixtures(){
         ArrayList<UserEntity> users = new UserFixtures().getUsers();
         
