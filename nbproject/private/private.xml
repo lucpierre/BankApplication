@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/M1/AAW/projectaaw/src/java/dao/entity/ClientEntity.java</file>
-            <file>file:/D:/M1/AAW/projectaaw/src/java/dao/entity/UserEntity.java</file>
-            <file>file:/D:/M1/AAW/projectaaw/src/java/controller/UserController.java</file>
-            <file>file:/D:/M1/AAW/projectaaw/src/java/dao/entity/ProfessionalEntity.java</file>
-            <file>file:/D:/M1/AAW/projectaaw/src/java/dao/repository/GenericDAOImpl.java</file>
-            <file>file:/D:/M1/AAW/projectaaw/src/java/fixtures/UserFixtures.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -6,7 +6,7 @@
     <div class="mt-5"> 
         <ul>
             <li>
-                <a href="#">
+                <a href="dashboard.htm">
                     <i class="material-icons mr-2 align-bottom">home</i>
                     Tableau de bord
                 </a>

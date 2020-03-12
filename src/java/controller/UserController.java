@@ -55,15 +55,31 @@ public class UserController extends AbstractController {
     }
     //==========================================================================
     
+    /**
+     * Path : /index
+     * 
+     * @param request
+     * @param response
+     * @return 
+     */
     @RequestMapping(value="/index", method = RequestMethod.GET)
     public ModelAndView index(
             HttpServletRequest request,
             HttpServletResponse response)
-    {    
+    {
+        // Charge des profils d'utilisateurs
+        loadFixtures();
         ModelAndView mv = new ModelAndView("index");
         return mv;
     }
     
+    /**
+     * Path /logout
+     * 
+     * @param request
+     * @param response
+     * @return 
+     */
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public ModelAndView logout(
             HttpServletRequest request,
@@ -81,14 +97,18 @@ public class UserController extends AbstractController {
         return mv;
     }
     
+    /**
+     * Path : /login
+     * 
+     * @param request
+     * @param response
+     * @return 
+     */
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public ModelAndView login(
             HttpServletRequest request,
             HttpServletResponse response)
-    {   
-        loadFixtures();
-        
-        
+    {
         // Récupération num_client et mdp
         String login = request.getParameter("login");
         String password = request.getParameter("password");
@@ -105,7 +125,36 @@ public class UserController extends AbstractController {
             return new ModelAndView("index");
         }
         
+        // Création de la session
         HttpSession session = this.createSession(request, u);
+        
+        // Redirection vers le bon tableau de bord selon le type d'utilisateur
+        return this.dashboard(request, response);
+    }
+    
+    /**
+     * Path : /dashboard
+     * 
+     * @param request
+     * @param response
+     * @return 
+     */
+    @RequestMapping(value="/dashboard", method = RequestMethod.GET)
+    public ModelAndView dashboard(
+            HttpServletRequest request,
+            HttpServletResponse response)
+    {
+        // Récupération de la session existante
+        HttpSession session = request.getSession();
+
+        if(null == session){
+            // Jeter une exception
+        }
+        
+        UserEntity u = user_service.find((String)session.getAttribute("user_id"));
+        if(null == u){
+            return new ModelAndView("index");
+        }
         
         if(u instanceof ClientEntity){
             ModelAndView mv = new ModelAndView("dashboardClient");
@@ -118,6 +167,7 @@ public class UserController extends AbstractController {
             return mv;
         } 
         else {
+            // Jeter une exception
             return new ModelAndView("index");
         }
     }
@@ -167,10 +217,11 @@ public class UserController extends AbstractController {
     }
     */
     
+    
     private HttpSession createSession(HttpServletRequest request, UserEntity u){
         // Crée une nouvelle session si aucune n'existe
         HttpSession session = request.getSession(true);
-        session.setAttribute("user_id", u.getId());
+        session.setAttribute("user_id", Long.toString(u.getId()));
         session.setAttribute("user_type", u.getUserType());
         session.setAttribute("user_last_name", u.getLastName());
         session.setAttribute("user_first_name", u.getFirstName());
