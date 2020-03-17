@@ -91,4 +91,22 @@ public class AccountEntity implements Serializable {
         return updated_at;
     }
     
+    public void setCreatedAt(Date new_date) {
+        this.created_at = new_date;
+    }
+
+    
+    public void setUpdatedAt(Date new_date) {
+        this.updated_at = new_date;
+    }
+
+    
+    public String getAccountType(){
+        if(this instanceof SavingAccountsEntity){
+            return "SavingAccountsEntity";
+        }
+        else{
+            return "CurrentAccountEntity";
+        }
+    }
 }
