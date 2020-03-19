@@ -38,12 +38,11 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     
     /*
     Implementation of the GenericDAO methods
-    */
-    
+    */ 
     @Override
     @Transactional
-    public List findAll(){
-        return new ArrayList<>();
+    public List<T> findAll(){
+        return this.em.createQuery("Select t from " + this.class_type.getSimpleName() + " t").getResultList();
     };
 
     

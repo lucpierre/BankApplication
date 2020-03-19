@@ -25,28 +25,28 @@ public class UserFixtures {
         
         users.add(
             new ClientEntity(
-                "client_address",
+                "c_address",
                 new Date(),
                 true,
-                "client_first_name",
-                "client_last_name",
-                "client_login",
-                "client@mail.com",
-                "client_password",
+                "c_first_name",
+                "c_last_name",
+                "c_login",
+                "c@mail.com",
+                "c_password",
                 "0011223344"
             )
         );
         
         users.add(
             new ProfessionalEntity(
-                "professional_address",
+                "p_address",
                 new Date(),
                 true,
-                "professional_first_name",
-                "professional_last_name",
-                "professional_login",
-                "professional@mail.com",
-                "professional_password",
+                "p_first_name",
+                "p_last_name",
+                "p_login",
+                "p@mail.com",
+                "p_password",
                 "5566778899",
                 "siret",
                 "siren",
@@ -56,14 +56,14 @@ public class UserFixtures {
         
         users.add(
             new AdvisorEntity(
-                "advisor_address",
+                "a_address",
                 new Date(),
                 true,
-                "advisor_first_name",
-                "advisor_last_name",
-                "advisor_login",
-                "advisor@mail.com",
-                "advisor_password",
+                "a_first_name",
+                "a_last_name",
+                "a_login",
+                "a@mail.com",
+                "a_password",
                 "9988776655"
             )
         );

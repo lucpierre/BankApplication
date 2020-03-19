@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import dao.entity.AdvisorEntity;
@@ -11,6 +6,7 @@ import dao.entity.UserEntity;
 import exceptions.UserNotFoundException;
 import fixtures.UserFixtures;
 import java.util.ArrayList;
+import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -34,12 +30,14 @@ public class UserController extends AbstractController {
     private final UserService user_service;
     
     public UserController() {
-        user_service = new UserServiceImpl();
+        this.user_service = new UserServiceImpl();
     }
     
     //==========================================================================
     // handleRequestInternal
     /**
+     * Path : /index
+     * method POST
      * 
      * @param request
      * @param response
@@ -58,6 +56,7 @@ public class UserController extends AbstractController {
     
     /**
      * Path : /index
+     * method GET
      * 
      * @param request
      * @param response
@@ -76,6 +75,7 @@ public class UserController extends AbstractController {
     
     /**
      * Path /logout
+     * method GET
      * 
      * @param request
      * @param response
@@ -100,6 +100,7 @@ public class UserController extends AbstractController {
     
     /**
      * Path : /login
+     * method POST
      * 
      * @param request
      * @param response
@@ -141,6 +142,7 @@ public class UserController extends AbstractController {
     
     /**
      * Path : /dashboard
+     * method GET
      * 
      * @param request
      * @param response
@@ -209,7 +211,7 @@ public class UserController extends AbstractController {
     }
     
     /**
-     * Peuple la base de donnée
+     * Peuple la base de données
      */
     private void loadFixtures(){
         ArrayList<UserEntity> users = new UserFixtures().getUsers();

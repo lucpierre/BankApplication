@@ -12,7 +12,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="list_clients.htm">
                     <i class="material-icons mr-2 align-bottom">group</i>
                     Clients
                 </a>
