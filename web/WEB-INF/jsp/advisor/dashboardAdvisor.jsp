@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <%@include file="dependencies_css.jsp"%>
+        <%@include file="../dependencies_css.jsp"%>
         <title>Espace conseiller</title>
     </head>
     
@@ -54,7 +54,7 @@
   
         </div>
                                 
-        <%@include file="dependencies_js.jsp"%>
+        <%@include file="../dependencies_js.jsp"%>
     
     </body>
 </html>

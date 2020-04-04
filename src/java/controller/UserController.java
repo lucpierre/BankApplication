@@ -166,12 +166,12 @@ public class UserController extends AbstractController {
         }
         
         if(u instanceof ClientEntity){
-            ModelAndView mv = new ModelAndView("dashboardClient");
+            ModelAndView mv = new ModelAndView("client/dashboardClient");
             mv.addObject("user", u);
             return mv;
         }
         else if (u instanceof AdvisorEntity){
-            ModelAndView mv = new ModelAndView("dashboardAdvisor");
+            ModelAndView mv = new ModelAndView("advisor/dashboardAdvisor");
             mv.addObject("user", u);
             return mv;
         } 

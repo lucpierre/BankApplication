@@ -45,37 +45,38 @@
                             </div>
                         </div>
                             
-                        
-                        <div class="form-group">
-                            <label for="email_input">Adresse mail</label>
-                            <input type="email" class="form-control" id="email_input">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone_input">Téléphone</label>
-                            <input type="tel" class="form-control" id="phone_input"  pattern="([0-9]{2}-){4}[0-9]{2}">
-                            <small>Format attendu : XX-XX-XX-XX-XX</small>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="address_input">Adresse</label>
-                            
-                            <textarea class="form-control" id="address_input" rows="6" cols="50"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="birthday_input">Jour de naissance</label>
-                            <input type="date" class="form-control" id="birthday_input">
-                        </div>
-                        
-                        <div class="form-group text-right mt-5 mb-5">
-                            <c:if test = "${null == client}">
-                                <button type="submit" class="btn btn-secondary">Ajouter</button>
-                            </c:if>
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label for="email_input">Adresse mail</label>
+                                <input type="email" class="form-control" id="email_input">
+                            </div>
 
-                            <c:if test = "${null != client}">
-                                <button type="submit" class="btn btn-secondary">Modifier</button>
-                            </c:if>
+                            <div class="form-group">
+                                <label for="phone_input">Téléphone</label>
+                                <input type="tel" class="form-control" id="phone_input"  pattern="([0-9]{2}-){4}[0-9]{2}">
+                                <small>Format attendu : XX-XX-XX-XX-XX</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address_input">Adresse</label>
+
+                                <textarea class="form-control" id="address_input" rows="6" cols="50"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="birthday_input">Jour de naissance</label>
+                                <input type="date" class="form-control" id="birthday_input">
+                            </div>
+
+                            <div class="form-group text-right mt-5 mb-5">
+                                <c:if test = "${null == client}">
+                                    <button type="submit" class="btn btn-secondary">Ajouter</button>
+                                </c:if>
+
+                                <c:if test = "${null != client}">
+                                    <button type="submit" class="btn btn-secondary">Modifier</button>
+                                </c:if>
+                            </div>
                         </div>
                             
                     </form>

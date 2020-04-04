@@ -2,11 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/M1/AAW/projectaaw/web/WEB-INF/jsp/client/form_edit_client.jsp</file>
-            <file>file:/D:/M1/AAW/projectaaw/web/WEB-INF/jsp/dashboardAdvisor.jsp</file>
-            <file>file:/D:/M1/AAW/projectaaw/src/java/controller/AdvisorController.java</file>
-            <file>file:/D:/M1/AAW/projectaaw/web/WEB-INF/jsp/managementClients.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

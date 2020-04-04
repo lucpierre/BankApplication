@@ -56,7 +56,7 @@ public class AdvisorController extends AbstractController {
         
         clients_vector = (Vector)this.client_service.findAll();
         
-        ModelAndView mv = new ModelAndView("managementClients");
+        ModelAndView mv = new ModelAndView("advisor/managementClients");
         mv.addObject("clients", clients_vector.toArray());
         mv.addObject("nb_clients", clients_vector.size());
         return mv;
@@ -117,7 +117,7 @@ public class AdvisorController extends AbstractController {
             return this.handleRequestInternal(request, response);
         }
         
-        ModelAndView mv = new ModelAndView("client/form_edit_client");
+        ModelAndView mv = new ModelAndView("advisor/form_edit_client");
         mv.addObject("client", client);
         return mv;
     }
@@ -149,7 +149,7 @@ public class AdvisorController extends AbstractController {
         
         
         
-        ModelAndView mv = new ModelAndView("client/form_edit_client");
+        ModelAndView mv = new ModelAndView("advisor/form_edit_client");
         mv.addObject("client", client);
         return mv;
     }
