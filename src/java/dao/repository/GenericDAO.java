@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dao.repository;
 
 import java.util.List;
-import java.io.Serializable;
 
 /**
  *
  * @author lucqu
  * @param <T>
  */
-public interface GenericDao <T extends Serializable>{
+public interface GenericDAO <T>{
     
     /**
      * Save an object in database
