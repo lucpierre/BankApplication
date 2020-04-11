@@ -30,6 +30,12 @@ section {
     padding : 24px;
 }
 
+.alert-info {
+    background-color: #202340;
+    color : #eeb14f;
+    border-radius: 10px 10px 10px 10px;
+}
+
 /*
 ================================================================================
 */

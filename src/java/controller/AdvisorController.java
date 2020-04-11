@@ -2,6 +2,7 @@ package controller;
 
 import dao.entity.ClientEntity;
 import dao.entity.UserEntity;
+import java.text.ParseException;
 import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,6 +70,7 @@ public class AdvisorController extends AbstractController {
      * @param request
      * @param response
      * @return 
+     * @throws java.lang.Exception 
      */
     @RequestMapping(value="/delete_client", method = RequestMethod.GET)
     public ModelAndView delete_client(
@@ -77,13 +79,13 @@ public class AdvisorController extends AbstractController {
     {
         String user_id = request.getParameter("id");
         if(null == user_id || user_id.equals("")){
-            // TODO Ajout d'un message info
+            // TODO Trouver comment ajouter un msg d'alert
             return this.handleRequestInternal(request, response);
         }
         
         UserEntity user = this.user_service.find(user_id);
         if(null == user){
-            // TODO Ajout d'un message info
+            // TODO Trouver comment ajouter un msg d'alert
             return this.handleRequestInternal(request, response);
         }
         
@@ -99,25 +101,27 @@ public class AdvisorController extends AbstractController {
      * @param request
      * @param response
      * @return 
+     * @throws java.lang.Exception 
      */
     @RequestMapping(value="/edit_client", method = RequestMethod.GET)
     public ModelAndView edit_client_get(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        ModelAndView mv = new ModelAndView("advisor/form_edit_client");
+        
         String client_id = request.getParameter("id");
         if(null == client_id || client_id.equals("")){
-            // TODO Ajout d'un message info
+            mv.addObject("alert_msg", "Impossible de récupérer le client demandé.");
             return this.handleRequestInternal(request, response);
         }
         
         UserEntity client = this.user_service.find(client_id);
         if(null == client){
-            // TODO Ajout d'un message info
+            mv.addObject("alert_msg", "Impossible de récupérer le client demandé.");
             return this.handleRequestInternal(request, response);
         }
         
-        ModelAndView mv = new ModelAndView("advisor/form_edit_client");
         mv.addObject("client", client);
         return mv;
     }
@@ -129,27 +133,55 @@ public class AdvisorController extends AbstractController {
      * @param request
      * @param response
      * @return 
+     * @throws java.lang.Exception 
      */
     @RequestMapping(value="/edit_client", method = RequestMethod.POST)
     public ModelAndView edit_client_post(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        ModelAndView mv = new ModelAndView("advisor/form_edit_client");
+        
         String client_id = request.getParameter("id");
         if(null == client_id || client_id.equals("")){
-            // TODO Ajout d'un message info
+            mv.addObject("alert_msg", "Aucun client correspondant.");
             return this.edit_client_get(request, response);
         }
         
         UserEntity client = this.user_service.find(client_id);
         if(null == client){
-            // TODO Ajout d'un message info
+            mv.addObject("alert_msg", "Impossible de récupérer le client demandé.");
+            System.err.println("Impossible to find the client");
             return this.edit_client_get(request, response);
         }
         
+        String first_name = request.getParameter("first_name_input");
+        String last_name = request.getParameter("last_name_input");
+        String login = request.getParameter("login_input");
+        String password = request.getParameter("password_input");
+        String mail = request.getParameter("mail_input");
+        String phone = request.getParameter("phone_input");
+        String address = request.getParameter("address_input");
+        String birthday = request.getParameter("birthday_input");
         
         
-        ModelAndView mv = new ModelAndView("advisor/form_edit_client");
+        try{
+            client.setFirstName(first_name);
+            client.setLastName(last_name);
+            client.setLogin(login);
+            client.setPassword(password);
+            client.setMail(mail);
+            client.setPhone(phone);
+            client.setAddress(address);
+            client.setBirthday(birthday);
+        }
+        catch(ParseException e){
+            System.err.println(e.getMessage());
+            mv.addObject("alert_msg", "Une erreur s'est produite durant la soumission du formulaire.");
+        }
+        
+        this.client_service.update((ClientEntity)client);
+        mv.addObject("info_msg", "Les informations ont été mises à jour.");
         mv.addObject("client", client);
         return mv;
     }

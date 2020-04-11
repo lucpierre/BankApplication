@@ -20,6 +20,12 @@
                         <h2>Clients</h2>
                     </div>
                     
+                    <c:if test="${null != alert_msg}">
+                        <div class="alert alert-danger" role="alert">
+                            <i class="material-icons mr-2 align-bottom">info</i> ${alert_msg}
+                        </div>
+                    </c:if>
+                    
                     <table class="table">
                         <thead class="header">
                             <tr class="contents">    
