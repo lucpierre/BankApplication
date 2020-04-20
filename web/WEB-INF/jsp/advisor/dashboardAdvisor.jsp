@@ -26,7 +26,7 @@
                             <div class="card-body">
                               <h5 class="card-title">Clients</h5>
                               <p class="card-text">Gérer la liste des clients.</p>
-                              <a href="#" class="btn btn-primary">Accéder aux clients</a>
+                              <a href="list_clients.htm" class="btn btn-primary">Accéder aux clients</a>
                             </div>
                         </div>
 
