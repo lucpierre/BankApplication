@@ -204,8 +204,8 @@ public class UserController extends AbstractController {
         session.setAttribute("user_civility", u.getCivility());
         
         // Fixe le temps avant la destruction automatique de la session (en seconde)
-        // 300 secondes = 5 minutes
-        session.setMaxInactiveInterval(300);
+        // 600 secondes = 10 minutes
+        session.setMaxInactiveInterval(600);
         
         return session;
     }

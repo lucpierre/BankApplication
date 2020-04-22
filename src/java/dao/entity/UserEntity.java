@@ -5,6 +5,7 @@
  */
 package dao.entity;
 
+import exceptions.UnknowCivilityException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -290,6 +291,19 @@ public class UserEntity implements Serializable {
     public String getCivility() {
         return this.civility;
     }
+    
+    /**
+     * Setter on the civility
+     * @param new_civility
+     */
+    public void setCivility(String new_civility) throws UnknowCivilityException {
+        if(new_civility.equals(UserEntity.CIVILITY_MR) || new_civility.equals(UserEntity.CIVILITY_MME)){
+            this.civility = new_civility;
+        }
+        else{
+            throw new UnknowCivilityException();
+        }
+    }
 
     /**
      * Get on the birthday
@@ -365,7 +379,10 @@ public class UserEntity implements Serializable {
      * @return 
      */
     public String getUserType(){
-        if(this instanceof ClientEntity){
+        if (this instanceof ProfessionalEntity){
+            return "ProfessionalEntity";
+        }
+        else if(this instanceof ClientEntity){
             return "ClientEntity";
         }
         else{

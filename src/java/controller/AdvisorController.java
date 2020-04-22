@@ -1,6 +1,7 @@
 package controller;
 
 import dao.entity.ClientEntity;
+import dao.entity.ProfessionalEntity;
 import dao.entity.UserEntity;
 import java.text.ParseException;
 import java.util.Vector;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import service.ClientService;
 import service.ClientServiceImpl;
+import service.ProfessionalService;
+import service.ProfessionalServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
@@ -30,12 +33,16 @@ public class AdvisorController extends AbstractController {
     @Autowired
     private final ClientService client_service;
     
+    @Autowired
+    private final ProfessionalService professional_service;
+    
     /**
      * Constructor
      */
     public AdvisorController() {
         this.user_service = new UserServiceImpl();
         this.client_service = new ClientServiceImpl();
+        this.professional_service = new ProfessionalServiceImpl();
     }
     
     /**
@@ -108,7 +115,7 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        ModelAndView mv = new ModelAndView("advisor/form_edit_client");
+        ModelAndView mv = new ModelAndView("advisor/form_client");
         
         String client_id = request.getParameter("id");
         if(null == client_id || client_id.equals("")){
@@ -140,7 +147,7 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        ModelAndView mv = new ModelAndView("advisor/form_edit_client");
+        ModelAndView mv = new ModelAndView("advisor/form_client");
         
         String client_id = request.getParameter("id");
         if(null == client_id || client_id.equals("")){
@@ -155,6 +162,7 @@ public class AdvisorController extends AbstractController {
             return this.edit_client_get(request, response);
         }
         
+        String civility = request.getParameter("civility_input");
         String first_name = request.getParameter("first_name_input");
         String last_name = request.getParameter("last_name_input");
         String login = request.getParameter("login_input");
@@ -166,6 +174,7 @@ public class AdvisorController extends AbstractController {
         
         
         try{
+            client.setCivility(civility);
             client.setFirstName(first_name);
             client.setLastName(last_name);
             client.setLogin(login);
@@ -175,13 +184,105 @@ public class AdvisorController extends AbstractController {
             client.setAddress(address);
             client.setBirthday(birthday);
         }
-        catch(ParseException e){
+        catch(Exception e){
             System.err.println(e.getMessage());
             mv.addObject("alert_msg", "Une erreur s'est produite durant la soumission du formulaire.");
+            mv.addObject("client", client);
+            return mv;
         }
         
         this.client_service.update((ClientEntity)client);
         mv.addObject("info_msg", "Les informations ont été mises à jour.");
+        mv.addObject("client", client);
+        return mv;
+    }
+    
+    /**
+     * Path : /add_client
+     * Method : GET
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/add_client", method = RequestMethod.GET)
+    public ModelAndView add_client_get(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        ModelAndView mv = new ModelAndView("advisor/form_client");
+        return mv;
+    }
+    
+    /**
+     * Path : /add_client
+     * Method : POST
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/add_client", method = RequestMethod.POST)
+    public ModelAndView add_client_post(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        ModelAndView mv = new ModelAndView("advisor/form_client");
+        
+        String user_type = request.getParameter("user_type_input");
+        String siret = request.getParameter("siret_input");
+        String siren = request.getParameter("siren_input");
+        String head_office_address = request.getParameter("head_office_address_input");
+        String civility = request.getParameter("civility_input");
+        String first_name = request.getParameter("first_name_input");
+        String last_name = request.getParameter("last_name_input");
+        String login = request.getParameter("login_input");
+        String password = request.getParameter("password_input");
+        String mail = request.getParameter("mail_input");
+        String phone = request.getParameter("phone_input");
+        String address = request.getParameter("address_input");
+        String birthday = request.getParameter("birthday_input");
+        
+        ClientEntity client = null;
+        
+        try{
+            if(user_type.equals("Professionnel")){
+                client = new ProfessionalEntity();
+                ((ProfessionalEntity)client).setSiren(siren);
+                ((ProfessionalEntity)client).setSiret(siret);
+                ((ProfessionalEntity)client).setHeadOfficeAddress(head_office_address);
+            }
+            else{
+                client = new ClientEntity();
+            }
+            
+            client.setCivility(civility);
+            client.setFirstName(first_name);
+            client.setLastName(last_name);
+            client.setLogin(login);
+            client.setPassword(password);
+            client.setMail(mail);
+            client.setPhone(phone);
+            client.setAddress(address);
+            client.setBirthday(birthday);
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+            mv.addObject("alert_msg", "Une erreur s'est produite durant la soumission du formulaire.");
+            mv.addObject("client", client);
+            return mv;
+        }
+        
+        if(user_type.equals("Professionnel")){
+            this.professional_service.save((ProfessionalEntity)client);
+        }
+        else{
+            this.client_service.save(client);
+        }
+        
+        mv.addObject("info_msg", "Le client est bien enregistré.");
         mv.addObject("client", client);
         return mv;
     }

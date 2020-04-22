@@ -77,11 +77,11 @@ public class ProfessionalEntity extends ClientEntity implements Serializable {
         this.siren = siren;
     }
 
-    public String getHead_office_address() {
+    public String getHeadOfficeAddress() {
         return head_office_address;
     }
 
-    public void setHead_office_address(String head_office_address) {
+    public void setHeadOfficeAddress(String head_office_address) {
         this.head_office_address = head_office_address;
     }
 }

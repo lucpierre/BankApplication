@@ -17,7 +17,18 @@
                 <!-- Section pour la liste des utilisateurs -->
                 <section>
                     <div class="section-title">
-                        <h2>Clients</h2>
+                        <div class=" row container-fluid pr-0 mr-5">
+                            <div class="col p-0">
+                                <h2>Clients</h2>
+                            </div>
+                            <div class="col text-right p-0">
+                                <p>
+                                    <a class="btn btn-primary btn-sm" href="add_client.htm" role="button">
+                                        <i class="material-icons mr-2 align-bottom">person_add</i> Nouveau client
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     
                     <c:if test="${null != alert_msg}">
@@ -29,11 +40,11 @@
                     <table class="table">
                         <thead class="header">
                             <tr class="contents">    
-                                <th scope="col">N° Client</th>
+                                <th scope="col" style="width: 10em;">N° Client</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col">Prénom</th>
                                 <th scope="col">Téléphone</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col" style="width: 10em;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,12 +54,15 @@
                                     <td><c:out value="${ client.lastName }" /></td>
                                     <td><c:out value="${ client.firstName }" /></td>
                                     <td><c:out value="${ client.phone }" /></td>
-                                    <td>
+                                    <td class="text-right">
                                         <a class="btn btn-secondary btn-sm" href="edit_client.htm?id=${client.id}" role="button">
-                                            <i class="material-icons mr-2 align-bottom">edit</i>
+                                            <i class="material-icons align-bottom">edit</i>
                                         </a>
-                                        <a class="btn btn-danger btn-sm" href="delete_client.htm?id=${client.id}" role="button">
-                                            <i class="material-icons mr-2 align-bottom">delete</i>
+                                        <a class="btn btn-danger btn-sm" href="delete_client.htm?id=${client.id}" role="button" onclick="return confirm('Êtes vous sûr de vouloir supprimer ce client ?')">
+                                            <i class="material-icons align-bottom">delete</i>
+                                        </a>
+                                        <a class="btn btn-primary btn-sm" href="#" role="button">
+                                            <i class="material-icons align-bottom">mail_outline</i>
                                         </a>
                                     </td>
                                 </tr>
