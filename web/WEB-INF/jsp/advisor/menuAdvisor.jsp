@@ -1,20 +1,20 @@
 <nav class="col-3 menu">
-    <div class="text-center mb-5 mt-4">
+    <div class="text-center mb-5 mt-5">
         <img src="${pageContext.request.contextPath}/img/logo.png" class="w-50" alt="">
     </div>
     
     <div class="mt-5"> 
         <ul>
             <li>
-                <a href="#">
+                <a href="dashboard.htm">
                     <i class="material-icons mr-2 align-bottom">home</i>
                     Tableau de bord
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="material-icons mr-2 align-bottom">euro</i>
-                    Comptes
+                <a href="list_clients.htm">
+                    <i class="material-icons mr-2 align-bottom">group</i>
+                    Clients
                 </a>
             </li>
             <li>
@@ -25,20 +25,14 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="material-icons mr-2 align-bottom">sync_alt</i>
-                    Transactions
-                </a>
-            </li>
-            <li>
-                <a href="#">
                     <i class="material-icons mr-2 align-bottom">message</i>
-                    Contact
+                    Messages
                 </a>
             </li>
             <li>
                 <a href="#">
                     <i class="material-icons mr-2 align-bottom">settings</i>
-                    Paramtres
+                    Paramètres
                 </a>
             </li>
             <li>
@@ -50,3 +44,4 @@
         </ul>
     </div>
 </nav>
+

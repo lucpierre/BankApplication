@@ -5,8 +5,14 @@
  */
 package dao.entity;
 
+import exceptions.UnknowCivilityException;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -51,7 +57,7 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column
+    @Column(unique = true)
     private String login;
     
     @Column
@@ -239,11 +245,27 @@ public class UserEntity implements Serializable {
     }
 
     /**
+     * Setter on the first name
+     * @param new_name String
+     */
+    public void setFirstName(String new_name) {
+        this.first_name = new_name;
+    }
+
+    /**
      * Getter on the last name
      * @return String
      */
     public String getLastName() {
         return this.last_name;
+    }
+
+    /**
+     * Setter on the last name
+     * @param new_name String
+     */
+    public void setLastName(String new_name) {
+        this.last_name = new_name;
     }
 
     /**
@@ -269,6 +291,19 @@ public class UserEntity implements Serializable {
     public String getCivility() {
         return this.civility;
     }
+    
+    /**
+     * Setter on the civility
+     * @param new_civility
+     */
+    public void setCivility(String new_civility) throws UnknowCivilityException {
+        if(new_civility.equals(UserEntity.CIVILITY_MR) || new_civility.equals(UserEntity.CIVILITY_MME)){
+            this.civility = new_civility;
+        }
+        else{
+            throw new UnknowCivilityException();
+        }
+    }
 
     /**
      * Get on the birthday
@@ -276,6 +311,33 @@ public class UserEntity implements Serializable {
      */
     public Date getBirthday() {
         return this.birthday;
+    }
+    
+    /**
+     * Setter on the birthday
+     * @param new_date Date
+     */
+    public void setBirthday(Date new_date) {
+        this.birthday = new_date;
+    }
+    
+    /**
+     * Setter on the birthday with a String
+     * @param new_date String
+     */
+    public void setBirthday(String new_date) throws ParseException {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        
+        this.birthday = formatter.parse(new_date);
+    }
+    
+    /**
+     * Get on the birthday
+     * @return String
+     */
+    public String getFormattedBirthday() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(this.birthday);
     }
 
     /**
@@ -310,12 +372,17 @@ public class UserEntity implements Serializable {
         this.updated_at = new_date;
     }
     
+    
+    
     /**
      * Return the type of the user
      * @return 
      */
     public String getUserType(){
-        if(this instanceof ClientEntity){
+        if (this instanceof ProfessionalEntity){
+            return "ProfessionalEntity";
+        }
+        else if(this instanceof ClientEntity){
             return "ClientEntity";
         }
         else{

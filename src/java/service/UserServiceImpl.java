@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import dao.entity.UserEntity;
 import dao.repository.UserDAO;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +29,7 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public List<UserEntity> findAll(){
-        return new ArrayList<>();
+        return this.findAll();
     }
     
     @Override
