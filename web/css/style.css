@@ -86,16 +86,24 @@ section {
 /*
     CSS pour les cards
 */
-.card-img-top {
-    max-height: 200px;
-    max-width: 200px;
-    
+.card-img {
     /* Permet de centrer les images */
     display: block;
     margin-right: auto;
     margin-left: auto;
 }
 
+.card-img-top {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.card-img-bottom {
+    max-height: 200px;
+    max-width: 600px;
+}
+
 .card-body {
     max-height: 200px;
+    border-top: solid 1px lightgray;
 }
