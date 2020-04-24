@@ -23,7 +23,7 @@
                             </div>
                             <div class="col text-right p-0">
                                 <p>
-                                    <a class="btn btn-primary btn-sm" href="#" role="button">
+                                    <a class="btn btn-primary btn-sm" href="add_advisor.htm" role="button">
                                         <i class="material-icons mr-2 align-bottom">person_add</i> Nouveau conseiller
                                     </a>
                                 </p>
@@ -34,6 +34,11 @@
                     <c:if test="${null != alert_msg}">
                         <div class="alert alert-danger" role="alert">
                             <i class="material-icons mr-2 align-bottom">info</i> ${alert_msg}
+                        </div>
+                    </c:if>
+                    <c:if test="${null != info_msg}">
+                        <div class="alert alert-info" role="alert">
+                            <i class="material-icons mr-2 align-bottom">info</i> ${info_msg}
                         </div>
                     </c:if>
                     
@@ -53,10 +58,10 @@
                                     <td><c:out value="${ advisor.firstName }" /></td>
                                     <td><c:out value="${ advisor.phone }" /></td>
                                     <td class="text-right">
-                                        <a class="btn btn-secondary btn-sm" href="#" role="button">
+                                        <a class="btn btn-secondary btn-sm" href="edit_advisor.htm?id=${advisor.id}" role="button">
                                             <i class="material-icons align-bottom">edit</i>
                                         </a>
-                                        <a class="btn btn-danger btn-sm" href="#" role="button" onclick="return confirm('Êtes vous sûr de vouloir supprimer ce conseiller ?')">
+                                        <a class="btn btn-danger btn-sm" href="delete_advisor.htm?id=${advisor.id}" role="button" onclick="return confirm('Êtes vous sûr de vouloir supprimer ce conseiller ?')">
                                             <i class="material-icons align-bottom">delete</i>
                                         </a>
                                     </td>
