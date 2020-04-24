@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
-import service.ClientService;
-import service.ClientServiceImpl;
-import service.ProfessionalService;
-import service.ProfessionalServiceImpl;
-import service.UserService;
-import service.UserServiceImpl;
+import service.PasswordService;
+import service.entities.ClientService;
+import service.entities.ClientServiceImpl;
+import service.entities.ProfessionalService;
+import service.entities.ProfessionalServiceImpl;
+import service.entities.UserService;
+import service.entities.UserServiceImpl;
 
 /**
  *
@@ -173,11 +174,14 @@ public class AdvisorController extends AbstractController {
             client.setFirstName(first_name);
             client.setLastName(last_name);
             client.setLogin(login);
-            client.setPassword(password);
             client.setMail(mail);
             client.setPhone(phone);
             client.setAddress(address);
             client.setBirthday(birthday);
+            
+            if(!PasswordService.compareString(password, client.getPassword())){
+                client.setPassword(password);
+            }
         }
         catch(Exception e){
             System.err.println(e.getMessage());
