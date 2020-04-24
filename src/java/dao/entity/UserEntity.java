@@ -385,6 +385,9 @@ public class UserEntity implements Serializable {
         else if(this instanceof ClientEntity){
             return "ClientEntity";
         }
+        else if(this instanceof AdministratorEntity){
+            return "AdministratorEntity";
+        }
         else{
             return "AdvisorEntity";
         }

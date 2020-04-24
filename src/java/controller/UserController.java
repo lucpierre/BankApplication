@@ -155,12 +155,13 @@ public class UserController extends AbstractController {
     {
         // Récupération de la session existante
         HttpSession session = request.getSession();
-
-        if(null == session){
-            // Jeter une exception
+        
+        String user_id = (String)session.getAttribute("user_id");
+        if(user_id == null || user_id.equals("")){
+            return this.logout(request, response);
         }
         
-        UserEntity u = user_service.find((String)session.getAttribute("user_id"));
+        UserEntity u = user_service.find(user_id);
         if(null == u){
             return new ModelAndView("index");
         }

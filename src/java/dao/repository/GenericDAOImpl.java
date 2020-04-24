@@ -1,5 +1,6 @@
 package dao.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,7 +42,7 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     @Override
     @Transactional
     public List<T> findAll(){
-        return this.em.createQuery("Select t from " + this.class_type.getSimpleName() + " t").getResultList();
+        return new ArrayList<>(this.em.createQuery("Select t from " + this.class_type.getSimpleName() + " t").getResultList());
     };
 
     

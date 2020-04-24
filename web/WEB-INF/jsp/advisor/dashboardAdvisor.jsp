@@ -20,9 +20,9 @@
                         <h2>Tableau de bord</h2>
                     </div>
 
-                    <div class="card-deck">
+                    <div class="card-deck mb-2">
                         <div class="card">
-                            <img src="${pageContext.request.contextPath}/img/man.png" class="card-img-top"  alt="">
+                            <img src="${pageContext.request.contextPath}/img/man.png" class="card-img card-img-top"  alt="">
                             <div class="card-body">
                               <h5 class="card-title">Clients</h5>
                               <p class="card-text">Gérer la liste des clients.</p>
@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="card">
-                            <img src="${pageContext.request.contextPath}/img/hand_coin.png" class="card-img-top" alt="">
+                            <img src="${pageContext.request.contextPath}/img/hand_coin.png" class="card-img card-img-top" alt="">
                             <div class="card-body">
                               <h5 class="card-title">Comptes</h5>
                               <p class="card-text">Gérer votre compte courant.</p>
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="card">
-                            <img src="${pageContext.request.contextPath}/img/phone.png" class="card-img-top" alt="">
+                            <img src="${pageContext.request.contextPath}/img/phone.png" class="card-img card-img-top" alt="">
                             <div class="card-body">
                               <h5 class="card-title">Messages</h5>
                               <p class="card-text">Gérer vos conversations.</p>
@@ -48,6 +48,19 @@
                             </div>
                         </div>
                     </div>
+                            
+                    <c:if test="${user_type == 'AdministratorEntity'}">
+                    <div class="card-deck">
+                        <div class="card">
+                            <img src="${pageContext.request.contextPath}/img/team.jpg" class="card-img card-img-bottom"  alt="">
+                            <div class="card-body">
+                              <h5 class="card-title">Conseillers</h5>
+                              <p class="card-text">Gérer la liste des conseillers.</p>
+                              <a href="list_advisors.htm" class="btn btn-primary">Accéder aux conseillers</a>
+                            </div>
+                        </div>
+                    </div>
+                    </c:if>
                 </section>
                             
             </div>

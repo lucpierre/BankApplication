@@ -5,6 +5,7 @@
  */
 package fixtures;
 
+import dao.entity.AdministratorEntity;
 import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.ProfessionalEntity;
@@ -64,6 +65,20 @@ public class UserFixtures {
                 "a_login",
                 "a@mail.com",
                 "a_password",
+                "9988776655"
+            )
+        );
+        
+        users.add(
+            new AdministratorEntity(
+                "admin",
+                new Date(),
+                true,
+                "admin",
+                "admin",
+                "admin",
+                "admin@mail.com",
+                "admin",
                 "9988776655"
             )
         );

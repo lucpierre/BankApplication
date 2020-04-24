@@ -3,8 +3,7 @@ package controller;
 import dao.entity.ClientEntity;
 import dao.entity.ProfessionalEntity;
 import dao.entity.UserEntity;
-import java.text.ParseException;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,14 +58,10 @@ public class AdvisorController extends AbstractController {
     protected ModelAndView handleRequestInternal(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        
-        Vector<ClientEntity> clients_vector = new Vector<>();
-        
-        clients_vector = (Vector)this.client_service.findAll();
+        ArrayList<ClientEntity> clients = (ArrayList)this.client_service.findAll();
         
         ModelAndView mv = new ModelAndView("advisor/managementClients");
-        mv.addObject("clients", clients_vector.toArray());
-        mv.addObject("nb_clients", clients_vector.size());
+        mv.addObject("clients", clients.toArray());
         return mv;
     }
     
