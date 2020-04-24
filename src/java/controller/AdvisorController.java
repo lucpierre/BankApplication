@@ -157,6 +157,9 @@ public class AdvisorController extends AbstractController {
             return this.edit_client_get(request, response);
         }
         
+        String siret = request.getParameter("siret_input");
+        String siren = request.getParameter("siren_input");
+        String head_office_address = request.getParameter("head_office_address_input");
         String civility = request.getParameter("civility_input");
         String first_name = request.getParameter("first_name_input");
         String last_name = request.getParameter("last_name_input");
@@ -169,6 +172,12 @@ public class AdvisorController extends AbstractController {
         
         
         try{
+            if(client instanceof ProfessionalEntity){
+                ((ProfessionalEntity)client).setSiren(siren);
+                ((ProfessionalEntity)client).setSiret(siret);
+                ((ProfessionalEntity)client).setHeadOfficeAddress(head_office_address);
+            }
+            
             client.setCivility(civility);
             client.setFirstName(first_name);
             client.setLastName(last_name);
@@ -186,7 +195,13 @@ public class AdvisorController extends AbstractController {
             return mv;
         }
         
-        this.client_service.update((ClientEntity)client);
+        if(client instanceof ProfessionalEntity){
+            this.professional_service.update((ProfessionalEntity)client);
+        }
+        else{
+            this.client_service.update((ClientEntity)client);
+        }
+        
         mv.addObject("info_msg", "Les informations ont été mises à jour.");
         mv.addObject("client", client);
         return mv;
