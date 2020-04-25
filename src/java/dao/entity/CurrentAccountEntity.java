@@ -6,6 +6,7 @@
 package dao.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -19,5 +20,5 @@ import javax.persistence.Table;
 @Table(name="CurrentAccountEntity")
 @DiscriminatorValue("CurrentAccountEntity")
 public class CurrentAccountEntity extends AccountEntity implements Serializable {
-    
+
 }

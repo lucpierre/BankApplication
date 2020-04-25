@@ -32,7 +32,7 @@ public class AccountDAOImpl extends GenericDAOImpl<AccountEntity> implements Acc
         try {
             return (AccountEntity)query.getSingleResult();
         } catch (NoResultException e) {
-            return null;
+            return null;        //Lever une exception 
         }
     }
 }
