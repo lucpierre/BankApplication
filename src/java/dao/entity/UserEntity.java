@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao.entity;
 
 import exceptions.UnknowCivilityException;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -28,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import service.PasswordService;
 
 /**
  *
@@ -160,7 +155,7 @@ public class UserEntity implements Serializable {
             String mail,
             String password,
             String phone
-    ){
+    ) throws NoSuchAlgorithmException{
         this.address = address;
         this.birthday = birthday;
         this.civility = (civility) ? UserEntity.CIVILITY_MR : UserEntity.CIVILITY_MME;
@@ -168,7 +163,7 @@ public class UserEntity implements Serializable {
         this.last_name = last_name;
         this.login = login;
         this.mail = mail;
-        this.password = password;
+        this.password = PasswordService.hashString(password);
         this.phone = phone;
     }
     
@@ -200,8 +195,8 @@ public class UserEntity implements Serializable {
      * Setter on the password
      * @param new_password String
      */
-    public void setPassword(String new_password) {
-        this.password = new_password;
+    public void setPassword(String new_password) throws NoSuchAlgorithmException {
+        this.password = PasswordService.hashString(new_password);
     }
 
     /**

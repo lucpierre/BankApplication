@@ -6,6 +6,7 @@
 package dao.entity;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class AdministratorEntity extends AdvisorEntity implements Serializable {
             String mail,
             String password,
             String phone
-    ){
+    ) throws NoSuchAlgorithmException{
         super(
             address,
             birthday,

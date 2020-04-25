@@ -1,4 +1,4 @@
-package service;
+package service.entities;
 
 import dao.entity.UserEntity;
 import dao.repository.UserDAO;

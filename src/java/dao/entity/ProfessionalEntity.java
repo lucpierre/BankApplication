@@ -1,6 +1,7 @@
 package dao.entity;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -43,7 +44,7 @@ public class ProfessionalEntity extends ClientEntity implements Serializable {
             String siret,
             String siren,
             String h_o_address
-    ){
+    ) throws NoSuchAlgorithmException{
         super(
             address,
             birthday,
