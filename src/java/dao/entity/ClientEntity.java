@@ -1,6 +1,10 @@
 package dao.entity;
 
 import java.io.Serializable;
+<<<<<<< HEAD
+=======
+import java.security.NoSuchAlgorithmException;
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -27,7 +31,11 @@ public class ClientEntity extends UserEntity implements Serializable {
             String mail,
             String password,
             String phone
+<<<<<<< HEAD
     ){
+=======
+    ) throws NoSuchAlgorithmException{
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
         super(
             address,
             birthday,

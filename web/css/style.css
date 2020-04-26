@@ -24,6 +24,7 @@ section {
 .section-title {
     border-bottom: solid 3px #202340;
     margin-bottom: 2rem;
+<<<<<<< HEAD
 }
 
 .jumbotron {
@@ -42,6 +43,32 @@ section {
     color: white;
 }
 
+=======
+}
+
+.jumbotron {
+    padding : 24px;
+}
+
+.alert-info {
+    background-color: #202340;
+    color : #eeb14f;
+    border-radius: 10px 10px 10px 10px;
+}
+
+/*
+================================================================================
+*/
+
+/*
+    CSS pour la page de connexion
+*/
+.connexion-page{
+    background-color: #202340;
+    color: white;
+}
+
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 /*
 ================================================================================
 */
@@ -66,6 +93,10 @@ section {
 
 .menu li {
     margin-top: 2rem;
+<<<<<<< HEAD
+=======
+    padding-left: 1rem;
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 }
 
 .menu i {
@@ -79,16 +110,36 @@ section {
 /*
     CSS pour les cards
 */
+<<<<<<< HEAD
 .card-img-top {
     max-height: 200px;
     max-width: 200px;
     
+=======
+.card-img {
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
     /* Permet de centrer les images */
     display: block;
     margin-right: auto;
     margin-left: auto;
 }
 
+<<<<<<< HEAD
 .card-body {
     max-height: 200px;
+=======
+.card-img-top {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.card-img-bottom {
+    max-height: 200px;
+    max-width: 600px;
+}
+
+.card-body {
+    max-height: 200px;
+    border-top: solid 1px lightgray;
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 }

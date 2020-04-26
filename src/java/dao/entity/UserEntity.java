@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,6 +7,16 @@
 package dao.entity;
 
 import java.io.Serializable;
+=======
+package dao.entity;
+
+import exceptions.UnknowCivilityException;
+import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -22,6 +33,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+<<<<<<< HEAD
+=======
+import service.PasswordService;
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 
 /**
  *
@@ -51,7 +66,11 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+<<<<<<< HEAD
     @Column
+=======
+    @Column(unique = true)
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
     private String login;
     
     @Column
@@ -154,7 +173,11 @@ public class UserEntity implements Serializable {
             String mail,
             String password,
             String phone
+<<<<<<< HEAD
     ){
+=======
+    ) throws NoSuchAlgorithmException{
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
         this.address = address;
         this.birthday = birthday;
         this.civility = (civility) ? UserEntity.CIVILITY_MR : UserEntity.CIVILITY_MME;
@@ -162,7 +185,11 @@ public class UserEntity implements Serializable {
         this.last_name = last_name;
         this.login = login;
         this.mail = mail;
+<<<<<<< HEAD
         this.password = password;
+=======
+        this.password = PasswordService.hashString(password);
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
         this.phone = phone;
     }
     
@@ -194,8 +221,13 @@ public class UserEntity implements Serializable {
      * Setter on the password
      * @param new_password String
      */
+<<<<<<< HEAD
     public void setPassword(String new_password) {
         this.password = new_password;
+=======
+    public void setPassword(String new_password) throws NoSuchAlgorithmException {
+        this.password = PasswordService.hashString(new_password);
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
     }
 
     /**
@@ -239,6 +271,17 @@ public class UserEntity implements Serializable {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Setter on the first name
+     * @param new_name String
+     */
+    public void setFirstName(String new_name) {
+        this.first_name = new_name;
+    }
+
+    /**
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
      * Getter on the last name
      * @return String
      */
@@ -247,6 +290,17 @@ public class UserEntity implements Serializable {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Setter on the last name
+     * @param new_name String
+     */
+    public void setLastName(String new_name) {
+        this.last_name = new_name;
+    }
+
+    /**
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
      * Getter on the address
      * @return String
      */
@@ -269,6 +323,22 @@ public class UserEntity implements Serializable {
     public String getCivility() {
         return this.civility;
     }
+<<<<<<< HEAD
+=======
+    
+    /**
+     * Setter on the civility
+     * @param new_civility
+     */
+    public void setCivility(String new_civility) throws UnknowCivilityException {
+        if(new_civility.equals(UserEntity.CIVILITY_MR) || new_civility.equals(UserEntity.CIVILITY_MME)){
+            this.civility = new_civility;
+        }
+        else{
+            throw new UnknowCivilityException();
+        }
+    }
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 
     /**
      * Get on the birthday
@@ -277,6 +347,36 @@ public class UserEntity implements Serializable {
     public Date getBirthday() {
         return this.birthday;
     }
+<<<<<<< HEAD
+=======
+    
+    /**
+     * Setter on the birthday
+     * @param new_date Date
+     */
+    public void setBirthday(Date new_date) {
+        this.birthday = new_date;
+    }
+    
+    /**
+     * Setter on the birthday with a String
+     * @param new_date String
+     */
+    public void setBirthday(String new_date) throws ParseException {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        
+        this.birthday = formatter.parse(new_date);
+    }
+    
+    /**
+     * Get on the birthday
+     * @return String
+     */
+    public String getFormattedBirthday() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(this.birthday);
+    }
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 
     /**
      * Getter on the created_at
@@ -310,14 +410,31 @@ public class UserEntity implements Serializable {
         this.updated_at = new_date;
     }
     
+<<<<<<< HEAD
+=======
+    
+    
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
     /**
      * Return the type of the user
      * @return 
      */
     public String getUserType(){
+<<<<<<< HEAD
         if(this instanceof ClientEntity){
             return "ClientEntity";
         }
+=======
+        if (this instanceof ProfessionalEntity){
+            return "ProfessionalEntity";
+        }
+        else if(this instanceof ClientEntity){
+            return "ClientEntity";
+        }
+        else if(this instanceof AdministratorEntity){
+            return "AdministratorEntity";
+        }
+>>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
         else{
             return "AdvisorEntity";
         }
