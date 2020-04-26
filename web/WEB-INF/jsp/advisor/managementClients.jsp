@@ -42,7 +42,7 @@
                         </div>
                     </c:if>
                     
-                    <div class="mb-5 container-fluid row">
+                    <div class="mb-5 mt-5 container-fluid row">
                         <div class="col">
                             <h4>Catégories d'utilisateurs :</h4>
                         </div>
@@ -52,6 +52,10 @@
                         <div class="col">
                             <p><i class="material-icons align-bottom">work_outline</i> Professionnel</p>
                         </div>
+                    </div>
+                    
+                    <div class="sub-section-title">
+                        <h4>Clients supervisés</h4>
                     </div>
                     
                     <table class="table">
@@ -86,13 +90,17 @@
                                             <i class="material-icons align-bottom">delete</i>
                                         </a>
                                         <a class="btn btn-primary btn-sm" href="#" role="button">
-                                            <i class="material-icons align-bottom">mail_outline</i>
+                                            <i class="material-icons align-bottom">mail</i>
                                         </a>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
+                    
+                    <div class="sub-section-title">
+                        <h4>Tous les clients</h4>
+                    </div>
                     
                     <table class="table">
                         <thead class="header">
@@ -101,7 +109,7 @@
                                 <th scope="col">Nom</th>
                                 <th scope="col">Prénom</th>
                                 <th scope="col">Téléphone</th>
-                                <th scope="col" style="width: 10em;">Actions</th>
+                                <th scope="col" style="width: 13em;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -126,7 +134,10 @@
                                             <i class="material-icons align-bottom">delete</i>
                                         </a>
                                         <a class="btn btn-primary btn-sm" href="#" role="button">
-                                            <i class="material-icons align-bottom">mail_outline</i>
+                                            <i class="material-icons align-bottom">mail</i>
+                                        </a>
+                                        <a class="btn btn-primary btn-sm" href="#" role="button">
+                                            <i class="material-icons align-bottom">group_add</i>
                                         </a>
                                     </td>
                                 </tr>
