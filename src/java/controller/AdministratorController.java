@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
-import service.AdministratorService;
-import service.AdministratorServiceImpl;
-import service.AdvisorService;
-import service.AdvisorServiceImpl;
-import service.UserService;
-import service.UserServiceImpl;
+import service.PasswordService;
+import service.entities.AdministratorService;
+import service.entities.AdministratorServiceImpl;
+import service.entities.AdvisorService;
+import service.entities.AdvisorServiceImpl;
+import service.entities.UserService;
+import service.entities.UserServiceImpl;
 
 /**
  *
@@ -60,11 +61,8 @@ public class AdministratorController extends AbstractController {
     protected ModelAndView handleRequestInternal(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ArrayList<AdvisorEntity> advisors = (ArrayList)this.advisor_service.findAll();
-        
         ModelAndView mv = new ModelAndView("advisor/administrator/managementAdvisors");
-        mv.addObject("advisors", advisors.toArray());
-        return mv;
+        return this.list_advisor(mv);
     }
     //==========================================================================
     
@@ -207,11 +205,14 @@ public class AdministratorController extends AbstractController {
             advisor.setFirstName(first_name);
             advisor.setLastName(last_name);
             advisor.setLogin(login);
-            advisor.setPassword(password);
             advisor.setMail(mail);
             advisor.setPhone(phone);
             advisor.setAddress(address);
             advisor.setBirthday(birthday);
+            
+            if(!PasswordService.compareString(password, advisor.getPassword())){
+                advisor.setPassword(password);
+            }
         }
         catch(Exception e){
             System.err.println(e.getMessage());

@@ -1,23 +1,28 @@
 package controller;
 
+import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.ProfessionalEntity;
 import dao.entity.UserEntity;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
-import service.ClientService;
-import service.ClientServiceImpl;
-import service.ProfessionalService;
-import service.ProfessionalServiceImpl;
-import service.UserService;
-import service.UserServiceImpl;
+import service.PasswordService;
+import service.entities.AdvisorService;
+import service.entities.AdvisorServiceImpl;
+import service.entities.ClientService;
+import service.entities.ClientServiceImpl;
+import service.entities.ProfessionalService;
+import service.entities.ProfessionalServiceImpl;
+import service.entities.UserService;
+import service.entities.UserServiceImpl;
 
 /**
  *
@@ -30,6 +35,9 @@ public class AdvisorController extends AbstractController {
     private final UserService user_service;
     
     @Autowired
+    private final AdvisorService advisor_service;
+    
+    @Autowired
     private final ClientService client_service;
     
     @Autowired
@@ -40,6 +48,7 @@ public class AdvisorController extends AbstractController {
      */
     public AdvisorController() {
         this.user_service = new UserServiceImpl();
+        this.advisor_service = new AdvisorServiceImpl();
         this.client_service = new ClientServiceImpl();
         this.professional_service = new ProfessionalServiceImpl();
     }
@@ -58,10 +67,44 @@ public class AdvisorController extends AbstractController {
     protected ModelAndView handleRequestInternal(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ArrayList<ClientEntity> clients = (ArrayList)this.client_service.findAll();
-        
         ModelAndView mv = new ModelAndView("advisor/managementClients");
+        return this.list_clients(request, mv);
+    }
+    
+    /**
+     * PATH : NO_PATH
+     * Take a ModelAndView and return it with the list of the clients
+     * 
+     * @param mv
+     * @return
+     * @throws Exception 
+     */
+    private ModelAndView list_clients(
+            HttpServletRequest request,
+            ModelAndView mv
+    ) throws Exception {
+        ArrayList<ClientEntity> clients = (ArrayList)this.client_service.findAll();
         mv.addObject("clients", clients.toArray());
+        
+        HttpSession session = request.getSession(false);
+        if(null == session){
+            return new ModelAndView("index");
+        }
+        
+        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        if(null == current_advisor_id || current_advisor_id.equals("")){
+            return new ModelAndView("index");
+        }
+        
+        AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
+        if(null == current_advisor){
+            return new ModelAndView("index");
+        }
+        
+        ArrayList<ClientEntity> supervised_clients = new ArrayList(current_advisor.getClients());
+        mv.addObject("supervised_clients", supervised_clients.toArray());
+        System.out.println(supervised_clients);
+        
         return mv;
     }
     
@@ -79,21 +122,24 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        ModelAndView mv = new ModelAndView("advisor/managementClients");
+        
         String user_id = request.getParameter("id");
         if(null == user_id || user_id.equals("")){
-            // TODO Trouver comment ajouter un msg d'alert
-            return this.handleRequestInternal(request, response);
+            mv.addObject("alert_msg", "Impossible de trouver le client demandé.");
+            return this.list_clients(request, mv);
         }
         
         UserEntity user = this.user_service.find(user_id);
         if(null == user){
-            // TODO Trouver comment ajouter un msg d'alert
-            return this.handleRequestInternal(request, response);
+            mv.addObject("alert_msg", "Impossible de trouver le client demandé.");
+            return this.list_clients(request, mv);
         }
         
         this.user_service.delete(user);
+        mv.addObject("alert_msg", "Le client a été supprimé avec succès.");
         
-        return this.handleRequestInternal(request, response);
+        return this.list_clients(request, mv);
     }
     
     /**
@@ -157,6 +203,9 @@ public class AdvisorController extends AbstractController {
             return this.edit_client_get(request, response);
         }
         
+        String siret = request.getParameter("siret_input");
+        String siren = request.getParameter("siren_input");
+        String head_office_address = request.getParameter("head_office_address_input");
         String civility = request.getParameter("civility_input");
         String first_name = request.getParameter("first_name_input");
         String last_name = request.getParameter("last_name_input");
@@ -169,15 +218,24 @@ public class AdvisorController extends AbstractController {
         
         
         try{
+            if(client instanceof ProfessionalEntity){
+                ((ProfessionalEntity)client).setSiren(siren);
+                ((ProfessionalEntity)client).setSiret(siret);
+                ((ProfessionalEntity)client).setHeadOfficeAddress(head_office_address);
+            }
+            
             client.setCivility(civility);
             client.setFirstName(first_name);
             client.setLastName(last_name);
             client.setLogin(login);
-            client.setPassword(password);
             client.setMail(mail);
             client.setPhone(phone);
             client.setAddress(address);
             client.setBirthday(birthday);
+            
+            if(!PasswordService.compareString(password, client.getPassword())){
+                client.setPassword(password);
+            }
         }
         catch(Exception e){
             System.err.println(e.getMessage());
@@ -186,7 +244,13 @@ public class AdvisorController extends AbstractController {
             return mv;
         }
         
-        this.client_service.update((ClientEntity)client);
+        if(client instanceof ProfessionalEntity){
+            this.professional_service.update((ProfessionalEntity)client);
+        }
+        else{
+            this.client_service.update((ClientEntity)client);
+        }
+        
         mv.addObject("info_msg", "Les informations ont été mises à jour.");
         mv.addObject("client", client);
         return mv;

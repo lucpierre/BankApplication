@@ -36,11 +36,32 @@
                             <i class="material-icons mr-2 align-bottom">info</i> ${alert_msg}
                         </div>
                     </c:if>
+                    <c:if test="${null != info_msg}">
+                        <div class="alert alert-info" role="alert">
+                            <i class="material-icons mr-2 align-bottom">info</i> ${info_msg}
+                        </div>
+                    </c:if>
+                    
+                    <div class="mb-5 mt-5 container-fluid row">
+                        <div class="col">
+                            <h4>Catégories d'utilisateurs :</h4>
+                        </div>
+                        <div class="col">
+                            <p><i class="material-icons align-bottom">person_outline</i> Particulier</p>
+                        </div>
+                        <div class="col">
+                            <p><i class="material-icons align-bottom">work_outline</i> Professionnel</p>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section-title">
+                        <h4>Clients supervisés</h4>
+                    </div>
                     
                     <table class="table">
                         <thead class="header">
                             <tr class="contents">    
-                                <th scope="col" style="width: 10em;">N° Client</th>
+                                <th scope="col" style="width: 4em;">Catégorie</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col">Prénom</th>
                                 <th scope="col">Téléphone</th>
@@ -48,9 +69,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${ clients }" var="client">
+                            <c:forEach items="${ supervised_clients }" var="client">
                                 <tr class="contents">
-                                    <td><c:out value="${ client.id }" /></td>
+                                    <td class="text-center">
+                                        <c:if test="${client.userType.equals('ProfessionalEntity')}">
+                                            <i class="material-icons align-bottom">work_outline</i>
+                                        </c:if>
+                                        <c:if test="${client.userType.equals('ClientEntity')}">
+                                            <i class="material-icons align-bottom">person_outline</i>
+                                        </c:if>
+                                    </td>
                                     <td><c:out value="${ client.lastName }" /></td>
                                     <td><c:out value="${ client.firstName }" /></td>
                                     <td><c:out value="${ client.phone }" /></td>
@@ -62,7 +90,54 @@
                                             <i class="material-icons align-bottom">delete</i>
                                         </a>
                                         <a class="btn btn-primary btn-sm" href="#" role="button">
-                                            <i class="material-icons align-bottom">mail_outline</i>
+                                            <i class="material-icons align-bottom">mail</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                    
+                    <div class="sub-section-title">
+                        <h4>Tous les clients</h4>
+                    </div>
+                    
+                    <table class="table">
+                        <thead class="header">
+                            <tr class="contents">    
+                                <th scope="col" style="width: 4em;">Catégorie</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Prénom</th>
+                                <th scope="col">Téléphone</th>
+                                <th scope="col" style="width: 13em;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${ clients }" var="client">
+                                <tr class="contents">
+                                    <td class="text-center">
+                                        <c:if test="${client.userType.equals('ProfessionalEntity')}">
+                                            <i class="material-icons align-bottom">work_outline</i>
+                                        </c:if>
+                                        <c:if test="${client.userType.equals('ClientEntity')}">
+                                            <i class="material-icons align-bottom">person_outline</i>
+                                        </c:if>
+                                    </td>
+                                    <td><c:out value="${ client.lastName }" /></td>
+                                    <td><c:out value="${ client.firstName }" /></td>
+                                    <td><c:out value="${ client.phone }" /></td>
+                                    <td class="text-right">
+                                        <a class="btn btn-secondary btn-sm" href="edit_client.htm?id=${client.id}" role="button">
+                                            <i class="material-icons align-bottom">edit</i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm" href="delete_client.htm?id=${client.id}" role="button" onclick="return confirm('Êtes vous sûr de vouloir supprimer ce client ?')">
+                                            <i class="material-icons align-bottom">delete</i>
+                                        </a>
+                                        <a class="btn btn-primary btn-sm" href="#" role="button">
+                                            <i class="material-icons align-bottom">mail</i>
+                                        </a>
+                                        <a class="btn btn-primary btn-sm" href="#" role="button">
+                                            <i class="material-icons align-bottom">group_add</i>
                                         </a>
                                     </td>
                                 </tr>

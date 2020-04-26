@@ -23,7 +23,13 @@ section {
 
 .section-title {
     border-bottom: solid 3px #202340;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+}
+
+.sub-section-title {
+    border-bottom: solid 1px #202340;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
 }
 
 .jumbotron {

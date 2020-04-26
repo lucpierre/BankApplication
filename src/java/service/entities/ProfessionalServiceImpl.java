@@ -1,8 +1,7 @@
-package service;
+package service.entities;
 
-import dao.entity.ClientEntity;
-import dao.repository.ClientDAO;
-import java.util.ArrayList;
+import dao.entity.ProfessionalEntity;
+import dao.repository.ProfessionalDAO;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,36 +12,35 @@ import org.springframework.stereotype.Service;
  * @author lucqu
  */
 @Service
-public class ClientServiceImpl implements ClientService {
+public class ProfessionalServiceImpl implements ProfessionalService {
     
     @Autowired
-    ClientDAO dao;
+    ProfessionalDAO dao;
 
     @Override
-    public ClientEntity find(String id) {
+    public ProfessionalEntity find(String id) {
          return this.dao.find(Long.parseLong(id));
     }
     
     @Override
-    public List<ClientEntity> findAll(){
+    public List<ProfessionalEntity> findAll(){
         return this.dao.findAll();
     }
     
     @Override
-    public void save(ClientEntity entity){
+    public void save(ProfessionalEntity entity){
         entity.setCreatedAt(new Date());
         this.dao.save(entity);
     }
     
     @Override
-    public void update(ClientEntity entity){
+    public void update(ProfessionalEntity entity){
         entity.setUpdatedAt(new Date());
         this.dao.update(entity);
     }
     
     @Override
-    public void delete(ClientEntity entity){
+    public void delete(ProfessionalEntity entity){
         this.dao.delete(entity);
     }
-    
 }

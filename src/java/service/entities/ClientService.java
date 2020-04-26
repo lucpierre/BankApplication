@@ -1,4 +1,4 @@
-package service;
+package service.entities;
 import dao.entity.ClientEntity;
 import java.util.List;
 

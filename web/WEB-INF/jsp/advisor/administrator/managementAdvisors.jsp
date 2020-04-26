@@ -42,9 +42,23 @@
                         </div>
                     </c:if>
                     
+                    <div class="mb-5 container-fluid row">
+                        <div class="col">
+                            <h4>Catégories d'utilisateurs :</h4>
+                        </div>
+                        <div class="col">
+                            <p><i class="material-icons align-bottom">person_outline</i> Conseiller</p>
+                        </div>
+                        <div class="col">
+                            <p><i class="material-icons align-bottom">stars</i> Administrateur</p>
+                        </div>
+                    </div>
+
+                    
                     <table class="table">
                         <thead class="header">
-                            <tr class="contents">    
+                            <tr class="contents">
+                                <th scope="col" style="width: 4em;">Catégorie</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col">Prénom</th>
                                 <th scope="col">Téléphone</th>
@@ -54,6 +68,14 @@
                         <tbody>
                             <c:forEach items="${ advisors }" var="advisor">
                                 <tr class="contents">
+                                    <td class="text-center">
+                                        <c:if test="${advisor.userType.equals('AdvisorEntity')}">
+                                            <i class="material-icons align-bottom">person_outline</i>
+                                        </c:if>
+                                        <c:if test="${advisor.userType.equals('AdministratorEntity')}">
+                                            <i class="material-icons align-bottom">stars</i>
+                                        </c:if>
+                                    </td>
                                     <td><c:out value="${ advisor.lastName }" /></td>
                                     <td><c:out value="${ advisor.firstName }" /></td>
                                     <td><c:out value="${ advisor.phone }" /></td>

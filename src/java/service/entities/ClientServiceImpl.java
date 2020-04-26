@@ -1,7 +1,8 @@
-package service;
+package service.entities;
 
-import dao.entity.AdministratorEntity;
-import dao.repository.AdministratorDAO;
+import dao.entity.ClientEntity;
+import dao.repository.ClientDAO;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,35 +13,35 @@ import org.springframework.stereotype.Service;
  * @author lucqu
  */
 @Service
-public class AdministratorServiceImpl implements AdministratorService {
+public class ClientServiceImpl implements ClientService {
     
     @Autowired
-    AdministratorDAO dao;
+    ClientDAO dao;
 
     @Override
-    public AdministratorEntity find(String id) {
+    public ClientEntity find(String id) {
          return this.dao.find(Long.parseLong(id));
     }
     
     @Override
-    public List<AdministratorEntity> findAll(){
+    public List<ClientEntity> findAll(){
         return this.dao.findAll();
     }
     
     @Override
-    public void save(AdministratorEntity entity){
+    public void save(ClientEntity entity){
         entity.setCreatedAt(new Date());
         this.dao.save(entity);
     }
     
     @Override
-    public void update(AdministratorEntity entity){
+    public void update(ClientEntity entity){
         entity.setUpdatedAt(new Date());
         this.dao.update(entity);
     }
     
     @Override
-    public void delete(AdministratorEntity entity){
+    public void delete(ClientEntity entity){
         this.dao.delete(entity);
     }
     
