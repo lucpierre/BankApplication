@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao.entity;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
@@ -26,7 +22,7 @@ public class AdvisorEntity extends UserEntity implements Serializable {
     /**
      * Supervised clients list 
      */
-    @OneToMany(mappedBy="advisor")
+    @OneToMany(mappedBy = "advisor")
     private List<ClientEntity> clients;
     
     //////////////////////////
@@ -36,7 +32,10 @@ public class AdvisorEntity extends UserEntity implements Serializable {
     /**
      * Empty constructor, set all the fields with the default value
      */
-    public AdvisorEntity(){super();}
+    public AdvisorEntity(){
+        super();
+        this.clients = new ArrayList<>();
+    }
     
     /**
      * Constructor
@@ -73,6 +72,7 @@ public class AdvisorEntity extends UserEntity implements Serializable {
             password,
             phone
         );
+        this.clients = new ArrayList<>();
     }
 
     /**
@@ -80,7 +80,15 @@ public class AdvisorEntity extends UserEntity implements Serializable {
      * @return the supervised clients list
      */
     public List<ClientEntity> getClients() {
-        return clients;
+        return this.clients;
+    }
+    
+    /**
+     * Getter on the clients list
+     * @param clients
+     */
+    public void setClients(List<ClientEntity> clients) {
+        this.clients = clients;
     }
 
     /**
@@ -90,16 +98,20 @@ public class AdvisorEntity extends UserEntity implements Serializable {
     public void addClient(ClientEntity new_client) {
         if(!this.clients.contains(new_client)){
             this.clients.add(new_client);
+            new_client.setAdvisor(this);
         }
     }
-
+    
     /**
      * Remove a client from the supervised clients list
      * @param client 
      */
     public void removeClient(ClientEntity client) {
-        if(!this.clients.contains(client)){
+        if(this.clients.contains(client)){
             this.clients.remove(client);
+            if(client.getAdvisor() == this){
+                client.setAdvisor(null);
+            }
         }
     }
 }

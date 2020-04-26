@@ -6,7 +6,6 @@ import dao.entity.UserEntity;
 import exceptions.UserNotFoundException;
 import fixtures.UserFixtures;
 import java.util.ArrayList;
-import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
+import service.entities.AdvisorService;
+import service.entities.AdvisorServiceImpl;
+import service.entities.ClientService;
+import service.entities.ClientServiceImpl;
 import service.entities.UserService;
 import service.entities.UserServiceImpl;
 
@@ -29,8 +32,16 @@ public class UserController extends AbstractController {
     @Autowired
     private final UserService user_service;
     
+    @Autowired
+    private final AdvisorService advisor_service;
+    
+    @Autowired
+    private final ClientService client_service;
+    
     public UserController() {
         this.user_service = new UserServiceImpl();
+        this.advisor_service = new AdvisorServiceImpl();
+        this.client_service = new ClientServiceImpl();
     }
     
     //==========================================================================
@@ -220,6 +231,14 @@ public class UserController extends AbstractController {
         for(UserEntity user : users){
             this.user_service.save(user);
         }
+        
+        // Ajout du client d'id 1 (d'après les fixtures) à la liste des clients supervisés du conseiller d'id 3 (toujours d'après les fixtures
+        AdvisorEntity a = ((AdvisorEntity)(user_service.find("3"))); 
+        ClientEntity c = ((ClientEntity)(user_service.find("1")));
+        
+        a.addClient(c);
+        this.advisor_service.update(a);
+        this.client_service.update(c);
     }
     
 }
