@@ -136,7 +136,7 @@
                                         <a class="btn btn-primary btn-sm" href="#" role="button">
                                             <i class="material-icons align-bottom">mail</i>
                                         </a>
-                                        <a class="btn btn-primary btn-sm" href="#" role="button">
+                                        <a class="btn btn-primary btn-sm" href="add_supervised_client.htm?client_id=${client.id}" role="button">
                                             <i class="material-icons align-bottom">group_add</i>
                                         </a>
                                     </td>
