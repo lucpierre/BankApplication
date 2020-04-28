@@ -290,6 +290,21 @@ public class AdvisorController extends AbstractController {
     {
         ModelAndView mv = new ModelAndView("advisor/form_client");
         
+        HttpSession session = request.getSession(false);
+        if(null == session){
+            return new ModelAndView("index");
+        }
+        
+        String advisor_id = (String)session.getAttribute("user_id");
+        if(null == advisor_id || advisor_id.equals("")){
+            return new ModelAndView("index");
+        }
+        
+        AdvisorEntity current_advisor = this.advisor_service.find(advisor_id);
+        if(null == current_advisor){
+            return new ModelAndView("index");
+        }
+        
         String user_type = request.getParameter("user_type_input");
         String siret = request.getParameter("siret_input");
         String siren = request.getParameter("siren_input");
@@ -340,6 +355,15 @@ public class AdvisorController extends AbstractController {
         else{
             this.client_service.save(client);
         }
+        
+        // Get the new client in the database to add it to the supervised clientd of the current advisor
+        // Don't test if the result is not null beacause we just insert it
+        ClientEntity database_client = (ClientEntity) this.user_service.findByLoginPassword(login, password);
+        
+        current_advisor.addClient(database_client);
+        
+        this.client_service.update(database_client);
+        this.advisor_service.update(current_advisor);
         
         mv.addObject("info_msg", "Le client est bien enregistré.");
         mv.addObject("client", client);
