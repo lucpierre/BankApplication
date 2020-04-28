@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -19,6 +20,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -87,6 +89,12 @@ public class UserEntity implements Serializable {
     @Column
     @Temporal(TemporalType.DATE)
     private Date updated_at;
+    
+    @OneToMany(mappedBy="sender")
+    private List<MessageEntity> sended_messages;
+    
+    @OneToMany(mappedBy="recipient")
+    private List<MessageEntity> recieved_messages;
     
 
     //////////////////////////
@@ -194,6 +202,7 @@ public class UserEntity implements Serializable {
     /**
      * Setter on the password
      * @param new_password String
+     * @throws java.security.NoSuchAlgorithmException
      */
     public void setPassword(String new_password) throws NoSuchAlgorithmException {
         this.password = PasswordService.hashString(new_password);
@@ -290,6 +299,7 @@ public class UserEntity implements Serializable {
     /**
      * Setter on the civility
      * @param new_civility
+     * @throws exceptions.UnknowCivilityException
      */
     public void setCivility(String new_civility) throws UnknowCivilityException {
         if(new_civility.equals(UserEntity.CIVILITY_MR) || new_civility.equals(UserEntity.CIVILITY_MME)){
@@ -319,6 +329,7 @@ public class UserEntity implements Serializable {
     /**
      * Setter on the birthday with a String
      * @param new_date String
+     * @throws java.text.ParseException
      */
     public void setBirthday(String new_date) throws ParseException {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -366,9 +377,83 @@ public class UserEntity implements Serializable {
     public void setUpdatedAt(Date new_date) {
         this.updated_at = new_date;
     }
+
+    /**
+     * Getter on the list of the sended messages
+     * @return the list of the sended messages
+     */
+    public List<MessageEntity> getSendedMessages() {
+        return sended_messages;
+    }
+
+    /**
+     * Set the list of the sended messages
+     * @param new_sended_messages 
+     */
+    public void setSendedMessages(List<MessageEntity> new_sended_messages) {
+        this.sended_messages = new_sended_messages;
+    }
     
+    /**
+     * Add a message to the sended messages list
+     * @param new_message 
+     */
+    public void addSendedMessage(MessageEntity new_message){
+        if(!this.sended_messages.contains(new_message)){
+            this.sended_messages.add(new_message);
+            new_message.setSender(this);
+        }
+    }
     
+    /**
+     * Remove a message from the sended messages list
+     * @param message 
+     */
+    public void removeSendedMessage(MessageEntity message){
+        if(this.sended_messages.contains(message)){
+            this.sended_messages.remove(message);
+            message.setSender(null);
+        }
+    }
+
+    /**
+     * Get the list of the received messages
+     * @return the list of the received messages
+     */
+    public List<MessageEntity> getRecievedMessages() {
+        return recieved_messages;
+    }
+
+    /**
+     * Set the list of the received messages
+     * @param new_recieved_messages 
+     */
+    public void setRecievedMessages(List<MessageEntity> new_recieved_messages) {
+        this.recieved_messages = new_recieved_messages;
+    }
     
+    /**
+     * Add a message to the received messages list
+     * @param new_message 
+     */
+    public void addReceivedMessage(MessageEntity new_message){
+        if(!this.recieved_messages.contains(new_message)){
+            this.recieved_messages.add(new_message);
+            new_message.setRecipient(this);
+        }
+    }
+    
+    /**
+     * Remove a message from the received messages list
+     * @param message 
+     */
+    public void removeReceivedMessage(MessageEntity message){
+        if(this.recieved_messages.contains(message)){
+            this.recieved_messages.remove(message);
+            message.setRecipient(null);
+        }
+    }
+        
     /**
      * Return the type of the user
      * @return 
