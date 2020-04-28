@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -151,6 +152,8 @@ public class UserEntity implements Serializable {
         this.password = "password";
         this.phone = "0011223344";
         this.updated_at = new Date();
+        this.sended_messages = new ArrayList<>();
+        this.recieved_messages = new ArrayList<>();
     }
     
     public UserEntity(
@@ -173,6 +176,8 @@ public class UserEntity implements Serializable {
         this.mail = mail;
         this.password = PasswordService.hashString(password);
         this.phone = phone;
+        this.sended_messages = new ArrayList<>();
+        this.recieved_messages = new ArrayList<>();
     }
     
     /**
