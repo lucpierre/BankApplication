@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -17,6 +19,16 @@ import javax.persistence.TemporalType;
  * @author lucqu
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(
+        name = "find_by_sender",
+        query = "SELECT m FROM MessageEntity m WHERE m.sender = :sender"
+    ),
+    @NamedQuery(
+        name = "find_by_sender_and_recipient",
+        query = "SELECT m FROM MessageEntity m WHERE m.sender = :sender AND m.recipient = :recipient"
+    )
+})
 public class MessageEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
