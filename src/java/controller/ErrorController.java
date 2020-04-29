@@ -35,14 +35,9 @@ public class ErrorController extends AbstractController {
     /**
      * Error page when the session is expired
      * 
-     * @param request
-     * @param response
      * @return index page
      */
-    public static ModelAndView expiredSession(
-        HttpServletRequest request,
-        HttpServletResponse response
-    )
+    public static ModelAndView expiredSession()
     {
         return new ModelAndView("index");
     }
@@ -50,14 +45,9 @@ public class ErrorController extends AbstractController {
     /**
      * Error page when asked ressource is not found
      * 
-     * @param request
-     * @param response
      * @return 404error
      */
-    public static ModelAndView error404(
-        HttpServletRequest request,
-        HttpServletResponse response
-    )
+    public static ModelAndView error404()
     {
         return new ModelAndView("errors/404error");
     }
@@ -65,14 +55,9 @@ public class ErrorController extends AbstractController {
     /**
      * Error page when the user does not have sufficient rights to access the resource
      * 
-     * @param request
-     * @param response
      * @return error403
      */
-    public static ModelAndView error403(
-        HttpServletRequest request,
-        HttpServletResponse response
-    )
+    public static ModelAndView error403()
     {
         return new ModelAndView("errors/404error");
     }
