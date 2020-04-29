@@ -103,7 +103,6 @@ public class AdvisorController extends AbstractController {
         
         ArrayList<ClientEntity> supervised_clients = new ArrayList(current_advisor.getClients());
         mv.addObject("supervised_clients", supervised_clients.toArray());
-        System.out.println(supervised_clients);
         
         return mv;
     }
@@ -344,5 +343,71 @@ public class AdvisorController extends AbstractController {
         mv.addObject("info_msg", "Le client est bien enregistré.");
         mv.addObject("client", client);
         return mv;
+    }
+    
+    /**
+     * Path : /add_supervised_client
+     * Method : GET
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/add_supervised_client", method = RequestMethod.GET)
+    public ModelAndView add_supervised_client(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        System.out.println("PLOP");
+        ModelAndView mv = new ModelAndView("advisor/managementClients");
+        
+        HttpSession session = request.getSession(false);
+        if(null == session){
+            return new ModelAndView("index");
+        }
+        
+        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        if(null == current_advisor_id || current_advisor_id.equals("")){
+            return new ModelAndView("index");
+        }
+        
+        AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
+        if(null == current_advisor){
+            return new ModelAndView("index");
+        }
+        
+        ArrayList<ClientEntity> supervised_clients = new ArrayList(current_advisor.getClients());
+        
+        String client_id = request.getParameter("client_id");
+        
+        if(null == client_id || client_id.equals("")){
+            mv.addObject("alert_msg", "Impossible de trouver le client demandé.");
+            return this.list_clients(request, mv);
+        }
+        
+        ClientEntity client = this.client_service.find(client_id);
+        if(null == client){
+            mv.addObject("alert_msg", "Impossible de trouver le client demandé.");
+            return this.list_clients(request, mv);
+        }
+        
+        if(supervised_clients.contains(client)){
+            mv.addObject("alert_msg", "Vous supervisez déjà ce client.");
+            return this.list_clients(request, mv);
+        }
+        
+        AdvisorEntity supervisor = client.getAdvisor();
+        if(null != supervisor){
+            mv.addObject("alert_msg", "Le client demandé est déjà supervisé par " + supervisor.getCivility() + " " + supervisor.getLastName() + " " + supervisor.getFirstName() + ".");
+            return this.list_clients(request, mv);
+        }
+        
+        current_advisor.addClient(client);
+        
+        this.advisor_service.update(current_advisor);
+        this.client_service.update(client);
+        
+        return this.list_clients(request, mv);
     }
 }
