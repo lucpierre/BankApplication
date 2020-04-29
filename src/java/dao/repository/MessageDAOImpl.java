@@ -5,12 +5,14 @@ import dao.entity.UserEntity;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author lucqu
  */
+@Repository
 public class MessageDAOImpl extends GenericDAOImpl<MessageEntity> implements MessageDAO{
     public MessageDAOImpl(){
         super(MessageEntity.class);
