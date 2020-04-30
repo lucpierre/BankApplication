@@ -56,7 +56,7 @@
                     </div>
                     
                     <div class="mb-3">
-                        <form action="#" method="post" class="row">
+                        <form action="chat_client.htm" method="post" class="row">
                             <div class="col-sm-10">
                                 <textarea class="form-control message-content-input" id="message_content" name="message_content" rows="1">Nouveau message</textarea>
                             </div>
