@@ -2,6 +2,7 @@ package controller;
 
 import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
+import dao.entity.MessageEntity;
 import dao.entity.ProfessionalEntity;
 import dao.entity.UserEntity;
 import java.util.ArrayList;
@@ -383,7 +384,6 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        System.out.println("PLOP");
         ModelAndView mv = new ModelAndView("advisor/managementClients");
         
         HttpSession session = request.getSession(false);
@@ -435,6 +435,86 @@ public class AdvisorController extends AbstractController {
         return this.list_clients(request, mv);
     }
     
+    /**
+     * Path : /chat_advisor
+     * Method : GET
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/chat_advisor", method = RequestMethod.GET)
+    public ModelAndView chat_advisor(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        ModelAndView mv = new ModelAndView("advisor/chat");
+        
+        String client_id = request.getParameter("id");
+        if(null == client_id || client_id.equals("")){
+            mv = new ModelAndView("advisor/managementClients");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        UserEntity client = this.user_service.find(client_id);
+        if(null == client){
+            mv = new ModelAndView("advisor/managementClients");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        HttpSession session = request.getSession(false);
+        if(null == session){
+            return new ModelAndView("index");
+        }
+        
+        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        if(null == current_advisor_id || current_advisor_id.equals("")){
+            return new ModelAndView("index");
+        }
+        
+        AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
+        if(null == current_advisor){
+            return new ModelAndView("index");
+        }
+        
+        /**
+         * =====================================================================
+         * Mock to create the chet view
+         */
+        ArrayList<MessageEntity> messages = new ArrayList<>();
+        MessageEntity client_send = new MessageEntity("Bonjour Mr le conseiller");
+        client_send.setSender(client);
+        client_send.setRecipient(current_advisor);
+        //---------
+        MessageEntity advisor_send = new MessageEntity("Bonjour Mr le client");
+        advisor_send.setSender(current_advisor);
+        advisor_send.setRecipient(client);
+        //---------
+        MessageEntity advisor_send2 = new MessageEntity("Comment allez vous ?");
+        advisor_send2.setSender(current_advisor);
+        advisor_send2.setRecipient(client);
+        //---------
+        MessageEntity client_send2 = new MessageEntity("Très bien et vous ?");
+        client_send2.setSender(client);
+        client_send2.setRecipient(current_advisor);
+        
+        messages.add(client_send);
+        messages.add(advisor_send);
+        messages.add(advisor_send2);
+        messages.add(client_send2);
+        
+        mv.addObject("client", client);
+        mv.addObject("messages", messages);
+        /**
+         * =====================================================================
+         */
+        
+        return mv;
+    }
+
     /**
      * Path : /client_dashboard
      * Method : GET

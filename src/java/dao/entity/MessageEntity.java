@@ -1,6 +1,7 @@
 package dao.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -17,6 +20,16 @@ import javax.persistence.TemporalType;
  * @author lucqu
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(
+        name = "find_by_sender",
+        query = "SELECT m FROM MessageEntity m WHERE m.sender = :sender"
+    ),
+    @NamedQuery(
+        name = "find_by_sender_and_recipient",
+        query = "SELECT m FROM MessageEntity m WHERE m.sender = :sender AND m.recipient = :recipient"
+    )
+})
 public class MessageEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -200,6 +213,13 @@ public class MessageEntity implements Serializable {
         this.updated_at = updated_at;
     }
     
-    
+    /**
+     * Return the date at dd-mm-yyyy format
+     * @return 
+     */
+    public String getCreatedAtFormatted() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        return formatter.format(this.created_at);
+    }
     
 }

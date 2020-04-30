@@ -91,7 +91,7 @@
                                         <a class="btn btn-danger btn-sm" href="delete_client.htm?id=${client.id}" role="button" onclick="return confirm('Êtes vous sûr de vouloir supprimer ce client ?')">
                                             <i class="material-icons align-bottom">delete</i>
                                         </a>
-                                        <a class="btn btn-primary btn-sm" href="#" role="button">
+                                        <a class="btn btn-primary btn-sm" href="chat_advisor.htm?id=${client.id}" role="button">
                                             <i class="material-icons align-bottom">mail</i>
                                         </a>
                                     </td>
@@ -137,7 +137,7 @@
                                         <a class="btn btn-danger btn-sm" href="delete_client.htm?id=${client.id}" role="button" onclick="return confirm('Êtes vous sûr de vouloir supprimer ce client ?')">
                                             <i class="material-icons align-bottom">delete</i>
                                         </a>
-                                        <a class="btn btn-primary btn-sm" href="#" role="button">
+                                        <a class="btn btn-primary btn-sm" href="chat_advisor.htm?id=${client.id}" role="button">
                                             <i class="material-icons align-bottom">mail</i>
                                         </a>
                                         <a class="btn btn-primary btn-sm" href="add_supervised_client.htm?client_id=${client.id}" role="button">

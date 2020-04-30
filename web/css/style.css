@@ -117,3 +117,22 @@ section {
     max-height: 200px;
     border-top: solid 1px lightgray;
 }
+
+/*
+================================================================================
+*/
+
+/*
+    CSS pour le chat
+*/
+.media {
+    padding : 1.5rem;
+}
+
+.chat-advisor-message {
+    background-color: #eeeeee;
+}
+
+.message-content-input {
+    border-radius: 5rem 5rem 5rem 5rem;
+}
