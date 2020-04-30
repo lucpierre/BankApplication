@@ -28,6 +28,10 @@ import javax.persistence.TemporalType;
     @NamedQuery(
         name = "find_by_sender_and_recipient",
         query = "SELECT m FROM MessageEntity m WHERE m.sender = :sender AND m.recipient = :recipient"
+    ),
+    @NamedQuery(
+        name = "find_chat",
+        query = "SELECT m FROM MessageEntity m WHERE (m.sender = :first_user AND m.recipient = :second_user) OR (m.sender = :second_user AND m.recipient = :first_user)"
     )
 })
 public class MessageEntity implements Serializable {
