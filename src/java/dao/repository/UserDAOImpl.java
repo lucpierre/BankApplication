@@ -7,8 +7,6 @@ package dao.repository;
 
 import dao.entity.UserEntity;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;

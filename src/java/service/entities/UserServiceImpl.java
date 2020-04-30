@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public List<UserEntity> findAll(){
-        return this.findAll();
+        return dao.findAll();
     }
     
     @Override
