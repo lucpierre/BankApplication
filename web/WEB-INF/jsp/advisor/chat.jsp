@@ -55,7 +55,7 @@
                     </div>
                     
                     <div class="mb-3">
-                        <form action="chat_advisor?id=${client.id}" method="post" class="row">
+                        <form action="chat_advisor.htm?id=${client.id}" method="post" class="row">
                             <div class="col-sm-10">
                                 <textarea class="form-control message-content-input" id="message_content" name="message_content" rows="1">Nouveau message</textarea>
                             </div>
