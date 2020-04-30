@@ -1,6 +1,7 @@
 package dao.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -212,6 +213,13 @@ public class MessageEntity implements Serializable {
         this.updated_at = updated_at;
     }
     
-    
+    /**
+     * Return the date at dd-mm-yyyy format
+     * @return 
+     */
+    public String getCreatedAtFormatted() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        return formatter.format(this.created_at);
+    }
     
 }
