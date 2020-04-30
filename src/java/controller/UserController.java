@@ -122,14 +122,18 @@ public class UserController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response)
     {
+        ModelAndView mv = new ModelAndView("index");
+        
         // Récupération num_client et mdp
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         if(null == login || login.equals("")){
-            return new ModelAndView("index");
+            mv.addObject("alert_msg", "Login et/ou mot de passe incorrect.");
+            return mv;
         }
         if(null == password || password.equals("")){
-            return new ModelAndView("index");
+            mv.addObject("alert_msg", "Login et/ou mot de passe incorrect.");
+            return mv;
         }
         
         UserEntity user = null;
@@ -141,7 +145,8 @@ public class UserController extends AbstractController {
             }
         }
         catch(UserNotFoundException e){
-            return new ModelAndView("index");
+            mv.addObject("alert_msg", "Login et/ou mot de passe incorrect.");
+            return mv;
         }
         
         // Création de la session

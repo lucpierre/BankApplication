@@ -34,15 +34,21 @@
                         <small class="form-text text-muted">Ne jamais partager ses identifiants : ce sont des informations PERSONNELLES !</small>
                     </form>
                     
-                    <c:choose>
-                        <c:when test="${true == logout}">
-                            <div class="alert alert-info mt-5" role="alert">
-                                <span>
-                                    <i class="material-icons mr-2 align-bottom">info</i> Vous avez été déconnecté avec succés.
-                                </span>
-                            </div>
-                        </c:when>
-                    </c:choose>
+                    <c:if test="${true == logout}">
+                        <div class="alert alert-info mt-5" role="alert">
+                            <span>
+                                <i class="material-icons mr-2 align-bottom">info</i> Vous avez été déconnecté avec succés.
+                            </span>
+                        </div>
+                    </c:if>
+                    
+                    <c:if test="${null != alert_msg}">
+                        <div class="alert alert-danger mt-5" role="alert">
+                            <span>
+                                <i class="material-icons mr-2 align-bottom">info</i> ${alert_msg}
+                            </span>
+                        </div>
+                    </c:if>
                         
                 </div>
                 <div class="col-2"></div>
