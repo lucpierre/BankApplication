@@ -434,4 +434,38 @@ public class AdvisorController extends AbstractController {
         
         return this.list_clients(request, mv);
     }
+    
+    /**
+     * Path : /client_dashboard
+     * Method : GET
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/client_dashboard", method = RequestMethod.GET)
+    public ModelAndView client_dashboard(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        ModelAndView mv = new ModelAndView("advisor/clientDashboard");
+        
+        String client_id = request.getParameter("id");
+        if(null == client_id || client_id.equals("")){
+            mv = new ModelAndView("advisor/clientDashboard");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        ClientEntity client = this.client_service.find(client_id);
+        if(null == client){
+            mv = new ModelAndView("advisor/clientDashboard");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        mv.addObject("client", client);
+        return mv;
+    }
 }
