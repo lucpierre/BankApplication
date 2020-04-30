@@ -20,7 +20,7 @@
                         <h2>Conversation avec ${client.civility} ${client.lastName} ${client.firstName}</h2>
                     </div>
                     
-                    <div>
+                    <div class="chat mb-5">
                         <c:forEach items="${messages}" var="message">
                             <c:if test="${message.sender.userType == 'ProfessionalEntity' || message.sender.userType == 'ClientEntity'}">
                                 <div class="media">
@@ -55,7 +55,7 @@
                     </div>
                     
                     <div class="mb-3">
-                        <form action="chat_advisor?id=${client.id}" method="post" class="container-fluid row">
+                        <form action="chat_advisor?id=${client.id}" method="post" class="row">
                             <div class="col-sm-10">
                                 <textarea class="form-control message-content-input" id="message_content" name="message_content" rows="1">Nouveau message</textarea>
                             </div>
