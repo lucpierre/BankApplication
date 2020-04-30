@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="chat_client.htm">
                     <i class="material-icons mr-2 align-bottom">message</i>
                     Contact
                 </a>
