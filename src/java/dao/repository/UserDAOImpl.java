@@ -24,13 +24,19 @@ public class UserDAOImpl extends GenericDAOImpl<UserEntity> implements UserDAO {
         super(UserEntity.class);
     }
     
+    /**
+     * Find a user with his login and password
+     * 
+     * @param login
+     * @param password
+     * @return UserEntity
+     */
     @Override
     @Transactional
     public UserEntity findByLoginPassword(String login, String password) {
         try {
             Query query = this.getEm().createNamedQuery("find_by_login_password");
             String hashed_password = PasswordService.hashString(password);
-            System.out.println(hashed_password);
             query.setParameter("login", login);
             query.setParameter("password", hashed_password);
             return (UserEntity)query.getSingleResult();
@@ -38,4 +44,24 @@ public class UserDAOImpl extends GenericDAOImpl<UserEntity> implements UserDAO {
             return null;
         }
     }
+    
+    /**
+     * Find a user with his login
+     * 
+     * @param login
+     * @return UserEntity
+     */
+    @Override
+    @Transactional
+    public UserEntity findByLogin(String login) {
+        try {
+            Query query = this.getEm().createNamedQuery("find_by_login");
+            query.setParameter("login", login);
+            return (UserEntity)query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    
+    
 }

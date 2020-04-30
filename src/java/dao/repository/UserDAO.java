@@ -13,4 +13,5 @@ import dao.entity.UserEntity;
  */
 public interface UserDAO extends GenericDAO<UserEntity>{
     public UserEntity findByLoginPassword(String login, String password);
+    public UserEntity findByLogin(String login);
 }

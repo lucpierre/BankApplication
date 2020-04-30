@@ -1,8 +1,10 @@
 package service.entities;
 
 import dao.entity.ClientEntity;
+import dao.entity.UserEntity;
 import dao.repository.ClientDAO;
-import java.util.ArrayList;
+import dao.repository.UserDAO;
+import exceptions.LoginAlreadyUsedException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class ClientServiceImpl implements ClientService {
     
     @Autowired
     ClientDAO dao;
+    
+    @Autowired
+    UserDAO user_dao;
 
     @Override
     public ClientEntity find(String id) {
@@ -29,13 +34,24 @@ public class ClientServiceImpl implements ClientService {
     }
     
     @Override
-    public void save(ClientEntity entity){
+    public void save(ClientEntity entity) throws LoginAlreadyUsedException{
+        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
+        if(null != user){
+            throw new LoginAlreadyUsedException();
+        }
+        
         entity.setCreatedAt(new Date());
+        entity.setUpdatedAt(new Date());
         this.dao.save(entity);
     }
     
     @Override
-    public void update(ClientEntity entity){
+    public void update(ClientEntity entity) throws LoginAlreadyUsedException {
+        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
+        if(null != user){
+            throw new LoginAlreadyUsedException();
+        }
+        
         entity.setUpdatedAt(new Date());
         this.dao.update(entity);
     }

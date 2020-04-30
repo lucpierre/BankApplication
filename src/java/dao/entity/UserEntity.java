@@ -41,6 +41,10 @@ import service.PasswordService;
     @NamedQuery(
         name = "find_by_login_password",
         query = "SELECT u FROM UserEntity u WHERE u.login = :login AND u.password = :password"
+    ),
+    @NamedQuery(
+        name = "find_by_login",
+        query = "SELECT u FROM UserEntity u WHERE u.login = :login"
     )
 })
 

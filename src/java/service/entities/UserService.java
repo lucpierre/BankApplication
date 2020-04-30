@@ -6,6 +6,7 @@
 package service.entities;
 
 import dao.entity.UserEntity;
+import exceptions.LoginAlreadyUsedException;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface UserService {
     public UserEntity find(String id);
     public UserEntity findByLoginPassword(String login, String password);
     public List<UserEntity> findAll();
-    public void save(UserEntity u);
-    public void update(UserEntity entity);
+    public void save(UserEntity u) throws LoginAlreadyUsedException;
+    public void update(UserEntity entity) throws LoginAlreadyUsedException;
     public void delete(UserEntity entity);
 }
