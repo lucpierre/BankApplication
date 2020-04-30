@@ -20,6 +20,8 @@ import service.entities.AdvisorService;
 import service.entities.AdvisorServiceImpl;
 import service.entities.ClientService;
 import service.entities.ClientServiceImpl;
+import service.entities.MessageService;
+import service.entities.MessageServiceImpl;
 import service.entities.ProfessionalService;
 import service.entities.ProfessionalServiceImpl;
 import service.entities.UserService;
@@ -42,6 +44,9 @@ public class AdvisorController extends AbstractController {
     private final ClientService client_service;
     
     @Autowired
+    private final MessageService message_service;
+    
+    @Autowired
     private final ProfessionalService professional_service;
     
     /**
@@ -51,6 +56,7 @@ public class AdvisorController extends AbstractController {
         this.user_service = new UserServiceImpl();
         this.advisor_service = new AdvisorServiceImpl();
         this.client_service = new ClientServiceImpl();
+        this.message_service = new MessageServiceImpl();
         this.professional_service = new ProfessionalServiceImpl();
     }
     
@@ -445,7 +451,11 @@ public class AdvisorController extends AbstractController {
      * @throws java.lang.Exception 
      */
     @RequestMapping(value="/chat_advisor", method = RequestMethod.GET)
+<<<<<<< HEAD
     public ModelAndView chat_advisor(
+=======
+    public ModelAndView chat_advisor_get(
+>>>>>>> 663c91bac5a8142b92b99f06d205a7ecb5448c36
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
@@ -480,6 +490,7 @@ public class AdvisorController extends AbstractController {
             return new ModelAndView("index");
         }
         
+<<<<<<< HEAD
         /**
          * =====================================================================
          * Mock to create the chet view
@@ -514,4 +525,104 @@ public class AdvisorController extends AbstractController {
         
         return mv;
     }
+=======
+        ArrayList<MessageEntity> messages = new ArrayList<>(this.message_service.findChat(current_advisor, client));
+        mv.addObject("client", client);
+        mv.addObject("messages", messages);
+        
+        return mv;
+    }
+    
+    /**
+     * Path : /chat_advisor
+     * Method : POST
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/chat_advisor", method = RequestMethod.POST)
+    public ModelAndView chat_advisor_post(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        ModelAndView mv;
+        
+        String client_id = request.getParameter("id");
+        if(null == client_id || client_id.equals("")){
+            mv = new ModelAndView("advisor/managementClients");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        UserEntity client = this.user_service.find(client_id);
+        if(null == client){
+            mv = new ModelAndView("advisor/managementClients");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        HttpSession session = request.getSession(false);
+        if(null == session){
+            return new ModelAndView("index");
+        }
+        
+        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        if(null == current_advisor_id || current_advisor_id.equals("")){
+            return new ModelAndView("index");
+        }
+        
+        AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
+        if(null == current_advisor){
+            return new ModelAndView("index");
+        }
+        
+        String message_content = request.getParameter("message_content");
+        if(null == message_content || message_content.equals("")){
+            return this.chat_advisor_get(request, response);
+        }
+        
+        MessageEntity message = new MessageEntity(message_content);
+        message.setSender(current_advisor);
+        message.setRecipient(client);
+        this.message_service.save(message);
+        
+        return this.chat_advisor_get(request, response);
+    }
+
+    /**
+     * Path : /client_dashboard
+     * Method : GET
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/client_dashboard", method = RequestMethod.GET)
+    public ModelAndView client_dashboard(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        ModelAndView mv = new ModelAndView("advisor/clientDashboard");
+        
+        String client_id = request.getParameter("id");
+        if(null == client_id || client_id.equals("")){
+            mv = new ModelAndView("advisor/clientDashboard");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        ClientEntity client = this.client_service.find(client_id);
+        if(null == client){
+            mv = new ModelAndView("advisor/clientDashboard");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        mv.addObject("client", client);
+        return mv;
+    }
+>>>>>>> 663c91bac5a8142b92b99f06d205a7ecb5448c36
 }

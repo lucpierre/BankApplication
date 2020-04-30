@@ -53,4 +53,26 @@ public class MessageDAOImpl extends GenericDAOImpl<MessageEntity> implements Mes
             return null;
         }
     }
+<<<<<<< HEAD
+=======
+    
+    /**
+     * Retrieves the list of messages between two users.
+     * @param first_user
+     * @param second_user
+     * @return MessageEntity list
+     */
+    @Override
+    @Transactional
+    public List<MessageEntity> findChat(UserEntity first_user, UserEntity second_user){
+        try {
+            Query query = this.getEm().createNamedQuery("find_chat");
+            query.setParameter("first_user", first_user);
+            query.setParameter("second_user", second_user);
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+>>>>>>> 663c91bac5a8142b92b99f06d205a7ecb5448c36
 }

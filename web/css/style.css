@@ -42,6 +42,10 @@ section {
     border-radius: 10px 10px 10px 10px;
 }
 
+.btn i {
+    font-size: 17px;
+}
+
 /*
 ================================================================================
 */
@@ -121,6 +125,14 @@ section {
 /*
     CSS pour le chat
 */
+<<<<<<< HEAD
+=======
+.chat {
+    max-height: 600px;
+    overflow: auto;
+}
+
+>>>>>>> 663c91bac5a8142b92b99f06d205a7ecb5448c36
 .media {
     padding : 1.5rem;
 }
