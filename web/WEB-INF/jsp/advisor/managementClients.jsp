@@ -61,11 +61,10 @@
                     <table class="table">
                         <thead class="header">
                             <tr class="contents">    
-                                <th scope="col" style="width: 4em;">Catégorie</th>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Prénom</th>
+                                <th scope="col" style="width: 5em;">Catégorie</th>
+                                <th scope="col">Identité</th>
                                 <th scope="col">Téléphone</th>
-                                <th scope="col" style="width: 10em;">Actions</th>
+                                <th scope="col" style="width: 15em;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -79,9 +78,12 @@
                                             <i class="material-icons align-bottom">person_outline</i>
                                         </c:if>
                                     </td>
-                                    <td><c:out value="${ client.lastName }" /></td>
-                                    <td><c:out value="${ client.firstName }" /></td>
-                                    <td><c:out value="${ client.phone }" /></td>
+                                    <td>
+                                        <a href="client_dashboard.htm?id=${client.id}">
+                                            ${ client.civility } ${ client.lastName } ${ client.firstName }
+                                        </a>
+                                    </td>
+                                    <td>${ client.phone }</td>
                                     <td class="text-right">
                                         <a class="btn btn-secondary btn-sm" href="edit_client.htm?id=${client.id}" role="button">
                                             <i class="material-icons align-bottom">edit</i>
@@ -105,11 +107,10 @@
                     <table class="table">
                         <thead class="header">
                             <tr class="contents">    
-                                <th scope="col" style="width: 4em;">Catégorie</th>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Prénom</th>
+                                <th scope="col" style="width: 5em;">Catégorie</th>
+                                <th scope="col">Identité</th>
                                 <th scope="col">Téléphone</th>
-                                <th scope="col" style="width: 13em;">Actions</th>
+                                <th scope="col" style="width: 15em;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,9 +124,12 @@
                                             <i class="material-icons align-bottom">person_outline</i>
                                         </c:if>
                                     </td>
-                                    <td><c:out value="${ client.lastName }" /></td>
-                                    <td><c:out value="${ client.firstName }" /></td>
-                                    <td><c:out value="${ client.phone }" /></td>
+                                    <td>
+                                        <a href="client_dashboard.htm?id=${client.id}">
+                                            ${ client.civility } ${ client.lastName } ${ client.firstName }
+                                        </a>
+                                    </td>
+                                    <td>${ client.phone }</td>
                                     <td class="text-right">
                                         <a class="btn btn-secondary btn-sm" href="edit_client.htm?id=${client.id}" role="button">
                                             <i class="material-icons align-bottom">edit</i>
