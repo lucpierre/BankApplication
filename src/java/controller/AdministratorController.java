@@ -61,11 +61,8 @@ public class AdministratorController extends AbstractController {
     protected ModelAndView handleRequestInternal(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ArrayList<AdvisorEntity> advisors = (ArrayList)this.advisor_service.findAll();
-        
         ModelAndView mv = new ModelAndView("advisor/administrator/managementAdvisors");
-        mv.addObject("advisors", advisors.toArray());
-        return mv;
+        return this.list_advisor(mv);
     }
     //==========================================================================
     

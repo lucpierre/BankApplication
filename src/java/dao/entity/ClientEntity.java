@@ -1,13 +1,12 @@
 package dao.entity;
 
 import java.io.Serializable;
-<<<<<<< HEAD
-=======
 import java.security.NoSuchAlgorithmException;
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,8 +18,35 @@ import javax.persistence.Table;
 @DiscriminatorValue("ClientEntity")
 public class ClientEntity extends UserEntity implements Serializable {
     
-    public ClientEntity(){}
+    /**
+     * Preferred advisor
+     */
+    @ManyToOne
+    @JoinColumn(name="advisor_fk")
+    private AdvisorEntity advisor;
     
+    //////////////////////////
+    // Methods             //
+    ////////////////////////
+    
+    /**
+     * Empty constructor, set all the fields with the default value
+     */
+    public ClientEntity(){super();}
+    
+    /**
+     * Constructor
+     * @param address
+     * @param birthday
+     * @param civility
+     * @param first_name
+     * @param last_name
+     * @param login
+     * @param mail
+     * @param password
+     * @param phone
+     * @throws NoSuchAlgorithmException 
+     */
     public ClientEntity(
             String address,
             Date birthday,
@@ -31,11 +57,7 @@ public class ClientEntity extends UserEntity implements Serializable {
             String mail,
             String password,
             String phone
-<<<<<<< HEAD
-    ){
-=======
     ) throws NoSuchAlgorithmException{
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
         super(
             address,
             birthday,
@@ -49,4 +71,19 @@ public class ClientEntity extends UserEntity implements Serializable {
         );
     }
 
+    /**
+     * Get the preferred advisor
+     * @return the preferred advisor
+     */
+    public AdvisorEntity getAdvisor() {
+        return advisor;
+    }
+
+    /**
+     * Set the preferred advisor
+     * @param new_advisor 
+     */
+    public void setAdvisor(AdvisorEntity new_advisor) {
+        this.advisor = new_advisor;
+    }
 }

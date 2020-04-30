@@ -5,10 +5,7 @@
     <class>dao.NewEntity</class>
     <class>dao.entity.ClientEntity</class>
     <class>dao.entity.AdvisorEntity</class>
-<<<<<<< HEAD
-=======
     <class>dao.entity.ProfessionalEntity</class>
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/BankProject"/>

@@ -1,10 +1,7 @@
 package dao.entity;
 
 import java.io.Serializable;
-<<<<<<< HEAD
-=======
 import java.security.NoSuchAlgorithmException;
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -47,11 +44,7 @@ public class ProfessionalEntity extends ClientEntity implements Serializable {
             String siret,
             String siren,
             String h_o_address
-<<<<<<< HEAD
-    ){
-=======
     ) throws NoSuchAlgorithmException{
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
         super(
             address,
             birthday,
@@ -85,19 +78,11 @@ public class ProfessionalEntity extends ClientEntity implements Serializable {
         this.siren = siren;
     }
 
-<<<<<<< HEAD
-    public String getHead_office_address() {
-        return head_office_address;
-    }
-
-    public void setHead_office_address(String head_office_address) {
-=======
     public String getHeadOfficeAddress() {
         return head_office_address;
     }
 
     public void setHeadOfficeAddress(String head_office_address) {
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
         this.head_office_address = head_office_address;
     }
 }

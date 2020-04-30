@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao.entity;
 
 import java.io.Serializable;
-<<<<<<< HEAD
-=======
 import java.security.NoSuchAlgorithmException;
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -24,8 +19,37 @@ import javax.persistence.Table;
 @DiscriminatorValue("AdvisorEntity")
 public class AdvisorEntity extends UserEntity implements Serializable {
     
-    public AdvisorEntity(){super();}
+    /**
+     * Supervised clients list 
+     */
+    @OneToMany(mappedBy = "advisor")
+    private List<ClientEntity> clients;
     
+    //////////////////////////
+    // Methods             //
+    ////////////////////////
+    
+    /**
+     * Empty constructor, set all the fields with the default value
+     */
+    public AdvisorEntity(){
+        super();
+        this.clients = new ArrayList<>();
+    }
+    
+    /**
+     * Constructor
+     * @param address
+     * @param birthday
+     * @param civility
+     * @param first_name
+     * @param last_name
+     * @param login
+     * @param mail
+     * @param password
+     * @param phone
+     * @throws NoSuchAlgorithmException 
+     */
     public AdvisorEntity(
             String address,
             Date birthday,
@@ -36,11 +60,7 @@ public class AdvisorEntity extends UserEntity implements Serializable {
             String mail,
             String password,
             String phone
-<<<<<<< HEAD
-    ){
-=======
     ) throws NoSuchAlgorithmException{
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
         super(
             address,
             birthday,
@@ -52,5 +72,46 @@ public class AdvisorEntity extends UserEntity implements Serializable {
             password,
             phone
         );
+        this.clients = new ArrayList<>();
+    }
+
+    /**
+     * Getter on the clients list
+     * @return the supervised clients list
+     */
+    public List<ClientEntity> getClients() {
+        return this.clients;
+    }
+    
+    /**
+     * Getter on the clients list
+     * @param clients
+     */
+    public void setClients(List<ClientEntity> clients) {
+        this.clients = clients;
+    }
+
+    /**
+     * Add a client to the supervised clients list
+     * @param new_client 
+     */
+    public void addClient(ClientEntity new_client) {
+        if(!this.clients.contains(new_client)){
+            this.clients.add(new_client);
+            new_client.setAdvisor(this);
+        }
+    }
+    
+    /**
+     * Remove a client from the supervised clients list
+     * @param client 
+     */
+    public void removeClient(ClientEntity client) {
+        if(this.clients.contains(client)){
+            this.clients.remove(client);
+            if(client.getAdvisor() == this){
+                client.setAdvisor(null);
+            }
+        }
     }
 }

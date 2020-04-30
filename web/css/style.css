@@ -23,27 +23,13 @@ section {
 
 .section-title {
     border-bottom: solid 3px #202340;
-    margin-bottom: 2rem;
-<<<<<<< HEAD
+    margin-bottom: 1rem;
 }
 
-.jumbotron {
-    padding : 24px;
-}
-
-/*
-================================================================================
-*/
-
-/*
-    CSS pour la page de connexion
-*/
-.connexion-page{
-    background-color: #202340;
-    color: white;
-}
-
-=======
+.sub-section-title {
+    border-bottom: solid 1px #202340;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
 }
 
 .jumbotron {
@@ -68,7 +54,6 @@ section {
     color: white;
 }
 
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 /*
 ================================================================================
 */
@@ -93,10 +78,7 @@ section {
 
 .menu li {
     margin-top: 2rem;
-<<<<<<< HEAD
-=======
     padding-left: 1rem;
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 }
 
 .menu i {
@@ -110,24 +92,13 @@ section {
 /*
     CSS pour les cards
 */
-<<<<<<< HEAD
-.card-img-top {
-    max-height: 200px;
-    max-width: 200px;
-    
-=======
 .card-img {
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
     /* Permet de centrer les images */
     display: block;
     margin-right: auto;
     margin-left: auto;
 }
 
-<<<<<<< HEAD
-.card-body {
-    max-height: 200px;
-=======
 .card-img-top {
     max-height: 200px;
     max-width: 200px;
@@ -141,5 +112,23 @@ section {
 .card-body {
     max-height: 200px;
     border-top: solid 1px lightgray;
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
+}
+
+/*
+================================================================================
+*/
+
+/*
+    CSS pour le chat
+*/
+.media {
+    padding : 1.5rem;
+}
+
+.chat-advisor-message {
+    background-color: #eeeeee;
+}
+
+.message-content-input {
+    border-radius: 5rem 5rem 5rem 5rem;
 }

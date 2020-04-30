@@ -5,18 +5,12 @@
  */
 package fixtures;
 
-<<<<<<< HEAD
-=======
 import dao.entity.AdministratorEntity;
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.ProfessionalEntity;
 import dao.entity.UserEntity;
-<<<<<<< HEAD
-=======
 import java.security.NoSuchAlgorithmException;
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -30,53 +24,6 @@ public class UserFixtures {
     
     public UserFixtures(){
         users = new ArrayList<>();
-<<<<<<< HEAD
-        
-        users.add(
-            new ClientEntity(
-                "client_address",
-                new Date(),
-                true,
-                "client_first_name",
-                "client_last_name",
-                "client_login",
-                "client@mail.com",
-                "client_password",
-                "0011223344"
-            )
-        );
-        
-        users.add(
-            new ProfessionalEntity(
-                "professional_address",
-                new Date(),
-                true,
-                "professional_first_name",
-                "professional_last_name",
-                "professional_login",
-                "professional@mail.com",
-                "professional_password",
-                "5566778899",
-                "siret",
-                "siren",
-                "head_office_address"
-            )
-        );
-        
-        users.add(
-            new AdvisorEntity(
-                "advisor_address",
-                new Date(),
-                true,
-                "advisor_first_name",
-                "advisor_last_name",
-                "advisor_login",
-                "advisor@mail.com",
-                "advisor_password",
-                "9988776655"
-            )
-        );
-=======
         try{
             users.add(
                 new ClientEntity(
@@ -141,7 +88,6 @@ public class UserFixtures {
             System.err.println("An error occured during the loading of the users fixtures");
             System.err.println(e.getMessage());
         }
->>>>>>> d16e95e926435aa011121ce5652b8dc5f0e1266b
     }
     
     public ArrayList<UserEntity> getUsers(){
