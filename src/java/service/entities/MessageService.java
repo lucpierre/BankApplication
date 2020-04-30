@@ -17,4 +17,5 @@ public interface MessageService {
     public void delete(MessageEntity entity);
     public List<MessageEntity> findBySender(UserEntity sender);
     public List<MessageEntity> findBySenderAndRecipient(UserEntity sender, UserEntity recipient);
+    public List<MessageEntity> findChat(UserEntity first_user, UserEntity second_user);
 }

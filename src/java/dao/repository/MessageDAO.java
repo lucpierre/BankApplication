@@ -11,4 +11,5 @@ import java.util.List;
 public interface MessageDAO extends GenericDAO<MessageEntity>{
     public List<MessageEntity> findBySender(UserEntity sender);
     public List<MessageEntity> findBySenderAndRecipient(UserEntity sender, UserEntity recipient);
+    public List<MessageEntity> findChat(UserEntity first_user, UserEntity second_user);
 }
