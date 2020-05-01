@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
+import service.SessionService;
 import service.entities.AdvisorService;
 import service.entities.AdvisorServiceImpl;
 import service.entities.ClientService;
@@ -38,10 +39,14 @@ public class UserController extends AbstractController {
     @Autowired
     private final ClientService client_service;
     
+    @Autowired
+    private final SessionService session_service;
+    
     public UserController() {
         this.user_service = new UserServiceImpl();
         this.advisor_service = new AdvisorServiceImpl();
         this.client_service = new ClientServiceImpl();
+        this.session_service = new SessionService();
     }
     
     //==========================================================================
@@ -97,12 +102,7 @@ public class UserController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response)
     {    
-        // Récupération de la session existante
-        HttpSession session = request.getSession();
-
-        if(null != session){
-            session.invalidate();
-        }
+        this.session_service.destroySession(request);
         
         ModelAndView mv = new ModelAndView("index");
         mv.addObject("logout", true);
@@ -150,7 +150,7 @@ public class UserController extends AbstractController {
         }
         
         // Création de la session
-        HttpSession session = this.createSession(request, user);
+        HttpSession session = this.session_service.createSession(request, user);
         
         // Redirection vers le bon tableau de bord selon le type d'utilisateur
         return this.dashboard(request, response);
@@ -170,12 +170,11 @@ public class UserController extends AbstractController {
             HttpServletResponse response)
     {
         // Récupération de la session existante
-        HttpSession session = request.getSession();
-        
-        String user_id = (String)session.getAttribute("user_id");
-        if(user_id == null || user_id.equals("")){
-            return this.logout(request, response);
+        String user_id = (String)this.session_service.getSessionAttribute(request, "user_id");
+        if(null == user_id){
+            return ErrorController.expiredSession();
         }
+        
         
         UserEntity u = user_service.find(user_id);
         if(null == u){
@@ -201,31 +200,6 @@ public class UserController extends AbstractController {
     //==========================================================================
     // Méthodes internes
     //==========================================================================
-    
-    /**
-     * Crée une session pour l'utilisateur.
-     * 
-     * @param request
-     * @param u
-     * @return 
-     */
-    private HttpSession createSession(HttpServletRequest request, UserEntity u){
-        // Crée une nouvelle session si aucune n'existe
-        HttpSession session = request.getSession(true);
-        
-        // Ajout des champs utilisateurs à la session
-        session.setAttribute("user_id", Long.toString(u.getId()));
-        session.setAttribute("user_type", u.getUserType());
-        session.setAttribute("user_last_name", u.getLastName());
-        session.setAttribute("user_first_name", u.getFirstName());
-        session.setAttribute("user_civility", u.getCivility());
-        
-        // Fixe le temps avant la destruction automatique de la session (en seconde)
-        // 600 secondes = 10 minutes
-        session.setMaxInactiveInterval(600);
-        
-        return session;
-    }
     
     /**
      * Peuple la base de données

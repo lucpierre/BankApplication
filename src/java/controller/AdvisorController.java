@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import service.PasswordService;
+import service.SessionService;
 import service.entities.AdvisorService;
 import service.entities.AdvisorServiceImpl;
 import service.entities.ClientService;
@@ -49,6 +50,9 @@ public class AdvisorController extends AbstractController {
     @Autowired
     private final ProfessionalService professional_service;
     
+    @Autowired
+    private final SessionService session_service;
+    
     /**
      * Constructor
      */
@@ -58,6 +62,7 @@ public class AdvisorController extends AbstractController {
         this.client_service = new ClientServiceImpl();
         this.message_service = new MessageServiceImpl();
         this.professional_service = new ProfessionalServiceImpl();
+        this.session_service = new SessionService();
     }
     
     /**
@@ -93,14 +98,9 @@ public class AdvisorController extends AbstractController {
         ArrayList<ClientEntity> clients = (ArrayList)this.client_service.findAll();
         mv.addObject("clients", clients.toArray());
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return ErrorController.expiredSession();
-        }
-        
-        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        String current_advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == current_advisor_id || current_advisor_id.equals("")){
-            return ErrorController.expiredSession();
+            return ErrorController.error404();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
@@ -295,12 +295,7 @@ public class AdvisorController extends AbstractController {
     {
         ModelAndView mv = new ModelAndView("advisor/form_client");
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return ErrorController.expiredSession();
-        }
-        
-        String advisor_id = (String)session.getAttribute("user_id");
+        String advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == advisor_id || advisor_id.equals("")){
             return ErrorController.expiredSession();
         }
@@ -391,12 +386,7 @@ public class AdvisorController extends AbstractController {
     {
         ModelAndView mv = new ModelAndView("advisor/managementClients");
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return ErrorController.expiredSession();
-        }
-        
-        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        String current_advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == current_advisor_id || current_advisor_id.equals("")){
             return ErrorController.expiredSession();
         }
@@ -470,12 +460,7 @@ public class AdvisorController extends AbstractController {
             return this.list_clients(request, mv);
         }
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return ErrorController.expiredSession();
-        }
-        
-        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        String current_advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == current_advisor_id || current_advisor_id.equals("")){
             return ErrorController.expiredSession();
         }
@@ -522,12 +507,7 @@ public class AdvisorController extends AbstractController {
             return this.list_clients(request, mv);
         }
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return ErrorController.expiredSession();
-        }
-        
-        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        String current_advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == current_advisor_id || current_advisor_id.equals("")){
             return ErrorController.expiredSession();
         }
