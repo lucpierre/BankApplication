@@ -1,9 +1,7 @@
 package controller;
 
-import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.MessageEntity;
-import dao.entity.UserEntity;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import service.entities.ClientService;
 import service.entities.ClientServiceImpl;
+import service.entities.MessageService;
+import service.entities.MessageServiceImpl;
 
 /**
  *
@@ -27,8 +27,12 @@ public class ClientController extends AbstractController {
     @Autowired
     private final ClientService client_service;
     
+    @Autowired
+    private final MessageService message_service;
+    
     public ClientController() {
         this.client_service = new ClientServiceImpl();
+        this.message_service = new MessageServiceImpl();
     }
     
     /**
@@ -76,38 +80,55 @@ public class ClientController extends AbstractController {
             return new ModelAndView("index");
         }
         
-        /**
-         * =====================================================================
-         * Mock to create the chet view
-         */
-        ArrayList<MessageEntity> messages = new ArrayList<>();
-        MessageEntity client_send = new MessageEntity("Bonjour Mr le conseiller");
-        client_send.setSender(current_client.getAdvisor());
-        client_send.setRecipient(current_client);
-        //---------
-        MessageEntity advisor_send = new MessageEntity("Bonjour Mr le client");
-        advisor_send.setSender(current_client);
-        advisor_send.setRecipient(current_client.getAdvisor());
-        //---------
-        MessageEntity advisor_send2 = new MessageEntity("Comment allez vous ?");
-        advisor_send2.setSender(current_client);
-        advisor_send2.setRecipient(current_client.getAdvisor());
-        //---------
-        MessageEntity client_send2 = new MessageEntity("Très bien et vous ?");
-        client_send2.setSender(current_client.getAdvisor());
-        client_send2.setRecipient(current_client);
-        
-        messages.add(client_send);
-        messages.add(advisor_send);
-        messages.add(advisor_send2);
-        messages.add(client_send2);
-        
+        ArrayList<MessageEntity> messages = new ArrayList<>(this.message_service.findChat(current_client, current_client.getAdvisor()));
+        mv.addObject("client", current_client);
         mv.addObject("messages", messages);
-        /**
-         * =====================================================================
-         */
         
         return mv;
+    }
+    
+    /**
+     * Path : /chat_client
+     * Method : POST
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/chat_client", method = RequestMethod.POST)
+    public ModelAndView chat_client_post(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        ModelAndView mv;
+        
+        HttpSession session = request.getSession(false);
+        if(null == session){
+            return new ModelAndView("index");
+        }
+        
+        String current_client_id = (String)(session.getAttribute("user_id"));
+        if(null == current_client_id || current_client_id.equals("")){
+            return new ModelAndView("index");
+        }
+        
+        ClientEntity current_client = this.client_service.find(current_client_id);
+        if(null == current_client){
+            return new ModelAndView("index");
+        }
+        
+        String message_content = request.getParameter("message_content");
+        if(null == message_content || message_content.equals("")){
+            return this.chat_client_get(request, response);
+        }
+        
+        MessageEntity message = new MessageEntity(message_content);
+        message.setSender(current_client);
+        message.setRecipient(current_client.getAdvisor());
+        this.message_service.save(message);
+        
+        return this.chat_client_get(request, response);
     }
     
 }
