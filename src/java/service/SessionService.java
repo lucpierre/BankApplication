@@ -19,7 +19,7 @@ public class SessionService {
      * @param u
      * @return 
      */
-    private HttpSession createSession(HttpServletRequest request, UserEntity u){
+    public HttpSession createSession(HttpServletRequest request, UserEntity u){
         // Crée une nouvelle session si aucune n'existe
         HttpSession session = request.getSession(true);
         
@@ -56,6 +56,19 @@ public class SessionService {
         }
         
         return obj;
+    }
+    
+    /**
+     * Destroy session if it's existing
+     * 
+     * @param request 
+     */
+    public void destroySession(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        
+        if(null != session){
+            session.invalidate();
+        }
     }
     
 }
