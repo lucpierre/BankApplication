@@ -59,6 +59,6 @@ public class ErrorController extends AbstractController {
      */
     public static ModelAndView error403()
     {
-        return new ModelAndView("errors/404error");
+        return new ModelAndView("errors/403error");
     }
 }
