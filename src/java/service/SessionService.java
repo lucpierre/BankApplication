@@ -45,7 +45,7 @@ public class SessionService {
      * @return Object || null
      */
     public Object getSessionAttribute(HttpServletRequest request, String key){
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         if(null == session){
             return null;
         }
