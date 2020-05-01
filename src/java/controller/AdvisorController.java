@@ -8,7 +8,6 @@ import dao.entity.UserEntity;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import service.PasswordService;
+import service.SecurityService;
 import service.SessionService;
 import service.entities.AdvisorService;
 import service.entities.AdvisorServiceImpl;
@@ -51,6 +51,9 @@ public class AdvisorController extends AbstractController {
     private final ProfessionalService professional_service;
     
     @Autowired
+    private final SecurityService security_service;
+    
+    @Autowired
     private final SessionService session_service;
     
     /**
@@ -62,6 +65,7 @@ public class AdvisorController extends AbstractController {
         this.client_service = new ClientServiceImpl();
         this.message_service = new MessageServiceImpl();
         this.professional_service = new ProfessionalServiceImpl();
+        this.security_service = new SecurityService();
         this.session_service = new SessionService();
     }
     
@@ -79,6 +83,10 @@ public class AdvisorController extends AbstractController {
     protected ModelAndView handleRequestInternal(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        if(!this.security_service.hasAccess(request, "list_clients_get")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/managementClients");
         return this.list_clients(request, mv);
     }
@@ -128,6 +136,10 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "delete_client_get")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/managementClients");
         
         String user_id = request.getParameter("id");
@@ -162,6 +174,10 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "edit_client_get")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/form_client");
         
         String client_id = request.getParameter("id");
@@ -194,6 +210,10 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "edit_client_post")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/form_client");
         
         String client_id = request.getParameter("id");
@@ -276,6 +296,10 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "add_client_get")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/form_client");
         return mv;
     }
@@ -293,6 +317,10 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response)
     {
+        if(!this.security_service.hasAccess(request, "add_client_post")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/form_client");
         
         String advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
@@ -380,10 +408,14 @@ public class AdvisorController extends AbstractController {
      * @throws java.lang.Exception 
      */
     @RequestMapping(value="/add_supervised_client", method = RequestMethod.GET)
-    public ModelAndView add_supervised_client(
+    public ModelAndView add_supervised_client_get(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "add_supervised_client")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/managementClients");
         
         String current_advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
@@ -444,6 +476,10 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "chat_advisor_get")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/chat");
         
         String client_id = request.getParameter("id");
@@ -491,6 +527,10 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "chat_advisor_post")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv;
         
         String client_id = request.getParameter("id");
@@ -540,10 +580,14 @@ public class AdvisorController extends AbstractController {
      * @throws java.lang.Exception 
      */
     @RequestMapping(value="/client_dashboard", method = RequestMethod.GET)
-    public ModelAndView client_dashboard(
+    public ModelAndView client_dashboard_get(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "client_dashboard")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/clientDashboard");
         
         String client_id = request.getParameter("id");
