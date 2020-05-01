@@ -213,6 +213,11 @@ public class AdministratorController extends AbstractController {
             if(!PasswordService.compareString(password, advisor.getPassword())){
                 advisor.setPassword(password);
             }
+            
+            this.advisor_service.update((AdvisorEntity)advisor);
+            mv.addObject("info_msg", "Les informations ont été mises à jour.");
+            mv.addObject("advisor", advisor);
+            return mv;
         }
         catch(Exception e){
             System.err.println(e.getMessage());
@@ -220,11 +225,6 @@ public class AdministratorController extends AbstractController {
             mv.addObject("advisor", advisor);
             return mv;
         }
-        
-        this.advisor_service.update((AdvisorEntity)advisor);
-        mv.addObject("info_msg", "Les informations ont été mises à jour.");
-        mv.addObject("advisor", advisor);
-        return mv;
     }
     
     /**
@@ -291,6 +291,18 @@ public class AdministratorController extends AbstractController {
             advisor.setPhone(phone);
             advisor.setAddress(address);
             advisor.setBirthday(birthday);
+            
+            if(user_type.equals("Administrateur")){
+                this.administrator_service.save((AdministratorEntity)advisor);
+                mv.addObject("info_msg", "L'administrateur est bien enregistré.");
+            }
+            else{
+                this.advisor_service.save(advisor);
+                mv.addObject("info_msg", "Le conseiller est bien enregistré.");
+            }
+
+            mv.addObject("advisor", advisor);
+            return mv;
         }
         catch(Exception e){
             System.err.println(e.getMessage());
@@ -298,17 +310,5 @@ public class AdministratorController extends AbstractController {
             mv.addObject("advisor", advisor);
             return mv;
         }
-        
-        if(user_type.equals("Administrateur")){
-            this.administrator_service.save((AdministratorEntity)advisor);
-            mv.addObject("info_msg", "L'administrateur est bien enregistré.");
-        }
-        else{
-            this.advisor_service.save(advisor);
-            mv.addObject("info_msg", "Le conseiller est bien enregistré.");
-        }
-        
-        mv.addObject("advisor", advisor);
-        return mv;
     }
 }

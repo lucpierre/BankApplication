@@ -232,18 +232,22 @@ public class UserController extends AbstractController {
      */
     private void loadFixtures(){
         ArrayList<UserEntity> users = new UserFixtures().getUsers();
-        
-        for(UserEntity user : users){
-            this.user_service.save(user);
+        try{
+            for(UserEntity user : users){
+                this.user_service.save(user);
+            }
+
+            // Ajout du client d'id 1 (d'après les fixtures) à la liste des clients supervisés du conseiller d'id 3 (toujours d'après les fixtures
+            AdvisorEntity a = ((AdvisorEntity)(user_service.find("3"))); 
+            ClientEntity c = ((ClientEntity)(user_service.find("1")));
+
+            a.addClient(c);
+            this.advisor_service.update(a);
+            this.client_service.update(c);
         }
-        
-        // Ajout du client d'id 1 (d'après les fixtures) à la liste des clients supervisés du conseiller d'id 3 (toujours d'après les fixtures
-        AdvisorEntity a = ((AdvisorEntity)(user_service.find("3"))); 
-        ClientEntity c = ((ClientEntity)(user_service.find("1")));
-        
-        a.addClient(c);
-        this.advisor_service.update(a);
-        this.client_service.update(c);
+        catch(Exception e){
+            System.err.println("Error during the loading of the fixtures.");
+        }
     }
     
 }

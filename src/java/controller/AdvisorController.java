@@ -242,19 +242,19 @@ public class AdvisorController extends AbstractController {
             if(!PasswordService.compareString(password, client.getPassword())){
                 client.setPassword(password);
             }
+            
+            if(client instanceof ProfessionalEntity){
+                this.professional_service.update((ProfessionalEntity)client);
+            }
+            else{
+                this.client_service.update((ClientEntity)client);
+            }
         }
         catch(Exception e){
             System.err.println(e.getMessage());
             mv.addObject("alert_msg", "Une erreur s'est produite durant la soumission du formulaire.");
             mv.addObject("client", client);
             return mv;
-        }
-        
-        if(client instanceof ProfessionalEntity){
-            this.professional_service.update((ProfessionalEntity)client);
-        }
-        else{
-            this.client_service.update((ClientEntity)client);
         }
         
         mv.addObject("info_msg", "Les informations ont été mises à jour.");
@@ -287,12 +287,11 @@ public class AdvisorController extends AbstractController {
      * @param request
      * @param response
      * @return 
-     * @throws java.lang.Exception 
      */
     @RequestMapping(value="/add_client", method = RequestMethod.POST)
     public ModelAndView add_client_post(
             HttpServletRequest request,
-            HttpServletResponse response) throws Exception
+            HttpServletResponse response)
     {
         ModelAndView mv = new ModelAndView("advisor/form_client");
         
@@ -347,6 +346,22 @@ public class AdvisorController extends AbstractController {
             client.setPhone(phone);
             client.setAddress(address);
             client.setBirthday(birthday);
+            
+            if(user_type.equals("Professionnel")){
+                this.professional_service.save((ProfessionalEntity)client);
+            }
+            else{
+                this.client_service.save(client);
+            }
+            
+            // Get the new client in the database to add it to the supervised clientd of the current advisor
+            // Don't test if the result is not null beacause we just insert it
+            ClientEntity database_client = (ClientEntity) this.user_service.findByLoginPassword(login, password);
+
+            current_advisor.addClient(database_client);
+
+            this.client_service.update(database_client);
+            this.advisor_service.update(current_advisor);
         }
         catch(Exception e){
             System.err.println(e.getMessage());
@@ -354,22 +369,6 @@ public class AdvisorController extends AbstractController {
             mv.addObject("client", client);
             return mv;
         }
-        
-        if(user_type.equals("Professionnel")){
-            this.professional_service.save((ProfessionalEntity)client);
-        }
-        else{
-            this.client_service.save(client);
-        }
-        
-        // Get the new client in the database to add it to the supervised clientd of the current advisor
-        // Don't test if the result is not null beacause we just insert it
-        ClientEntity database_client = (ClientEntity) this.user_service.findByLoginPassword(login, password);
-        
-        current_advisor.addClient(database_client);
-        
-        this.client_service.update(database_client);
-        this.advisor_service.update(current_advisor);
         
         mv.addObject("info_msg", "Le client est bien enregistré.");
         mv.addObject("client", client);

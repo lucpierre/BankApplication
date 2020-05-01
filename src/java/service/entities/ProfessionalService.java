@@ -1,6 +1,7 @@
 package service.entities;
 
 import dao.entity.ProfessionalEntity;
+import exceptions.LoginAlreadyUsedException;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
 public interface ProfessionalService {
     public ProfessionalEntity find(String id);
     public List<ProfessionalEntity> findAll();
-    public void save(ProfessionalEntity u);
-    public void update(ProfessionalEntity entity);
+    public void save(ProfessionalEntity u) throws LoginAlreadyUsedException;
+    public void update(ProfessionalEntity entity) throws LoginAlreadyUsedException;
     public void delete(ProfessionalEntity entity);
 }

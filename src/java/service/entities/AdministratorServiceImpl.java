@@ -1,7 +1,10 @@
 package service.entities;
 
 import dao.entity.AdministratorEntity;
+import dao.entity.UserEntity;
 import dao.repository.AdministratorDAO;
+import dao.repository.UserDAO;
+import exceptions.LoginAlreadyUsedException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ public class AdministratorServiceImpl implements AdministratorService {
     
     @Autowired
     AdministratorDAO dao;
+    
+    @Autowired
+    UserDAO user_dao;
 
     @Override
     public AdministratorEntity find(String id) {
@@ -28,13 +34,24 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
     
     @Override
-    public void save(AdministratorEntity entity){
+    public void save(AdministratorEntity entity) throws LoginAlreadyUsedException{
+        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
+        if(null != user){
+            throw new LoginAlreadyUsedException();
+        }
+        
         entity.setCreatedAt(new Date());
+        entity.setUpdatedAt(new Date());
         this.dao.save(entity);
     }
     
     @Override
-    public void update(AdministratorEntity entity){
+    public void update(AdministratorEntity entity) throws LoginAlreadyUsedException{
+        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
+        if(null != user){
+            throw new LoginAlreadyUsedException();
+        }
+        
         entity.setUpdatedAt(new Date());
         this.dao.update(entity);
     }

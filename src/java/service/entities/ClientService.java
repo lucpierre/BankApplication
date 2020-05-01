@@ -1,5 +1,6 @@
 package service.entities;
 import dao.entity.ClientEntity;
+import exceptions.LoginAlreadyUsedException;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
 public interface ClientService {
     public ClientEntity find(String id);
     public List<ClientEntity> findAll();
-    public void save(ClientEntity u);
-    public void update(ClientEntity entity);
+    public void save(ClientEntity u) throws LoginAlreadyUsedException;
+    public void update(ClientEntity entity) throws LoginAlreadyUsedException;
     public void delete(ClientEntity entity);
 }

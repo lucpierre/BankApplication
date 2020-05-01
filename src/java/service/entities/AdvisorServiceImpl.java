@@ -1,7 +1,10 @@
 package service.entities;
 
 import dao.entity.AdvisorEntity;
+import dao.entity.UserEntity;
 import dao.repository.AdvisorDAO;
+import dao.repository.UserDAO;
+import exceptions.LoginAlreadyUsedException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ public class AdvisorServiceImpl implements AdvisorService {
     
     @Autowired
     AdvisorDAO dao;
+    
+    @Autowired
+    UserDAO user_dao;
 
     @Override
     public AdvisorEntity find(String id) {
@@ -28,13 +34,24 @@ public class AdvisorServiceImpl implements AdvisorService {
     }
     
     @Override
-    public void save(AdvisorEntity entity){
+    public void save(AdvisorEntity entity) throws LoginAlreadyUsedException{
+        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
+        if(null != user){
+            throw new LoginAlreadyUsedException();
+        }
+        
         entity.setCreatedAt(new Date());
+        entity.setUpdatedAt(new Date());
         this.dao.save(entity);
     }
     
     @Override
-    public void update(AdvisorEntity entity){
+    public void update(AdvisorEntity entity) throws LoginAlreadyUsedException{
+        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
+        if(null != user){
+            throw new LoginAlreadyUsedException();
+        }
+        
         entity.setUpdatedAt(new Date());
         this.dao.update(entity);
     }

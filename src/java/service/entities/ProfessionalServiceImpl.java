@@ -1,7 +1,10 @@
 package service.entities;
 
 import dao.entity.ProfessionalEntity;
+import dao.entity.UserEntity;
 import dao.repository.ProfessionalDAO;
+import dao.repository.UserDAO;
+import exceptions.LoginAlreadyUsedException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     
     @Autowired
     ProfessionalDAO dao;
+    
+    @Autowired
+    UserDAO user_dao;
 
     @Override
     public ProfessionalEntity find(String id) {
@@ -28,13 +34,24 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     }
     
     @Override
-    public void save(ProfessionalEntity entity){
+    public void save(ProfessionalEntity entity) throws LoginAlreadyUsedException{
+        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
+        if(null != user){
+            throw new LoginAlreadyUsedException();
+        }
+        
         entity.setCreatedAt(new Date());
+        entity.setUpdatedAt(new Date());
         this.dao.save(entity);
     }
     
     @Override
-    public void update(ProfessionalEntity entity){
+    public void update(ProfessionalEntity entity) throws LoginAlreadyUsedException{
+        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
+        if(null != user){
+            throw new LoginAlreadyUsedException();
+        }
+        
         entity.setUpdatedAt(new Date());
         this.dao.update(entity);
     }
