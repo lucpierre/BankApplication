@@ -96,9 +96,7 @@ public class MessageServiceImpl implements MessageService{
     public List<MessageEntity> findBySenderAndRecipient(UserEntity sender, UserEntity recipient){
         return dao.findBySenderAndRecipient(sender, recipient);
     }
-<<<<<<< HEAD
-=======
-    
+
     /**
      * Retrieves the list of messages between two users.
      * @param first_user
@@ -109,5 +107,4 @@ public class MessageServiceImpl implements MessageService{
     public List<MessageEntity> findChat(UserEntity first_user, UserEntity second_user){
         return dao.findChat(first_user, second_user);
     }
->>>>>>> 663c91bac5a8142b92b99f06d205a7ecb5448c36
 }

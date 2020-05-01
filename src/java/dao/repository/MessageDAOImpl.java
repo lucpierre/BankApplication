@@ -53,8 +53,6 @@ public class MessageDAOImpl extends GenericDAOImpl<MessageEntity> implements Mes
             return null;
         }
     }
-<<<<<<< HEAD
-=======
     
     /**
      * Retrieves the list of messages between two users.
@@ -74,5 +72,4 @@ public class MessageDAOImpl extends GenericDAOImpl<MessageEntity> implements Mes
             return null;
         }
     }
->>>>>>> 663c91bac5a8142b92b99f06d205a7ecb5448c36
 }

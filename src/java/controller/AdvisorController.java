@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import service.PasswordService;
+import service.SessionService;
 import service.entities.AdvisorService;
 import service.entities.AdvisorServiceImpl;
 import service.entities.ClientService;
@@ -49,6 +50,9 @@ public class AdvisorController extends AbstractController {
     @Autowired
     private final ProfessionalService professional_service;
     
+    @Autowired
+    private final SessionService session_service;
+    
     /**
      * Constructor
      */
@@ -58,6 +62,7 @@ public class AdvisorController extends AbstractController {
         this.client_service = new ClientServiceImpl();
         this.message_service = new MessageServiceImpl();
         this.professional_service = new ProfessionalServiceImpl();
+        this.session_service = new SessionService();
     }
     
     /**
@@ -93,19 +98,14 @@ public class AdvisorController extends AbstractController {
         ArrayList<ClientEntity> clients = (ArrayList)this.client_service.findAll();
         mv.addObject("clients", clients.toArray());
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return new ModelAndView("index");
-        }
-        
-        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        String current_advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == current_advisor_id || current_advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.error404();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         ArrayList<ClientEntity> supervised_clients = new ArrayList(current_advisor.getClients());
@@ -242,19 +242,19 @@ public class AdvisorController extends AbstractController {
             if(!PasswordService.compareString(password, client.getPassword())){
                 client.setPassword(password);
             }
+            
+            if(client instanceof ProfessionalEntity){
+                this.professional_service.update((ProfessionalEntity)client);
+            }
+            else{
+                this.client_service.update((ClientEntity)client);
+            }
         }
         catch(Exception e){
             System.err.println(e.getMessage());
             mv.addObject("alert_msg", "Une erreur s'est produite durant la soumission du formulaire.");
             mv.addObject("client", client);
             return mv;
-        }
-        
-        if(client instanceof ProfessionalEntity){
-            this.professional_service.update((ProfessionalEntity)client);
-        }
-        else{
-            this.client_service.update((ClientEntity)client);
         }
         
         mv.addObject("info_msg", "Les informations ont été mises à jour.");
@@ -287,28 +287,22 @@ public class AdvisorController extends AbstractController {
      * @param request
      * @param response
      * @return 
-     * @throws java.lang.Exception 
      */
     @RequestMapping(value="/add_client", method = RequestMethod.POST)
     public ModelAndView add_client_post(
             HttpServletRequest request,
-            HttpServletResponse response) throws Exception
+            HttpServletResponse response)
     {
         ModelAndView mv = new ModelAndView("advisor/form_client");
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return new ModelAndView("index");
-        }
-        
-        String advisor_id = (String)session.getAttribute("user_id");
+        String advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == advisor_id || advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String user_type = request.getParameter("user_type_input");
@@ -347,6 +341,22 @@ public class AdvisorController extends AbstractController {
             client.setPhone(phone);
             client.setAddress(address);
             client.setBirthday(birthday);
+            
+            if(user_type.equals("Professionnel")){
+                this.professional_service.save((ProfessionalEntity)client);
+            }
+            else{
+                this.client_service.save(client);
+            }
+            
+            // Get the new client in the database to add it to the supervised clientd of the current advisor
+            // Don't test if the result is not null beacause we just insert it
+            ClientEntity database_client = (ClientEntity) this.user_service.findByLoginPassword(login, password);
+
+            current_advisor.addClient(database_client);
+
+            this.client_service.update(database_client);
+            this.advisor_service.update(current_advisor);
         }
         catch(Exception e){
             System.err.println(e.getMessage());
@@ -354,22 +364,6 @@ public class AdvisorController extends AbstractController {
             mv.addObject("client", client);
             return mv;
         }
-        
-        if(user_type.equals("Professionnel")){
-            this.professional_service.save((ProfessionalEntity)client);
-        }
-        else{
-            this.client_service.save(client);
-        }
-        
-        // Get the new client in the database to add it to the supervised clientd of the current advisor
-        // Don't test if the result is not null beacause we just insert it
-        ClientEntity database_client = (ClientEntity) this.user_service.findByLoginPassword(login, password);
-        
-        current_advisor.addClient(database_client);
-        
-        this.client_service.update(database_client);
-        this.advisor_service.update(current_advisor);
         
         mv.addObject("info_msg", "Le client est bien enregistré.");
         mv.addObject("client", client);
@@ -392,19 +386,14 @@ public class AdvisorController extends AbstractController {
     {
         ModelAndView mv = new ModelAndView("advisor/managementClients");
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return new ModelAndView("index");
-        }
-        
-        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        String current_advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == current_advisor_id || current_advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         ArrayList<ClientEntity> supervised_clients = new ArrayList(current_advisor.getClients());
@@ -451,11 +440,7 @@ public class AdvisorController extends AbstractController {
      * @throws java.lang.Exception 
      */
     @RequestMapping(value="/chat_advisor", method = RequestMethod.GET)
-<<<<<<< HEAD
-    public ModelAndView chat_advisor(
-=======
     public ModelAndView chat_advisor_get(
->>>>>>> 663c91bac5a8142b92b99f06d205a7ecb5448c36
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
@@ -475,57 +460,16 @@ public class AdvisorController extends AbstractController {
             return this.list_clients(request, mv);
         }
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return new ModelAndView("index");
-        }
-        
-        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        String current_advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == current_advisor_id || current_advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
-<<<<<<< HEAD
-        /**
-         * =====================================================================
-         * Mock to create the chet view
-         */
-        ArrayList<MessageEntity> messages = new ArrayList<>();
-        MessageEntity client_send = new MessageEntity("Bonjour Mr le conseiller");
-        client_send.setSender(client);
-        client_send.setRecipient(current_advisor);
-        //---------
-        MessageEntity advisor_send = new MessageEntity("Bonjour Mr le client");
-        advisor_send.setSender(current_advisor);
-        advisor_send.setRecipient(client);
-        //---------
-        MessageEntity advisor_send2 = new MessageEntity("Comment allez vous ?");
-        advisor_send2.setSender(current_advisor);
-        advisor_send2.setRecipient(client);
-        //---------
-        MessageEntity client_send2 = new MessageEntity("Très bien et vous ?");
-        client_send2.setSender(client);
-        client_send2.setRecipient(current_advisor);
-        
-        messages.add(client_send);
-        messages.add(advisor_send);
-        messages.add(advisor_send2);
-        messages.add(client_send2);
-        
-        mv.addObject("client", client);
-        mv.addObject("messages", messages);
-        /**
-         * =====================================================================
-         */
-        
-        return mv;
-    }
-=======
         ArrayList<MessageEntity> messages = new ArrayList<>(this.message_service.findChat(current_advisor, client));
         mv.addObject("client", client);
         mv.addObject("messages", messages);
@@ -563,19 +507,14 @@ public class AdvisorController extends AbstractController {
             return this.list_clients(request, mv);
         }
         
-        HttpSession session = request.getSession(false);
-        if(null == session){
-            return new ModelAndView("index");
-        }
-        
-        String current_advisor_id = (String)(session.getAttribute("user_id"));
+        String current_advisor_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == current_advisor_id || current_advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String message_content = request.getParameter("message_content");
@@ -624,5 +563,4 @@ public class AdvisorController extends AbstractController {
         mv.addObject("client", client);
         return mv;
     }
->>>>>>> 663c91bac5a8142b92b99f06d205a7ecb5448c36
 }
