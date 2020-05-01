@@ -67,17 +67,17 @@ public class ClientController extends AbstractController {
         
         HttpSession session = request.getSession(false);
         if(null == session){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String current_client_id = (String)(session.getAttribute("user_id"));
         if(null == current_client_id || current_client_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         ClientEntity current_client = this.client_service.find(current_client_id);
         if(null == current_client){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         ArrayList<MessageEntity> messages = new ArrayList<>(this.message_service.findChat(current_client, current_client.getAdvisor()));
@@ -105,17 +105,17 @@ public class ClientController extends AbstractController {
         
         HttpSession session = request.getSession(false);
         if(null == session){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String current_client_id = (String)(session.getAttribute("user_id"));
         if(null == current_client_id || current_client_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         ClientEntity current_client = this.client_service.find(current_client_id);
         if(null == current_client){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String message_content = request.getParameter("message_content");

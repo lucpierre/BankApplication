@@ -179,7 +179,7 @@ public class UserController extends AbstractController {
         
         UserEntity u = user_service.find(user_id);
         if(null == u){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         if(u instanceof ClientEntity){

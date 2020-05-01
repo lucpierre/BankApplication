@@ -95,17 +95,17 @@ public class AdvisorController extends AbstractController {
         
         HttpSession session = request.getSession(false);
         if(null == session){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String current_advisor_id = (String)(session.getAttribute("user_id"));
         if(null == current_advisor_id || current_advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         ArrayList<ClientEntity> supervised_clients = new ArrayList(current_advisor.getClients());
@@ -297,17 +297,17 @@ public class AdvisorController extends AbstractController {
         
         HttpSession session = request.getSession(false);
         if(null == session){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String advisor_id = (String)session.getAttribute("user_id");
         if(null == advisor_id || advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String user_type = request.getParameter("user_type_input");
@@ -393,17 +393,17 @@ public class AdvisorController extends AbstractController {
         
         HttpSession session = request.getSession(false);
         if(null == session){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String current_advisor_id = (String)(session.getAttribute("user_id"));
         if(null == current_advisor_id || current_advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         ArrayList<ClientEntity> supervised_clients = new ArrayList(current_advisor.getClients());
@@ -472,17 +472,17 @@ public class AdvisorController extends AbstractController {
         
         HttpSession session = request.getSession(false);
         if(null == session){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String current_advisor_id = (String)(session.getAttribute("user_id"));
         if(null == current_advisor_id || current_advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         ArrayList<MessageEntity> messages = new ArrayList<>(this.message_service.findChat(current_advisor, client));
@@ -524,17 +524,17 @@ public class AdvisorController extends AbstractController {
         
         HttpSession session = request.getSession(false);
         if(null == session){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String current_advisor_id = (String)(session.getAttribute("user_id"));
         if(null == current_advisor_id || current_advisor_id.equals("")){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         AdvisorEntity current_advisor = this.advisor_service.find(current_advisor_id);
         if(null == current_advisor){
-            return new ModelAndView("index");
+            return ErrorController.expiredSession();
         }
         
         String message_content = request.getParameter("message_content");
