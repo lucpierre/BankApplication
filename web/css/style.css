@@ -125,6 +125,7 @@ section {
 /*
     CSS pour le chat
 */
+
 .chat {
     max-height: 600px;
     overflow: auto;
