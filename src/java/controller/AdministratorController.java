@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import service.PasswordService;
+import service.SecurityService;
 import service.entities.AdministratorService;
 import service.entities.AdministratorServiceImpl;
 import service.entities.AdvisorService;
@@ -37,6 +38,9 @@ public class AdministratorController extends AbstractController {
     @Autowired
     private final AdministratorService administrator_service;
     
+    @Autowired
+    private final SecurityService security_service;
+    
     /**
      * Constructor
      */
@@ -44,6 +48,7 @@ public class AdministratorController extends AbstractController {
         this.user_service = new UserServiceImpl();
         this.advisor_service = new AdvisorServiceImpl();
         this.administrator_service = new AdministratorServiceImpl();
+        this.security_service = new SecurityService();
     }
     
     //==========================================================================
@@ -61,6 +66,10 @@ public class AdministratorController extends AbstractController {
     protected ModelAndView handleRequestInternal(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        if(!this.security_service.hasAccess(request, "list_advisors_get")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/administrator/managementAdvisors");
         return this.list_advisor(mv);
     }
@@ -96,6 +105,10 @@ public class AdministratorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "delete_advisor_get")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/administrator/managementAdvisors");
         
         String advisor_id = request.getParameter("id");
@@ -142,6 +155,10 @@ public class AdministratorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "edit_advisor_get")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/administrator/form_advisor");
         
         String advisor_id = request.getParameter("id");
@@ -174,6 +191,10 @@ public class AdministratorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "edit_advisor_post")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/administrator/form_advisor");
         
         String advisor_id = request.getParameter("id");
@@ -241,6 +262,10 @@ public class AdministratorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "add_advisor_get")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/administrator/form_advisor");
         return mv;
     }
@@ -259,6 +284,10 @@ public class AdministratorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
+        if(!this.security_service.hasAccess(request, "add_advisor_post")){
+            return ErrorController.error403();
+        }
+        
         ModelAndView mv = new ModelAndView("advisor/administrator/form_advisor");
         
         String user_type = request.getParameter("user_type_input");
