@@ -3,11 +3,13 @@ package service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author lucqu
  */
+@Service
 public class PasswordService {
     
     /**
