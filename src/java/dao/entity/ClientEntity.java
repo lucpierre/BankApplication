@@ -27,7 +27,6 @@ public class ClientEntity extends UserEntity implements Serializable {
     @JoinColumn(name="advisor_fk")
     private AdvisorEntity advisor;
     
-    
     /**
      * Account-s
      */
