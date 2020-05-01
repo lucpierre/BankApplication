@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
+import service.SecurityService;
 import service.SessionService;
 import service.entities.AdvisorService;
 import service.entities.AdvisorServiceImpl;
@@ -40,12 +41,16 @@ public class UserController extends AbstractController {
     private final ClientService client_service;
     
     @Autowired
+    private final SecurityService security_service;
+    
+    @Autowired
     private final SessionService session_service;
     
     public UserController() {
         this.user_service = new UserServiceImpl();
         this.advisor_service = new AdvisorServiceImpl();
         this.client_service = new ClientServiceImpl();
+        this.security_service = new SecurityService();
         this.session_service = new SessionService();
     }
     
@@ -101,7 +106,7 @@ public class UserController extends AbstractController {
     public ModelAndView logout(
             HttpServletRequest request,
             HttpServletResponse response)
-    {    
+    {
         this.session_service.destroySession(request);
         
         ModelAndView mv = new ModelAndView("index");
@@ -169,6 +174,10 @@ public class UserController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response)
     {
+        if(!this.security_service.hasAccess(request, "dashboard_get")){
+            return ErrorController.error403();
+        }
+        
         // Récupération de la session existante
         String user_id = (String)this.session_service.getSessionAttribute(request, "user_id");
         if(null == user_id){
