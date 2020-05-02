@@ -63,7 +63,7 @@ public class AccountEntity implements Serializable {
     @Column
     private double balance;
     
-    @Column
+    @Column(unique = true)
     private String account_number;
     
     @Column
@@ -90,15 +90,19 @@ public class AccountEntity implements Serializable {
         return balance;
     }
 
-    public String getAccount_number() {
+    public String getAccountNumber() {
         return account_number;
     }
+    
+    public void setAccountNumber(String new_account_number) {
+        this.account_number = new_account_number;
+    }
 
-    public Date getCreated_at() {
+    public Date getCreatedAt() {
         return created_at;
     }
 
-    public Date getUpdated_at() {
+    public Date getUpdatedAt() {
         return updated_at;
     }
     

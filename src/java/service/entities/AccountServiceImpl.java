@@ -10,6 +10,7 @@ import dao.repository.AccountDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,9 @@ public class AccountServiceImpl implements AccountService {
     
     @Override
     public void save(AccountEntity entity){
+        entity.setAccountNumber(this.genUniqueAccountNumber());
         entity.setCreatedAt(new Date());
+        entity.setUpdatedAt(new Date());
         dao.save(entity);
     }
     
@@ -53,6 +56,45 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void delete(AccountEntity entity){
         dao.delete(entity);
+    }
+    
+    /**
+     * Return a random account number made by 11 characters between 0 and 9
+     * 
+     * @return String
+     */
+    private String genAccountNumber(){
+        int left_limit = 48; // char '0'
+        int right_limit = 57; // letter '9'
+        int target_string_length = 11;
+        Random random = new Random();
+
+        String generated_string = random.ints(left_limit, right_limit + 1)
+          .limit(target_string_length)
+          .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+          .toString();
+
+        System.out.println(generated_string);
+        return generated_string;
+    }
+    
+    /**
+     * Return a unique random account number made by 11 characters between 0 and 9
+     * 
+     * @return 
+     */
+    private String genUniqueAccountNumber(){
+        String gen_account_number = this.genAccountNumber();
+        AccountEntity account = this.findByNumber(gen_account_number);
+        
+        if(null != account){
+            while(null != account){
+                gen_account_number = this.genAccountNumber();
+                account = this.findByNumber(gen_account_number);
+            }
+        }
+        
+        return gen_account_number;
     }
     
 }
