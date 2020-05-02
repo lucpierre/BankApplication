@@ -12,6 +12,6 @@ public interface ProfessionalService {
     public ProfessionalEntity find(String id);
     public List<ProfessionalEntity> findAll();
     public void save(ProfessionalEntity u) throws LoginAlreadyUsedException;
-    public void update(ProfessionalEntity entity) throws LoginAlreadyUsedException;
+    public void update(ProfessionalEntity entity);
     public void delete(ProfessionalEntity entity);
 }

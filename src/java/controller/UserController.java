@@ -1,9 +1,11 @@
 package controller;
 
+import dao.entity.AccountEntity;
 import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.UserEntity;
 import exceptions.UserNotFoundException;
+import fixtures.AccountFixtures;
 import fixtures.UserFixtures;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import service.SecurityService;
 import service.SessionService;
+import service.entities.AccountService;
+import service.entities.AccountServiceImpl;
 import service.entities.AdvisorService;
 import service.entities.AdvisorServiceImpl;
 import service.entities.ClientService;
@@ -35,6 +39,9 @@ public class UserController extends AbstractController {
     private final UserService user_service;
     
     @Autowired
+    private final AccountService account_service;
+    
+    @Autowired
     private final AdvisorService advisor_service;
     
     @Autowired
@@ -48,6 +55,7 @@ public class UserController extends AbstractController {
     
     public UserController() {
         this.user_service = new UserServiceImpl();
+        this.account_service = new AccountServiceImpl();
         this.advisor_service = new AdvisorServiceImpl();
         this.client_service = new ClientServiceImpl();
         this.security_service = new SecurityService();
@@ -215,9 +223,16 @@ public class UserController extends AbstractController {
      */
     private void loadFixtures(){
         ArrayList<UserEntity> users = new UserFixtures().getUsers();
+        ArrayList<AccountEntity> accounts = new AccountFixtures().getAccounts();
+        
+        
         try{
             for(UserEntity user : users){
                 this.user_service.save(user);
+            }
+            
+            for(AccountEntity account : accounts){
+                this.account_service.save(account);
             }
 
             // Ajout du client d'id 1 (d'après les fixtures) à la liste des clients supervisés du conseiller d'id 3 (toujours d'après les fixtures
@@ -227,9 +242,21 @@ public class UserController extends AbstractController {
             a.addClient(c);
             this.advisor_service.update(a);
             this.client_service.update(c);
+            
+            // Ajout des comptes au client
+            AccountEntity account_0 = this.account_service.find("5");
+            AccountEntity account_1 = this.account_service.find("6");
+            
+            c.addAccount(account_0);
+            c.addAccount(account_1);
+            
+            client_service.update(c);
+            account_service.update(account_0);
+            account_service.update(account_1);
         }
         catch(Exception e){
             System.err.println("Error during the loading of the fixtures.");
+            e.printStackTrace();
         }
     }
     

@@ -46,11 +46,8 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public void update(UserEntity entity) throws LoginAlreadyUsedException{
+    public void update(UserEntity entity){
         UserEntity user = this.dao.findByLogin(entity.getLogin());
-        if(null != user){
-            throw new LoginAlreadyUsedException();
-        }
         
         entity.setUpdatedAt(new Date());
         dao.update(entity);

@@ -58,8 +58,6 @@
                         <h4>Clients supervisés</h4>
                     </div>
                     
-<<<<<<< HEAD
-=======
                     <table class="table">
                         <thead class="header">
                             <tr class="contents">    
@@ -106,56 +104,11 @@
                         <h4>Tous les clients</h4>
                     </div>
                     
->>>>>>> 663c91bac5a8142b92b99f06d205a7ecb5448c36
-                    <table class="table">
-                        <thead class="header">
-                            <tr class="contents">    
-                                <th scope="col" style="width: 5em;">Catégorie</th>
-                                <th scope="col">Identité</th>
-                                <th scope="col">Téléphone</th>
-                                <th scope="col" style="width: 15em;">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${ supervised_clients }" var="client">
-                                <tr class="contents">
-                                    <td class="text-center">
-                                        <c:if test="${client.userType.equals('ProfessionalEntity')}">
-                                            <i class="material-icons align-bottom">work_outline</i>
-                                        </c:if>
-                                        <c:if test="${client.userType.equals('ClientEntity')}">
-                                            <i class="material-icons align-bottom">person_outline</i>
-                                        </c:if>
-                                    </td>
-                                    <td><c:out value="${ client.lastName }" /></td>
-                                    <td><c:out value="${ client.firstName }" /></td>
-                                    <td><c:out value="${ client.phone }" /></td>
-                                    <td class="text-right">
-                                        <a class="btn btn-secondary btn-sm" href="edit_client.htm?id=${client.id}" role="button">
-                                            <i class="material-icons align-bottom">edit</i>
-                                        </a>
-                                        <a class="btn btn-danger btn-sm" href="delete_client.htm?id=${client.id}" role="button" onclick="return confirm('Êtes vous sûr de vouloir supprimer ce client ?')">
-                                            <i class="material-icons align-bottom">delete</i>
-                                        </a>
-                                        <a class="btn btn-primary btn-sm" href="chat_advisor.htm?id=${client.id}" role="button">
-                                            <i class="material-icons align-bottom">mail</i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                    
-                    <div class="sub-section-title">
-                        <h4>Tous les clients</h4>
-                    </div>
-                    
                     <table class="table">
                         <thead class="header">
                             <tr class="contents">    
                                 <th scope="col" style="width: 4em;">Catégorie</th>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Prénom</th>
+                                <th scope="col">Identité</th>
                                 <th scope="col">Téléphone</th>
                                 <th scope="col" style="width: 13em;">Actions</th>
                             </tr>

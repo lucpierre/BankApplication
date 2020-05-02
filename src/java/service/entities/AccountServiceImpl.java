@@ -36,12 +36,15 @@ public class AccountServiceImpl implements AccountService {
     
     @Override
     public List<AccountEntity> findAll(){
-        return new ArrayList<>();
+        return new ArrayList<>(dao.findAll());
     }
     
     @Override
     public void save(AccountEntity entity){
-        entity.setAccountNumber(this.genUniqueAccountNumber());
+        String account_number = this.genUniqueAccountNumber();
+        System.out.println(account_number);
+        entity.setAccountNumber(account_number);
+        System.out.println(entity.getAccountNumber());
         entity.setCreatedAt(new Date());
         entity.setUpdatedAt(new Date());
         dao.save(entity);
@@ -74,7 +77,6 @@ public class AccountServiceImpl implements AccountService {
           .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
           .toString();
 
-        System.out.println(generated_string);
         return generated_string;
     }
     

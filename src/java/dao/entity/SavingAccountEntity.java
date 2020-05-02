@@ -18,6 +18,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="SavingAccountsEntity")
 @DiscriminatorValue("SavingAccountsEntity")
-public class SavingAccountsEntity extends AccountEntity implements Serializable {
+public class SavingAccountEntity extends AccountEntity implements Serializable {
     
 }

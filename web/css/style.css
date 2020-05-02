@@ -46,6 +46,10 @@ section {
     font-size: 17px;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 /*
 ================================================================================
 */
@@ -73,7 +77,6 @@ section {
 
 .menu a, .menu a:hover {
     color: white;
-    text-decoration: none;
 }
 
 .menu ul {
