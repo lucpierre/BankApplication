@@ -11,6 +11,6 @@ public interface AdministratorService {
     public AdministratorEntity find(String id);
     public List<AdministratorEntity> findAll();
     public void save(AdministratorEntity u) throws LoginAlreadyUsedException;
-    public void update(AdministratorEntity entity) throws LoginAlreadyUsedException;
+    public void update(AdministratorEntity entity);
     public void delete(AdministratorEntity entity);
 }

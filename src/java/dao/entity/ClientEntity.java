@@ -104,18 +104,48 @@ public class ClientEntity extends UserEntity implements Serializable {
     }
     
     /**
-     * Get client-s
+     * Get accounts list
+     * 
      * @return the client-s
      */
-    public ArrayList<AccountEntity> getAccount() {
+    public ArrayList<AccountEntity> getAccounts() {
         return new ArrayList(this.accounts);
     }
 
     /**
-     * Set account
+     * Set accounts list
+     * 
+     * @param new_accounts
+     */
+    public void setAccounts(AccountEntity new_accounts) {
+        this.accounts.add(new_accounts);
+    }
+    
+    /**
+     * Add a new account
+     * 
      * @param new_account 
      */
-    public void setAccount(AccountEntity new_account) {
-        this.accounts.add(new_account);
+    public void addAccount(AccountEntity new_account){
+        if(!this.accounts.contains(new_account)){
+            this.accounts.add(new_account);
+            if(new_account.getClients().contains(this)){
+                new_account.addClient(this);
+            }
+        }
+    }
+    
+    /**
+     * Remove a new account
+     * 
+     * @param account 
+     */
+    public void removeAccount(AccountEntity account){
+        if(this.accounts.contains(account)){
+            this.accounts.remove(account);
+            if(account.getClients().contains(this)){
+                account.removeClient(this);
+            }
+        }
     }
 }

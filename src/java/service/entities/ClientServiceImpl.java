@@ -46,12 +46,7 @@ public class ClientServiceImpl implements ClientService {
     }
     
     @Override
-    public void update(ClientEntity entity) throws LoginAlreadyUsedException {
-        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
-        if(null != user){
-            throw new LoginAlreadyUsedException();
-        }
-        
+    public void update(ClientEntity entity){
         entity.setUpdatedAt(new Date());
         this.dao.update(entity);
     }

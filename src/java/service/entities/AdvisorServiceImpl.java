@@ -46,11 +46,7 @@ public class AdvisorServiceImpl implements AdvisorService {
     }
     
     @Override
-    public void update(AdvisorEntity entity) throws LoginAlreadyUsedException{
-        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
-        if(null != user){
-            throw new LoginAlreadyUsedException();
-        }
+    public void update(AdvisorEntity entity){
         
         entity.setUpdatedAt(new Date());
         this.dao.update(entity);

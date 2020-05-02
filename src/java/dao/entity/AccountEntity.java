@@ -19,7 +19,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -49,9 +48,8 @@ public class AccountEntity implements Serializable {
     
     
     /**
-     * User-s
+     * Clients list
      */
-    
     @ManyToMany(mappedBy = "accounts") 
     private List<ClientEntity> clients;
         
@@ -127,22 +125,52 @@ public class AccountEntity implements Serializable {
         }
     }
     
+    /**
+     * Set the clients list
+     * 
+     * @param new_clients 
+     */
+    public void setClients(List<ClientEntity> new_clients){
+        this.clients = new_clients;
+    }
     
     /**
-     * Get client-s
-     * @return the client-s
+     * Get the clients list
+     * 
+     * @return list of ClientEntity
      */
-    public ArrayList<ClientEntity> getUser() {
-        return new ArrayList(this.clients);
+    public List<ClientEntity> getClients(){
+        return this.clients;
     }
-
+    
     /**
-     * Set client
+     * Add a new client
+     * 
      * @param new_client 
      */
-    public void setUser(ClientEntity new_client) {
-        this.clients.add(new_client);
+    public void addClient(ClientEntity new_client){
+        if(!this.clients.contains(new_client)){
+            this.clients.add(new_client);
+            if(!new_client.getAccounts().contains(this)){
+                new_client.addAccount(this);
+            }
+        }
     }
+    
+    /**
+     * Remove a new client
+     * 
+     * @param client 
+     */
+    public void removeClient(ClientEntity client){
+        if(this.clients.contains(client)){
+            this.clients.remove(client);
+            if(client.getAccounts().contains(this)){
+                client.removeAccount(this);
+            }
+        }
+    }
+    
     
     
 }

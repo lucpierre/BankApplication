@@ -11,6 +11,6 @@ public interface AdvisorService {
     public AdvisorEntity find(String id);
     public List<AdvisorEntity> findAll();
     public void save(AdvisorEntity u) throws LoginAlreadyUsedException;
-    public void update(AdvisorEntity entity) throws LoginAlreadyUsedException;
+    public void update(AdvisorEntity entity);
     public void delete(AdvisorEntity entity);
 }

@@ -18,6 +18,6 @@ public interface UserService {
     public UserEntity findByLoginPassword(String login, String password);
     public List<UserEntity> findAll();
     public void save(UserEntity u) throws LoginAlreadyUsedException;
-    public void update(UserEntity entity) throws LoginAlreadyUsedException;
+    public void update(UserEntity entity) ;
     public void delete(UserEntity entity);
 }

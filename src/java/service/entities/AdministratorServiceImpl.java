@@ -46,12 +46,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
     
     @Override
-    public void update(AdministratorEntity entity) throws LoginAlreadyUsedException{
-        UserEntity user = this.user_dao.findByLogin(entity.getLogin());
-        if(null != user){
-            throw new LoginAlreadyUsedException();
-        }
-        
+    public void update(AdministratorEntity entity){
         entity.setUpdatedAt(new Date());
         this.dao.update(entity);
     }
