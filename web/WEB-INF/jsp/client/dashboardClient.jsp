@@ -1,4 +1,4 @@
-<%@page import="dao.entity.UserEntity"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,29 +24,38 @@
 
                     <div class="card-deck">
                         <div class="card">
-                            <img class="card-img-top" src="${pageContext.request.contextPath}/img/hand_coin.png" alt="">
+                            <img class="card-img-top card-img" src="${pageContext.request.contextPath}/img/hand_coin.png" alt="">
                             <div class="card-body">
-                                <h5 class="card-title">Comptes</h5>
+                                <a href="#">
+                                    <h5 class="card-title">Comptes</h5>
+                                </a>
                                 <p class="card-text">Gérer votre compte courant.</p>
                                 <p class="card-text"><a href="#" class="btn btn-primary">Accéder aux comptes</a></p>
                             </div>
                         </div>
+                            
                         <div class="card">
-                            <img class="card-img-top" src="${pageContext.request.contextPath}/img/hand_pig.png" alt="">
+                            <img class="card-img-top card-img" src="${pageContext.request.contextPath}/img/hand_pig.png" alt="">
                             <div class="card-body">
-                                <h5 class="card-title">Livrets</h5>
+                                <a href="#">
+                                    <h5 class="card-title">Livrets</h5>
+                                </a>
                                 <p class="card-text">Gérer votre livret courant.</p>
                                 <p class="card-text"><a href="#" class="btn btn-primary">Accéder aux livrets</a></p>
                             </div>
                         </div>
+                            
                         <div class="card">
-                            <img class="card-img-top" src="${pageContext.request.contextPath}/img/hand_bank.png" alt="">
+                            <img class="card-img-top card-img" src="${pageContext.request.contextPath}/img/hand_bank.png" alt="">
                             <div class="card-body">
-                                <h5 class="card-title">Transactions</h5>
+                                <a href="#">
+                                    <h5 class="card-title">Transactions</h5>
+                                </a>
                                 <p class="card-text">Gérer vos virements.</p>
                                 <p class="card-text"><a href="#" class="btn btn-primary">Accéder aux transactions</a></p>
                             </div>
                         </div>
+                            
                     </div>
                 </section>
                             
@@ -56,28 +65,33 @@
                         <h2>Aperçu des contrats</h2>
                     </div>
                     
-                    <table class="table">
-                        <thead class="header">
-                            <tr class="contents">    
-                                <th scope="col">Propriétaire</th>
-                                <th scope="col">Type de contrat</th>
-                                <th scope="col">Numéro de contrat</th>
-                                <th scope="col">Solde</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="contents">
-                                <td>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="card-deck">
+                        <c:forEach items="${user.accounts}" var="account">
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="#">
+                                    <h5>
+                                        <c:if test="${account.accountType == 'CurrentAccountEntity'}">
+                                            Compte courant
+                                        </c:if>
+                                        <c:if test="${account.accountType == 'SavingAccountEntity'}">
+                                            Livret A
+                                        </c:if>
+                                    </h5>
+                                </a>
+                                <small>N° ${account.accountNumber}</small>
+                            </div>
 
+                            <div class="card-body text-right">
+                                <h3>${account.balance} €</h3>
+                            </div>
+                        </div>
+                        </c:forEach>
+                    </div>
+                    
                 </section>
-
                 
             </div>
-  
         </div>
                                 
         <%@include file="../dependencies_js.jsp"%>

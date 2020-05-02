@@ -52,13 +52,12 @@ public class AccountEntity implements Serializable {
      */
     @ManyToMany(mappedBy = "accounts") 
     private List<ClientEntity> clients;
-        
     
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long account_id;
+    private Long id;
     
     @Column
     private double balance;
@@ -77,9 +76,44 @@ public class AccountEntity implements Serializable {
     //////////////////////////
     // Generated methods   //
     ////////////////////////
+    
+    public AccountEntity(){
+        this.account_number = null;
+        this.balance = 0;
+        this.clients = new ArrayList<>();
+    }
 
-    public Long getAccount_id() {
-        return account_id;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = this.id;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof AccountEntity)) {
+            return false;
+        }
+        AccountEntity other = (AccountEntity) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
+    public String toString() {
+        return "dao.entities.AccountEntity[ id=" + id + " ]";
     }
     
     public void setBalance(double new_balance) {
@@ -95,7 +129,9 @@ public class AccountEntity implements Serializable {
     }
     
     public void setAccountNumber(String new_account_number) {
-        this.account_number = new_account_number;
+        if(null == this.account_number){
+            this.account_number = new_account_number;
+        }
     }
 
     public Date getCreatedAt() {
@@ -117,8 +153,8 @@ public class AccountEntity implements Serializable {
 
     
     public String getAccountType(){
-        if(this instanceof SavingAccountsEntity){
-            return "SavingAccountsEntity";
+        if(this instanceof SavingAccountEntity){
+            return "SavingAccountEntity";
         }
         else{
             return "CurrentAccountEntity";
