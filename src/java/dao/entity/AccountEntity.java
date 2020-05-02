@@ -22,6 +22,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,11 +47,15 @@ import javax.persistence.TemporalType;
 
 public class AccountEntity implements Serializable {
     
+    /**
+     * Banking list 
+     */
+    @OneToMany(mappedBy = "accounts")
+    private List<BankingEntity> banking;
     
     /**
      * User-s
      */
-    
     @ManyToMany(mappedBy = "accounts") 
     private List<ClientEntity> clients;
         
@@ -131,7 +136,7 @@ public class AccountEntity implements Serializable {
      * Get client-s
      * @return the client-s
      */
-    public ArrayList<ClientEntity> getUser() {
+    public ArrayList<ClientEntity> getClients() {
         return new ArrayList(this.clients);
     }
 
@@ -139,9 +144,50 @@ public class AccountEntity implements Serializable {
      * Set client
      * @param new_client 
      */
-    public void setUser(ClientEntity new_client) {
+    public void setClients(ClientEntity new_client) {
         this.clients.add(new_client);
     }
     
+    
+    
+    /**
+     * Getter on the banking list
+     * @return the banking list
+     */
+    public List<BankingEntity> getBanking() {
+        return this.banking;
+    }
+    
+    /**
+     * Getter on the banking list
+     * @param new_banking
+     */
+    public void setBanking(List<BankingEntity> new_banking) {
+        this.banking = new_banking;
+    }
+
+    /**
+     * Add a client to the supervised clients list
+     * @param new_client 
+     */
+    public void addBanking(BankingEntity new_banking) {
+        if(!this.banking.contains(new_banking)){
+            this.banking.add(new_banking);
+            new_banking.setAccount(this);
+        }
+    }
+    
+    /**
+     * Remove a banking from the banking list
+     * @param banking 
+     */
+    public void removeBanking(BankingEntity banking_param) {
+        if(this.banking.contains(banking_param)){
+            this.banking.remove(banking_param);
+            if(banking_param.getAccount()== this){
+                banking_param.setAccount(null);
+            }
+        }
+    }
     
 }
