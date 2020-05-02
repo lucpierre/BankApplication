@@ -2,10 +2,13 @@ package dao.entity;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -24,6 +27,18 @@ public class ClientEntity extends UserEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name="advisor_fk")
     private AdvisorEntity advisor;
+    
+    /**
+     * Account-s
+     */
+    @JoinTable(
+            name="client_account_fk",
+            joinColumns=@JoinColumn(name="client_fk"),
+            inverseJoinColumns=@JoinColumn(name="account_fk")
+    )
+    @ManyToMany
+    private ArrayList<AccountEntity> accounts;
+  
     
     //////////////////////////
     // Methods             //
@@ -85,5 +100,21 @@ public class ClientEntity extends UserEntity implements Serializable {
      */
     public void setAdvisor(AdvisorEntity new_advisor) {
         this.advisor = new_advisor;
+    }
+    
+    /**
+     * Get client-s
+     * @return the client-s
+     */
+    public ArrayList<AccountEntity> getAccount() {
+        return this.accounts;
+    }
+
+    /**
+     * Set account
+     * @param new_account 
+     */
+    public void setAccount(AccountEntity new_account) {
+        this.accounts.add(new_account);
     }
 }

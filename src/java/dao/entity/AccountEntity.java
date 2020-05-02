@@ -6,6 +6,7 @@
 package dao.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -17,6 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -42,6 +45,15 @@ import javax.persistence.TemporalType;
 })
 
 public class AccountEntity implements Serializable {
+    
+    
+    /**
+     * User-s
+     */
+    
+    @ManyToMany(mappedBy = "accounts") 
+    private ArrayList<ClientEntity> clients;
+        
     
     private static final long serialVersionUID = 1L;
     
@@ -113,4 +125,23 @@ public class AccountEntity implements Serializable {
             return "CurrentAccountEntity";
         }
     }
+    
+    
+    /**
+     * Get client-s
+     * @return the client-s
+     */
+    public ArrayList<ClientEntity> getUser() {
+        return this.clients;
+    }
+
+    /**
+     * Set client
+     * @param new_client 
+     */
+    public void setUser(ClientEntity new_client) {
+        this.clients.add(new_client);
+    }
+    
+    
 }
