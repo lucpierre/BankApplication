@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -32,12 +33,12 @@ public class ClientEntity extends UserEntity implements Serializable {
      * Account-s
      */
     @JoinTable(
-            name="client_account_fk",
+            name="ClientEntity_AccountEntity",
             joinColumns=@JoinColumn(name="client_fk"),
             inverseJoinColumns=@JoinColumn(name="account_fk")
     )
     @ManyToMany
-    private ArrayList<AccountEntity> accounts;
+    private List<AccountEntity> accounts;
   
     
     //////////////////////////
@@ -107,7 +108,7 @@ public class ClientEntity extends UserEntity implements Serializable {
      * @return the client-s
      */
     public ArrayList<AccountEntity> getAccount() {
-        return this.accounts;
+        return new ArrayList(this.accounts);
     }
 
     /**

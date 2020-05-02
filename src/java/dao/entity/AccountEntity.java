@@ -8,6 +8,7 @@ package dao.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -52,7 +53,7 @@ public class AccountEntity implements Serializable {
      */
     
     @ManyToMany(mappedBy = "accounts") 
-    private ArrayList<ClientEntity> clients;
+    private List<ClientEntity> clients;
         
     
     private static final long serialVersionUID = 1L;
@@ -132,7 +133,7 @@ public class AccountEntity implements Serializable {
      * @return the client-s
      */
     public ArrayList<ClientEntity> getUser() {
-        return this.clients;
+        return new ArrayList(this.clients);
     }
 
     /**
