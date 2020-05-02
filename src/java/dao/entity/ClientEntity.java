@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -30,8 +31,12 @@ public class ClientEntity extends UserEntity implements Serializable {
     /**
      * Account-s
      */
+    @JoinTable(
+            name="client_account_fk",
+            joinColumns=@JoinColumn(name="client_fk"),
+            inverseJoinColumns=@JoinColumn(name="account_fk")
+    )
     @ManyToMany
-    @JoinColumn(name="account_fk")
     private ArrayList<AccountEntity> accounts;
   
     

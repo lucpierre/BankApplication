@@ -50,9 +50,9 @@ public class AccountEntity implements Serializable {
     /**
      * User-s
      */
-    @ManyToMany
-    @JoinColumn(name="client_fk")
-    private ArrayList<UserEntity> clients;
+    
+    @ManyToMany(mappedBy = "accounts") 
+    private ArrayList<ClientEntity> clients;
         
     
     private static final long serialVersionUID = 1L;
@@ -127,7 +127,7 @@ public class AccountEntity implements Serializable {
      * Get client-s
      * @return the client-s
      */
-    public ArrayList<UserEntity> getUser() {
+    public ArrayList<ClientEntity> getUser() {
         return this.clients;
     }
 
@@ -135,7 +135,7 @@ public class AccountEntity implements Serializable {
      * Set client
      * @param new_client 
      */
-    public void setUser(UserEntity new_client) {
+    public void setUser(ClientEntity new_client) {
         this.clients.add(new_client);
     }
     
