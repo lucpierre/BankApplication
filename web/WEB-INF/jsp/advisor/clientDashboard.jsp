@@ -34,13 +34,13 @@
                         </a>
                     </div>
                     
-                    <c:forEach items="${accounts}" var="account">
-                    <div class="card">
+                    <c:forEach items="${client.accounts}" var="account">
+                    <div class="card mb-3">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <h5>${account.accountType}</h5>
-                                    <small>${account.accountNumber}</small>
+                                    <small>N° ${account.accountNumber}</small>
                                 </div>
                                 <div class="col-sm-6 text-right">
                                     <h3>${account.balance} €</h3>
