@@ -50,7 +50,7 @@ public class AccountEntity implements Serializable {
     /**
      * Banking list 
      */
-    @OneToMany(mappedBy = "accounts")
+    @OneToMany(mappedBy = "account")
     private List<BankingEntity> banking;    
     
     /**
