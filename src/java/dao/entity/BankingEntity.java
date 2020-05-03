@@ -31,10 +31,8 @@ import javax.persistence.TemporalType;
  */
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="BankingEntity")
-@DiscriminatorColumn(name="accounttype", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("AccountEntity")
+@DiscriminatorValue("BankingEntity")
 
 @NamedQueries({
     @NamedQuery(
@@ -67,6 +65,9 @@ public class BankingEntity implements Serializable {
     
     @Column
     private boolean debtor;
+    
+    @Column
+    private String comment = null;
     
     @Column
     @Temporal(TemporalType.DATE)
@@ -129,6 +130,24 @@ public class BankingEntity implements Serializable {
         this.debtor = new_debtor;
     }
 
+    
+    /**
+     * Getter of comment : justify the banking
+     * @return String : comment
+     */
+    public String getComment() {
+        return this.comment;
+    }
+    
+    /**
+     * Setter for comment
+     * @param new_comment 
+     */
+    public void setComment(String new_comment) {
+        this.comment = new_comment;
+    }
+
+    
     /**
      * Getter on the creation date
      * @return Date
@@ -154,7 +173,7 @@ public class BankingEntity implements Serializable {
     }
     
     /**
-     * Getter on the account
+     * Setter on the account
      * @param new account
      */
     public void setAccount(AccountEntity new_account) {

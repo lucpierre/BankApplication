@@ -222,7 +222,7 @@ public class AccountEntity implements Serializable {
     }
     
     /**
-     * Getter on the banking list
+     * Setter on the banking list
      * @param new_banking
      */
     public void setBanking(List<BankingEntity> new_banking) {
