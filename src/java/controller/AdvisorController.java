@@ -584,7 +584,7 @@ public class AdvisorController extends AbstractController {
             HttpServletRequest request,
             HttpServletResponse response) throws Exception
     {
-        if(!this.security_service.hasAccess(request, "client_dashboard")){
+        if(!this.security_service.hasAccess(request, "client_dashboard_get")){
             return ErrorController.error403();
         }
         
