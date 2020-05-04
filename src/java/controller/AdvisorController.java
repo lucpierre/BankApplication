@@ -605,8 +605,6 @@ public class AdvisorController extends AbstractController {
             return this.list_clients(request, mv);
         }
         
-        System.out.println(client.getAccounts());
-        
         mv.addObject("client", client);
         return mv;
     }
