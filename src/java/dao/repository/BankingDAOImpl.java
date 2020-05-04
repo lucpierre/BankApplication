@@ -24,16 +24,4 @@ public class BankingDAOImpl extends GenericDAOImpl<BankingEntity> implements Ban
         super(BankingEntity.class);
     }
     
-    @Transactional
-    @Override
-    public BankingEntity findById(String banking_id) {
-        Query query = this.getEm().createNamedQuery("find_by_id");
-        
-        query.setParameter("banking_id", banking_id);
-        try {
-            return (BankingEntity)query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;        // Need Exception
-        }
-    }
 }

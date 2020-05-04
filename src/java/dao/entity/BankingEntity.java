@@ -30,12 +30,6 @@ import javax.persistence.TemporalType;
 @Table(name="BankingEntity")
 @DiscriminatorValue("BankingEntity")
 
-@NamedQueries({
-    @NamedQuery(
-        name = "find_by_id",
-        query = "SELECT u FROM BankingEntity u WHERE u.banking_id = :banking_id"
-    )
-})
 
 public class BankingEntity implements Serializable {
     
@@ -68,6 +62,10 @@ public class BankingEntity implements Serializable {
     @Column
     @Temporal(TemporalType.DATE)
     private Date created_at;
+    
+    @Column
+    @Temporal(TemporalType.DATE)
+    private Date updated_at;
     
     /**
      * Getter on the banking id
@@ -158,6 +156,22 @@ public class BankingEntity implements Serializable {
      */
     public void setCreatedAt(Date new_date) {
         this.created_at = new_date;
+    }
+    
+    /**
+     * Getter on the update date
+     * @return Date
+     */
+    public Date getUpdatedAt() {
+        return updated_at;
+    }
+
+    /**
+     * Setter on the update date
+     * @param updated_at 
+     */
+    public void setUpdatedAt(Date updated_at) {
+        this.updated_at = updated_at;
     }
     
     /**

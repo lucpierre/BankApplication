@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.repository;
-
-
-import dao.entity.BankingEntity;
+package exceptions;
 
 /**
  *
  * @author Charles
  */
-public interface BankingDAO extends GenericDAO<BankingEntity>{
-
+public class BankingInvalidException extends Exception {
+    public BankingInvalidException(){
+        super("Invalid Banking : need cost, reference, account");
+    }
 }
