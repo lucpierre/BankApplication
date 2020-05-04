@@ -129,7 +129,7 @@ public class ClientEntity extends UserEntity implements Serializable {
     public void addAccount(AccountEntity new_account){
         if(!this.accounts.contains(new_account)){
             this.accounts.add(new_account);
-            if(new_account.getClients().contains(this)){
+            if(!new_account.getClients().contains(this)){
                 new_account.addClient(this);
             }
         }

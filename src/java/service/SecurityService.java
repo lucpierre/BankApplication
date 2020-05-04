@@ -54,6 +54,7 @@ public class SecurityService {
         ROUTING_MAP.put("chat_advisor_get", new ArrayList(Arrays.asList(advisor)));
         ROUTING_MAP.put("chat_advisor_post", new ArrayList(Arrays.asList(advisor)));
         ROUTING_MAP.put("client_dashboard_get", new ArrayList(Arrays.asList(advisor)));
+        ROUTING_MAP.put("remove_client_account_get", new ArrayList(Arrays.asList(advisor)));
         
         // ClientController
         ROUTING_MAP.put("chat_client_get", new ArrayList(Arrays.asList(client)));
