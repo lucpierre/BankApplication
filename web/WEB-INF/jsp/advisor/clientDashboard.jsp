@@ -34,6 +34,17 @@
                         </a>
                     </div>
                     
+                    <c:if test="${null != alert_msg}">
+                        <div class="alert alert-danger" role="alert">
+                            <i class="material-icons mr-2 align-bottom">info</i> ${alert_msg}
+                        </div>
+                    </c:if>
+                    <c:if test="${null != info_msg}">
+                        <div class="alert alert-info" role="alert">
+                            <i class="material-icons mr-2 align-bottom">info</i> ${info_msg}
+                        </div>
+                    </c:if>
+                    
                     <c:forEach items="${client.accounts}" var="account">
                     <div class="card mb-3">
                         <div class="card-header">
@@ -57,7 +68,7 @@
                             </p>
 
                             <p>
-                                <a href="#" class="text-danger"><i class="material-icons align-bottom mr-2">chevron_right</i> Clôturer le compte.</a>
+                                <a href="remove_client_account.htm?id=${client.id}&account_id=${account.id}" class="text-danger"><i class="material-icons align-bottom mr-2">chevron_right</i> Clôturer le compte.</a>
                             </p>
                         </div>
                     </div>

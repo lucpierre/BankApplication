@@ -1,11 +1,13 @@
 package controller;
 
+import dao.entity.AccountEntity;
 import dao.entity.AdvisorEntity;
 import dao.entity.ClientEntity;
 import dao.entity.MessageEntity;
 import dao.entity.ProfessionalEntity;
 import dao.entity.UserEntity;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.mvc.AbstractController;
 import service.PasswordService;
 import service.SecurityService;
 import service.SessionService;
+import service.entities.AccountService;
+import service.entities.AccountServiceImpl;
 import service.entities.AdvisorService;
 import service.entities.AdvisorServiceImpl;
 import service.entities.ClientService;
@@ -42,6 +46,9 @@ public class AdvisorController extends AbstractController {
     private final AdvisorService advisor_service;
     
     @Autowired
+    private final AccountService account_service;
+    
+    @Autowired
     private final ClientService client_service;
     
     @Autowired
@@ -62,6 +69,7 @@ public class AdvisorController extends AbstractController {
     public AdvisorController() {
         this.user_service = new UserServiceImpl();
         this.advisor_service = new AdvisorServiceImpl();
+        this.account_service = new AccountServiceImpl();
         this.client_service = new ClientServiceImpl();
         this.message_service = new MessageServiceImpl();
         this.professional_service = new ProfessionalServiceImpl();
@@ -569,6 +577,37 @@ public class AdvisorController extends AbstractController {
         
         return this.chat_advisor_get(request, response);
     }
+    
+    /**
+     * PATH : NO_PATH
+     * 
+     * @param request
+     * @param mv
+     * @return
+     * @throws Exception 
+     */
+    private ModelAndView client_dashboard(
+        HttpServletRequest request,
+        ModelAndView mv
+    ) throws Exception{
+        
+        String client_id = request.getParameter("id");
+        if(null == client_id || client_id.equals("")){
+            mv = new ModelAndView("advisor/clientDashboard");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        ClientEntity client = this.client_service.find(client_id);
+        if(null == client){
+            mv = new ModelAndView("advisor/clientDashboard");
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return this.list_clients(request, mv);
+        }
+        
+        mv.addObject("client", client);
+        return mv;
+    }
 
     /**
      * Path : /client_dashboard
@@ -590,21 +629,57 @@ public class AdvisorController extends AbstractController {
         
         ModelAndView mv = new ModelAndView("advisor/clientDashboard");
         
-        String client_id = request.getParameter("id");
-        if(null == client_id || client_id.equals("")){
-            mv = new ModelAndView("advisor/clientDashboard");
-            mv.addObject("alert_msg", "Le client demandé est introuvable.");
-            return this.list_clients(request, mv);
+        return this.client_dashboard(request, mv);
+    }
+    
+    /**
+     * Path : /remove_client_account
+     * Method : GET
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/remove_client_account", method = RequestMethod.GET)
+    public ModelAndView remove_client_account_get(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        if(!this.security_service.hasAccess(request, "remove_client_account_get")){
+            return ErrorController.error403();
         }
         
-        ClientEntity client = this.client_service.find(client_id);
-        if(null == client){
-            mv = new ModelAndView("advisor/clientDashboard");
-            mv.addObject("alert_msg", "Le client demandé est introuvable.");
-            return this.list_clients(request, mv);
+        ModelAndView mv = new ModelAndView("advisor/clientDashboard");
+        
+        String account_id = request.getParameter("account_id");
+        if(null == account_id || account_id.equals("")){
+            mv.addObject("alert_msg", "Le compte est introuvable.");
+            return this.client_dashboard(request, mv);
         }
         
-        mv.addObject("client", client);
-        return mv;
+        AccountEntity account = this.account_service.find(account_id);
+        if(null == account){
+            mv.addObject("alert_msg", "Le compte est introuvable.");
+            return this.client_dashboard(request, mv);
+        }
+        
+        if(account.getBalance() != 0.0){
+            mv.addObject("alert_msg", "Veuillez vider le compte avant de le cloturer.");
+            return this.client_dashboard(request, mv);
+        }
+        
+        ArrayList<ClientEntity> clients = new ArrayList(account.getClients());
+        
+        clients.forEach((client_entity) -> {
+            ClientEntity client = this.client_service.find(Long.toString(client_entity.getId()));
+            client.removeAccount(account);
+            this.client_service.update(client);
+        });
+        
+        this.account_service.delete(account);
+        
+        mv.addObject("alert_msg", "Le compte a bien été supprimé.");
+        return this.client_dashboard(request, mv);
     }
 }
