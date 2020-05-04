@@ -664,7 +664,7 @@ public class AdvisorController extends AbstractController {
             return this.client_dashboard(request, mv);
         }
         
-        if(account.getBalance() == 0.0){
+        if(account.getBalance() != 0.0){
             mv.addObject("alert_msg", "Veuillez vider le compte avant de le cloturer.");
             return this.client_dashboard(request, mv);
         }
