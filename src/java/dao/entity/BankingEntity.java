@@ -8,15 +8,11 @@ package dao.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -107,7 +103,7 @@ public class BankingEntity implements Serializable {
     
     /**
      * Setter for the recipient of banking
-     * @param new_reference 
+     * @param new_cost 
      */
     public void setCost(Double new_cost) {
         this.cost = new_cost;
@@ -158,7 +154,7 @@ public class BankingEntity implements Serializable {
 
     /**
      * Setter on the creation date
-     * @param created_at 
+     * @param new_date 
      */
     public void setCreatedAt(Date new_date) {
         this.created_at = new_date;
@@ -174,7 +170,7 @@ public class BankingEntity implements Serializable {
     
     /**
      * Setter on the account
-     * @param new account
+     * @param new_account
      */
     public void setAccount(AccountEntity new_account) {
         this.account = new_account;
