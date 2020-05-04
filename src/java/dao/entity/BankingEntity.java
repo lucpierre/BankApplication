@@ -8,15 +8,11 @@ package dao.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -34,12 +30,6 @@ import javax.persistence.TemporalType;
 @Table(name="BankingEntity")
 @DiscriminatorValue("BankingEntity")
 
-@NamedQueries({
-    @NamedQuery(
-        name = "find_by_id",
-        query = "SELECT u FROM BankingEntity u WHERE u.banking_id = :banking_id"
-    )
-})
 
 public class BankingEntity implements Serializable {
     
@@ -72,6 +62,10 @@ public class BankingEntity implements Serializable {
     @Column
     @Temporal(TemporalType.DATE)
     private Date created_at;
+    
+    @Column
+    @Temporal(TemporalType.DATE)
+    private Date updated_at;
     
     /**
      * Getter on the banking id
@@ -107,7 +101,7 @@ public class BankingEntity implements Serializable {
     
     /**
      * Setter for the recipient of banking
-     * @param new_reference 
+     * @param new_cost 
      */
     public void setCost(Double new_cost) {
         this.cost = new_cost;
@@ -158,10 +152,26 @@ public class BankingEntity implements Serializable {
 
     /**
      * Setter on the creation date
-     * @param created_at 
+     * @param new_date 
      */
     public void setCreatedAt(Date new_date) {
         this.created_at = new_date;
+    }
+    
+    /**
+     * Getter on the update date
+     * @return Date
+     */
+    public Date getUpdatedAt() {
+        return updated_at;
+    }
+
+    /**
+     * Setter on the update date
+     * @param updated_at 
+     */
+    public void setUpdatedAt(Date updated_at) {
+        this.updated_at = updated_at;
     }
     
     /**
@@ -174,7 +184,7 @@ public class BankingEntity implements Serializable {
     
     /**
      * Setter on the account
-     * @param new account
+     * @param new_account
      */
     public void setAccount(AccountEntity new_account) {
         this.account = new_account;
