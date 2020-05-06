@@ -24,7 +24,7 @@
                         <div class="constainer-fluid row">
                             <div class="col-sm-6">
                                 <!-- <h3>Mr ${user_last_name} ${user_first_name}</h3> -->
-                                <h3>Mr nom prenom</h3>
+                                <h3>M nom prenom</h3>
                                 <!-- <p class="text-muted">${num_account}</p> -->
                                 <p class="text-muted">numero livret</p>
                             </div>

@@ -14,7 +14,7 @@
     <body>
         <h1>Erreur 403</h1>
         <p>
-            VOus n'avez pas les droits suffisants pour accéder à cette ressource.
+            Vous n'avez pas les droits suffisants pour accéder à cette ressource.
         </p>
     </body>
 </html>
