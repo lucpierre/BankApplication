@@ -19,16 +19,16 @@
         </tr>
         <tr>
             <c:forEach items="${banking}" var="banking">
-                <td>${banking.createdAtFormatted}</td>
-                <td>${banking.comment}</td>
-                <td>${banking.reference}</td>
+                <td class="text-right"><c:out value="${banking.createdAtFormatted}"</td>
+                <td class="text-center"><c:out value="${banking.comment}"</td>
+                <td class="text-right"><c:out value="${banking.reference}"</td>
                 <c:if test="${banking.debtor == true}">
-                    <td>-${banking.cost}</td>
+                    <td class="text-right">-<c:out value="$${banking.cost}"</td>
                 </c:if>
                 <c:if test="${banking.debtor == false}">
-                    <td>${banking.cost}</td>
+                    <td class="text-right"><c:out value="$${banking.cost}"</td>
                 </c:if>
             </c:forEach>
         </tr>
-    </tbody>
+    </tbody>             
 </table>
