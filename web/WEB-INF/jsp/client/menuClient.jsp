@@ -38,7 +38,7 @@
             <li>
                 <a href="#">
                     <i class="material-icons mr-2 align-bottom">settings</i>
-                    Paramtres
+                    Paramètres
                 </a>
             </li>
             <li>

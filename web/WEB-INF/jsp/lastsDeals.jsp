@@ -8,11 +8,27 @@
         </tr>
     </thead>
     <tbody>
+        <div class="section-title">
+                <h2>Dernières opérations de ${client.civility} ${client.lastName} ${client.firstName}</h2>
+        </div>    
         <tr class="contents">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>Date</td>
+            <td>Commentaire</td>
+            <td>Référence</td>
+            <td>Montant</td>
+        </tr>
+        <tr>
+            <c:forEach items="${banking}" var="banking">
+                <td>${banking.createdAtFormatted}</td>
+                <td>${banking.comment}</td>
+                <td>${banking.reference}</td>
+                <c:if test="${banking.debtor == true}">
+                    <td>-${banking.cost}</td>
+                </c:if>
+                <c:if test="${banking.debtor == false}">
+                    <td>${banking.cost}</td>
+                </c:if>
+            </c:forEach>
         </tr>
     </tbody>
 </table>
