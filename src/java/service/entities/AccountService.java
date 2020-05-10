@@ -6,6 +6,7 @@
 package service.entities;
 
 import dao.entity.AccountEntity;
+import exceptions.CreateAccountException;
 import java.util.List;
 
 /**
@@ -19,4 +20,5 @@ public interface AccountService {
     public void save(AccountEntity entity);
     public void update(AccountEntity entity);
     public void delete(AccountEntity entity);
+    public void openNewAccount(String client_id, String account_type, String balance) throws CreateAccountException;
 }
