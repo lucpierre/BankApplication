@@ -90,7 +90,7 @@ public class AdvisorEntity extends UserEntity implements Serializable {
     public void setClients(List<ClientEntity> clients) {
         this.clients = clients;
     }
-
+    
     /**
      * Add a client to the supervised clients list
      * @param new_client 

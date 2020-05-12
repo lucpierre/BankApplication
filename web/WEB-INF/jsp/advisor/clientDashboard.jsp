@@ -21,7 +21,7 @@
                     </div>
                     
                     <div class="mb-5">
-                        <a class="btn btn-primary btn-sm" href="#" role="button">
+                        <a class="btn btn-primary btn-sm" href="add_client_account.htm?id=${client.id}" role="button">
                             <i class="material-icons align-bottom mr-2">add</i><span class="align-top">Nouveau contrat</span>
                         </a>
                         

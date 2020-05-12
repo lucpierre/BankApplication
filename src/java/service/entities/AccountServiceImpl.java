@@ -6,7 +6,11 @@
 package service.entities;
 
 import dao.entity.AccountEntity;
+import dao.entity.ClientEntity;
+import dao.entity.CurrentAccountEntity;
+import dao.entity.SavingAccountEntity;
 import dao.repository.AccountDAO;
+import exceptions.CreateAccountException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +27,9 @@ public class AccountServiceImpl implements AccountService {
     
     @Autowired
     AccountDAO dao;
+    
+    @Autowired
+    ClientService client_service;
 
     @Override
     public AccountEntity find(String id) {
@@ -41,10 +48,6 @@ public class AccountServiceImpl implements AccountService {
     
     @Override
     public void save(AccountEntity entity){
-        String account_number = this.genUniqueAccountNumber();
-        System.out.println(account_number);
-        entity.setAccountNumber(account_number);
-        System.out.println(entity.getAccountNumber());
         entity.setCreatedAt(new Date());
         entity.setUpdatedAt(new Date());
         dao.save(entity);
@@ -98,5 +101,51 @@ public class AccountServiceImpl implements AccountService {
         
         return gen_account_number;
     }
+    
+    /**
+     * 
+     * @param client_id
+     * @param account_type
+     * @param balance
+     * @throws CreateAccountException 
+     */
+    @Override
+    public void openNewAccount(
+        String client_id,
+        String account_type,
+        String balance
+    ) throws CreateAccountException
+    {
+        ClientEntity client = this.client_service.find(client_id);
+        if(null == client){
+            throw new CreateAccountException("Le client demandé est introuvable.");
+        }
+        
+        AccountEntity account;
+        switch(account_type) 
+        { 
+            case "CurrentAccountEntity": 
+                account = new CurrentAccountEntity(); 
+                break; 
+            case "SavingAccountEntity": 
+                account = new SavingAccountEntity();
+                break; 
+            default: 
+                throw new CreateAccountException("Le type de contrat est inconnu.");
+        }
+        
+        String account_number = this.genUniqueAccountNumber();
+        account.setAccountNumber(account_number);
+        account.setBalance(Double.parseDouble(balance));
+        
+        this.save(account);
+        
+        AccountEntity account_entity = this.findByNumber(account_number);
+        
+        client.addAccount(account_entity);
+        
+        this.update(account_entity);
+        this.client_service.update(client);
+    } 
     
 }

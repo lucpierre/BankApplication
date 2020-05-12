@@ -682,4 +682,95 @@ public class AdvisorController extends AbstractController {
         mv.addObject("alert_msg", "Le compte a bien été supprimé.");
         return this.client_dashboard(request, mv);
     }
+    
+    /**
+     * Path : /add_client_account
+     * Method : GET
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/add_client_account", method = RequestMethod.GET)
+    public ModelAndView add_client_account_get(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        if(!this.security_service.hasAccess(request, "add_client_account_get")){
+            return ErrorController.error403();
+        }
+        
+        ModelAndView mv = new ModelAndView("advisor/formAccount");
+        
+        
+        String client_id = request.getParameter("id");
+        if(null == client_id || client_id.equals("")){
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return mv;
+        }
+        
+        ClientEntity client = this.client_service.find(client_id);
+        if(null == client){
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return mv;
+        }
+        
+        mv.addObject("client", client);
+        return mv;
+    }
+    
+    /**
+     * Path : /add_client_account
+     * Method : POST
+     * 
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @RequestMapping(value="/add_client_account", method = RequestMethod.POST)
+    public ModelAndView add_client_account_post(
+        HttpServletRequest request,
+        HttpServletResponse response) throws Exception
+    {
+        if(!this.security_service.hasAccess(request, "add_client_account_post")){
+            return ErrorController.error403();
+        }
+        
+        ModelAndView mv = new ModelAndView("advisor/formAccount");
+        
+        
+        String client_id = request.getParameter("id");
+        if(null == client_id || client_id.equals("")){
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return mv;
+        }
+        
+        ClientEntity client = this.client_service.find(client_id);
+        if(null == client){
+            mv.addObject("alert_msg", "Le client demandé est introuvable.");
+            return mv;
+        }
+        
+        
+        String account_type = request.getParameter("account_type_input");
+        if(null == account_type || account_type.equals("")){
+            mv.addObject("alert_msg", "Le type de compte n'est pas autorisé.");
+            return mv;
+        }
+        
+        String balance = request.getParameter("balance_input");
+        if(null == balance || balance.equals("")){
+            mv.addObject("alert_msg", "Le solde à l'ouverture doit être précisé.");
+            return mv;
+        }
+        
+        this.account_service.openNewAccount(client_id, account_type, balance);
+        
+        mv = new ModelAndView("advisor/clientDashboard");
+        mv.addObject("info_msg", "Le compte a bien été ouvert.");
+        mv.addObject("client", client);
+        return this.client_dashboard(request, mv);
+    }
 }
